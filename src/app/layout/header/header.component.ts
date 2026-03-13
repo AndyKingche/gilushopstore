@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit {
   isMobile = false;
 
   navLinks = [
-    { path: '/', label: 'HOME' },
-    { path: '/shop', label: 'SHOP' },
-    { path: '/about', label: 'ABOUT US' },
+    { path: '/', label: 'GILÚ' },
+    { path: '/shop', label: 'COMPRAR' },
+    { path: '/about', label: 'NOSOTROS' },
     { path: '/faq', label: 'FAQ' }
   ];
 
