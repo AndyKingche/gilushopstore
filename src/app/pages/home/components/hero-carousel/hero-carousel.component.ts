@@ -40,20 +40,26 @@ interface Slide {
 export class HeroCarouselComponent implements OnInit, OnDestroy {
   slides: Slide[] = [
     { 
+      title: 'Tu tienda de Maquillaje Favorita', 
+      subtitle: '100% Original', 
+      cta: 'Ver colección',
+      category: 'todo'
+    },
+    { 
       title: 'Nueva colección Maybelline', 
-      subtitle: 'Bases Superstay', 
+      subtitle: 'Bases Fresh Tint', 
       cta: 'Ver colección',
       category: 'bases'
     },
     { 
-      title: 'e.l.f. Cosmetics', 
-      subtitle: 'Labiales que duran todo el día', 
+      title: 'E.l.f. Cosmetics', 
+      subtitle: 'Lip oil que duran todo el día', 
       cta: 'Descubre más',
       category: 'labios'
     },
     { 
       title: 'Primers para piel perfecta', 
-      subtitle: 'Maybelline & e.l.f.', 
+      subtitle: 'Maybelline & e.l.f., NYX', 
       cta: 'Ver primers',
       category: 'primers'
     },

@@ -64,6 +64,7 @@ export class SearchFilterComponent implements OnInit {
   getCategoryLabel(category: string): string {
     const labels: { [key: string]: string } = {
       'bases': 'Bases',
+      'todo': 'Bases',
       'labios': 'Labios',
       'rostro': 'Rostro',
       'primers': 'Primers',
