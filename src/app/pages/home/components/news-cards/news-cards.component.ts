@@ -39,7 +39,7 @@ export class NewsCardsComponent {
       image: 'https://www.bloombeauty.com.mx/cdn/shop/files/DisenosdeProductos_720x.png?v=1753916305'
     },
     {
-      badge: '30% OFF',
+      badge: '10% OFF',
       badgeColor: '#D95F80',
       title: 'Semana Gilú',
       description: 'Aprovecha el descuento 💕',
