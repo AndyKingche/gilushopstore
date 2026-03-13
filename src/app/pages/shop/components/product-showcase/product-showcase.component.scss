@@ -86,16 +86,8 @@
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    
-    &.maybelline {
-      background: linear-gradient(135deg, #ffcc00 0%, #e63946 100%);
-      color: $white;
-    }
-    
-    &.elf {
-      background: $dark;
-      color: $white;
-    }
+    background: $dark;
+    color: $white;
   }
   
   .btn-view {
