@@ -7,7 +7,8 @@
   height: 500px;
   overflow: hidden;
   background: $dark;
-  
+  font-family: 'Nunito';
+
   @include mobile {
     height: 400px;
   }
@@ -60,7 +61,6 @@
 }
 
 .slide-title {
-  font-family: $font-display;
   font-size: clamp(32px, 5vw, 56px);
   font-weight: 600;
   margin-bottom: 16px;
