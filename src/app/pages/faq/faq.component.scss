@@ -39,7 +39,7 @@
   color: $dark;
   transition: all $transition-fast;
 
-  &:hover {
+  &:hover, &.active {
     background: $pink-primary;
     color: $white;
     box-shadow: 0 4px 20px rgba(217, 95, 128, 0.3);

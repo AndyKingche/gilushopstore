@@ -6,8 +6,8 @@
 
       <div class="faq-list">
         <div class="faq-item">
-          <button class="faq-question" (click)="toggleCollapse(0)">
-            <span>¿Cuáles son las formas de pago y envíos?</span>
+          <button class="faq-question" [class.active]="isActive(0)" (click)="toggleCollapse(0)">
+            <span>¿Cuáles son las FORMAS DE PAGO y ENVÍOS?</span>
             <svg class="arrow" [class.active]="isActive(0)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" (click)="toggleCollapse(1)">
+          <button class="faq-question" [class.active]="isActive(1)" (click)="toggleCollapse(1)">
             <span>¿Qué son los PLANES ACUMULATIVOS?</span>
             <svg class="arrow" [class.active]="isActive(1)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" (click)="toggleCollapse(2)">
+          <button class="faq-question" [class.active]="isActive(2)" (click)="toggleCollapse(2)">
             <span>¿Qué son las CAJITAS EMPRENDEDORAS?</span>
             <svg class="arrow" [class.active]="isActive(2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
