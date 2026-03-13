@@ -59,7 +59,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     },
     { 
       title: 'Semana Gilú 💕', 
-      subtitle: '30% OFF en productos seleccionados', 
+      subtitle: 'Hasta el 10% OFF en productos seleccionados', 
       cta: 'Aprovechar',
       category: 'oferta'
     },
