@@ -108,28 +108,55 @@
 
 .video-info {
   padding: 16px;
-  
-  h4 {
-    font-family: $font-display;
-    font-size: 18px;
-    font-weight: 600;
-    color: $dark;
-    margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .play-info {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: $pink-primary;
+    color: $white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: darken($pink-primary, 8%);
+      transform: scale(1.1);
+    }
   }
-  
-  .influencer-name {
-    font-size: 14px;
-    color: lighten($dark, 40%);
-    margin-bottom: 8px;
-  }
-  
-  .product-tag {
-    display: inline-block;
-    padding: 4px 12px;
-    background: $pink-light;
-    color: $dark;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
+
+  .info-text {
+    flex: 1;
+
+    h4 {
+      font-family: $font-display;
+      font-size: 18px;
+      font-weight: 600;
+      color: $dark;
+      margin-bottom: 4px;
+    }
+
+    .influencer-name {
+      font-size: 14px;
+      color: lighten($dark, 40%);
+      margin-bottom: 8px;
+    }
+
+    .product-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: $pink-light;
+      color: $dark;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
   }
 }
