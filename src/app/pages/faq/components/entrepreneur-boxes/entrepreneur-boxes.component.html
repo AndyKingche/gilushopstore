@@ -1,0 +1,21 @@
+<div class="entrepreneur-boxes">
+  <div class="news-slider-wrapper">
+    <div class="news-slider">
+      <div class="news-card" *ngFor="let box of entrepreneurBoxes" [class.selected]="selectedBox?.id === box.id" (click)="selectBox(box)">
+        <div class="card-image">
+          <span class="badge" [style.background-color]="box.badgeColor">{{ box.badge }}</span>
+        </div>
+        <div class="card-desc">
+          <h4>{{ box.name }}</h4>
+          <p>{{ box.description }}</p>
+          <span class="price">{{ box.price }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <p>Selecciona una cajita emprendedora para contactarnos por WhatsApp y obtener más información.</p>
+    <button class="btn-primary" [disabled]="!selectedBox" (click)="contactWhatsApp()">Contactar por WhatsApp</button>
+  </div>
+</div>

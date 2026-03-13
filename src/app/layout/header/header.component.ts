@@ -18,7 +18,8 @@ export class HeaderComponent implements OnInit {
   navLinks = [
     { path: '/', label: 'HOME' },
     { path: '/shop', label: 'SHOP' },
-    { path: '/about', label: 'ABOUT US' }
+    { path: '/about', label: 'ABOUT US' },
+    { path: '/faq', label: 'FAQ' }
   ];
 
   constructor(

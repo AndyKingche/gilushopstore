@@ -1,0 +1,48 @@
+<div class="faq-page">
+  <section class="faq-section">
+    <div class="container">
+      <h2 class="section-title">Preguntas Frecuentes</h2>
+      <p class="section-subtitle">Resolvemos tus dudas</p>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" (click)="toggleCollapse(0)">
+            <span>¿Cuáles son las formas de pago y envíos?</span>
+            <svg class="arrow" [class.active]="isActive(0)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" [class.active]="isActive(0)">
+            <app-payment-shipping></app-payment-shipping>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" (click)="toggleCollapse(1)">
+            <span>¿Qué son los PLANES ACUMULATIVOS?</span>
+            <svg class="arrow" [class.active]="isActive(1)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" [class.active]="isActive(1)">
+            <app-accumulative-plans></app-accumulative-plans>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" (click)="toggleCollapse(2)">
+            <span>¿Qué son las CAJITAS EMPRENDEDORAS?</span>
+            <svg class="arrow" [class.active]="isActive(2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" [class.active]="isActive(2)">
+            <app-entrepreneur-boxes></app-entrepreneur-boxes>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-join-banner></app-join-banner>
+</div>
