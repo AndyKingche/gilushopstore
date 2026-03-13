@@ -135,3 +135,15 @@ input, select, textarea {
     transform: scale(1.05);
   }
 }
+
+// Scroll animations
+[appScrollAnimation] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+[appScrollAnimation].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
