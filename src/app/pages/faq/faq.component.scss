@@ -71,6 +71,9 @@
 
   &.active {
     max-height: 1000px;
-    padding: 0 24px 24px;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
