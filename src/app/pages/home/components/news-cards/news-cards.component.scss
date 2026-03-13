@@ -70,19 +70,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: $white;
-  
+  background: $dark;
+
   h4 {
     font-family: $font-display;
     font-size: 18px;
     font-weight: 600;
-    color: $dark;
+    color: $pink-primary;
     margin-bottom: 4px;
   }
-  
+
   p {
     font-size: 13px;
-    color: lighten($dark, 40%);
+    color: $white;
   }
 }
 
