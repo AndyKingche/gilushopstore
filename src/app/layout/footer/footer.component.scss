@@ -74,8 +74,13 @@
 
 // Social Column
 .social-column {
+  h4 {
+    text-align: center;
+  }
+
   .social-icons {
     display: flex;
+    justify-content: center;
     gap: 16px;
     
     a {
