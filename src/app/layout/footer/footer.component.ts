@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
   // Placeholder contact info - replace with actual data
-  address = 'Av. Principal 123, Quito, Ecuador';
+  address = 'Av. Quito y Atahualpa, Otavalo - Imbabura, Ecuador';
   whatsapp = '+593 99 123 4567';
-  email = 'contacto@gilu.com';
-  companyName = 'Studio Design';
+  email = 'customers@gilushop.store';
+  companyName = 'IZENSHY';
   
   socialLinks = [
     { name: 'Facebook', icon: 'facebook', url: 'https://facebook.com/gilu' },
-    { name: 'TikTok', icon: 'tiktok', url: 'https://tiktok.com/@gilu' },
-    { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/gilu' }
+    { name: 'TikTok', icon: 'tiktok', url: 'https://tiktok.com/@gilu.ec' },
+    { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/gilu.ec' }
   ];
 }
