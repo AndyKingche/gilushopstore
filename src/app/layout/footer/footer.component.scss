@@ -1,0 +1,156 @@
+@import 'variables';
+@import 'mixins';
+
+.footer {
+  background: $dark;
+  color: $white;
+  padding: 60px 24px 30px;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.footer-column {
+  h4 {
+    font-family: $font-display;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $white;
+  }
+}
+
+// Contact Column
+.contact-column {
+  .contact-list {
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: rgba($white, 0.85);
+      
+      svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: $pink-primary;
+      }
+    }
+  }
+  
+  .schedule {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba($white, 0.1);
+    
+    .schedule-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: $pink-primary;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    p {
+      font-size: 13px;
+      color: rgba($white, 0.7);
+      margin-bottom: 4px;
+    }
+  }
+}
+
+// Social Column
+.social-column {
+  .social-icons {
+    display: flex;
+    gap: 16px;
+    
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba($white, 0.1);
+      color: $white;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: $pink-primary;
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+// Brand Column
+.brand-column {
+  text-align: right;
+  
+  @include tablet {
+    text-align: center;
+  }
+  
+  .footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    
+    @include tablet {
+      align-items: center;
+    }
+    
+    .brand-title {
+      font-family: $font-display;
+      font-size: 32px;
+      font-weight: 600;
+      color: $white;
+      line-height: 1;
+    }
+    
+    .brand-tagline {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba($white, 0.6);
+    }
+  }
+  
+  .copyright {
+    font-size: 13px;
+    color: rgba($white, 0.7);
+    margin-bottom: 4px;
+  }
+  
+  .designed-by {
+    font-size: 12px;
+    color: rgba($white, 0.5);
+  }
+}
+
+// Responsive
+@include mobile {
+  .footer {
+    padding: 40px 16px 24px;
+  }
+  
+  .footer-column h4 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+}

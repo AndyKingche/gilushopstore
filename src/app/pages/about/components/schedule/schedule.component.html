@@ -1,0 +1,11 @@
+<div class="schedule-container">
+  <div class="schedule-row" 
+       *ngFor="let s of schedule"
+       [class.today]="s.dayNum === today">
+    <div class="day-name">
+      {{ s.day }}
+      <span class="today-badge" *ngIf="s.dayNum === today">Hoy 📍</span>
+    </div>
+    <div class="hours">{{ s.open }} — {{ s.close }}</div>
+  </div>
+</div>

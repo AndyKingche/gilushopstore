@@ -1,0 +1,18 @@
+<div class="search-filter-wrapper">
+  <div class="search-bar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input 
+      type="text" 
+      placeholder="Busca tu producto favorito 💄"
+      [formControl]="searchControl" />
+    <button class="clear-btn" *ngIf="searchControl.value" (click)="clear()">✕</button>
+  </div>
+  
+  <select [formControl]="categoryControl" class="category-select">
+    <option value="">Todas las categorías</option>
+    <option *ngFor="let cat of categories" [value]="cat">{{ getCategoryLabel(cat) }}</option>
+  </select>
+</div>

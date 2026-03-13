@@ -1,0 +1,25 @@
+<div class="news-slider-wrapper">
+  <button class="nav-arrow prev" (click)="scrollLeft()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="news-slider" #slider>
+    <div class="news-card" *ngFor="let card of newsCards">
+      <div class="card-image">
+        <span class="badge" [style.background-color]="card.badgeColor">{{ card.badge }}</span>
+      </div>
+      <div class="card-desc">
+        <h4>{{ card.title }}</h4>
+        <p>{{ card.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav-arrow next" (click)="scrollRight()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+</div>

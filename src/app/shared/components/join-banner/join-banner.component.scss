@@ -1,0 +1,82 @@
+@import 'variables';
+@import 'mixins';
+
+.join-banner {
+  background: linear-gradient(135deg, $pink-primary 0%, $pink-medium 100%);
+  padding: 60px 20px;
+  margin: 40px 0;
+  border-radius: 20px;
+  
+  .banner-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    color: $white;
+  }
+  
+  .banner-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    font-family: $font-display;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin-bottom: 24px;
+    opacity: 0.9;
+  }
+  
+  .btn-join {
+    background: $white;
+    color: $pink-primary;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-family: $font-primary;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .login-link {
+    display: block;
+    font-size: 14px;
+    opacity: 0.85;
+    
+    a {
+      color: $white;
+      text-decoration: underline;
+      font-weight: 600;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  @include mobile {
+    padding: 40px 16px;
+    
+    h3 {
+      font-size: 26px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
+}

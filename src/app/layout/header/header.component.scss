@@ -1,0 +1,285 @@
+@import 'variables';
+@import 'mixins';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: $white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+// Logo
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  
+  .brand-title {
+    font-family: $font-display;
+    font-size: 32px;
+    font-weight: 600;
+    color: $pink-primary;
+    line-height: 1;
+  }
+  
+  .brand-tagline {
+    font-size: 10px;
+    font-weight: 500;
+    color: $dark;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+
+// Navigation Desktop
+.nav-desktop {
+  display: flex;
+  gap: 32px;
+  
+  a {
+    font-size: 14px;
+    font-weight: 600;
+    color: $dark;
+    text-decoration: none;
+    position: relative;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: $pink-primary;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover,
+    &.active {
+      color: $pink-primary;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Header Actions
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+// Search Box
+.search-box {
+  display: flex;
+  align-items: center;
+  background: $gray-100;
+  border-radius: 25px;
+  padding: 8px 16px;
+  gap: 8px;
+  
+  input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    width: 180px;
+    outline: none;
+    
+    &::placeholder {
+      color: lighten($dark, 50%);
+    }
+  }
+  
+  .search-btn {
+    color: $pink-primary;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      color: darken($pink-primary, 10%);
+    }
+  }
+}
+
+// Cart Button
+.cart-btn {
+  position: relative;
+  color: $dark;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: $pink-primary;
+  }
+  
+  .cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: $pink-primary;
+    color: $white;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+  }
+}
+
+// Mobile Menu Toggle
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  cursor: pointer;
+  
+  span {
+    width: 24px;
+    height: 2px;
+    background: $dark;
+    transition: all 0.3s ease;
+  }
+  
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+  
+  @include mobile {
+    display: flex;
+  }
+}
+
+// Mobile Menu Overlay
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+// Mobile Navigation
+.nav-mobile {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100vh;
+  background: $white;
+  z-index: 999;
+  padding: 80px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: left 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  
+  &.open {
+    left: 0;
+  }
+  
+  a {
+    font-size: 16px;
+    font-weight: 600;
+    color: $dark;
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid $gray-300;
+    transition: color 0.3s ease;
+    
+    &:hover,
+    &.active {
+      color: $pink-primary;
+    }
+  }
+  
+  .mobile-search {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    
+    input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid $gray-300;
+      border-radius: 25px;
+      font-size: 14px;
+      outline: none;
+      
+      &:focus {
+        border-color: $pink-primary;
+      }
+    }
+    
+    button {
+      background: $pink-primary;
+      color: $white;
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+// Responsive
+@include mobile {
+  .header-container {
+    padding: 12px 16px;
+  }
+  
+  .logo .brand-title {
+    font-size: 26px;
+  }
+  
+  .header-actions {
+    gap: 8px;
+  }
+  
+  .search-box {
+    display: none;
+  }
+}

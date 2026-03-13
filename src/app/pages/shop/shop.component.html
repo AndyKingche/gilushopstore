@@ -1,0 +1,14 @@
+<div class="shop-page">
+  <div class="container">
+    <app-product-showcase (categorySelect)="onCategorySelect($event)"></app-product-showcase>
+    
+    <app-search-filter 
+      [categories]="categories"
+      (filterChange)="onSearchChange($event)">
+    </app-search-filter>
+    
+    <app-product-grid [products]="products$ | async"></app-product-grid>
+  </div>
+  
+  <app-join-banner></app-join-banner>
+</div>

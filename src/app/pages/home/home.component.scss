@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'mixins';
+
+.home-page {
+  width: 100%;
+}
+
+.news-section {
+  padding: 80px 0;
+  background: $white;
+}

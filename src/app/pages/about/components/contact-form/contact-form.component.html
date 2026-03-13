@@ -1,0 +1,60 @@
+<div class="contact-form-wrapper">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="contact-form">
+    <div class="form-group">
+      <label for="name">Nombre completo</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name"
+        [class.error]="f['name'].touched && f['name'].errors">
+      <span class="error-msg" *ngIf="f['name'].touched && f['name'].errors?.['required']">El nombre es requerido</span>
+      <span class="error-msg" *ngIf="f['name'].touched && f['name'].errors?.['minlength']">Mínimo 2 caracteres</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email"
+        [class.error]="f['email'].touched && f['email'].errors">
+      <span class="error-msg" *ngIf="f['email'].touched && f['email'].errors?.['required']">El correo es requerido</span>
+      <span class="error-msg" *ngIf="f['email'].touched && f['email'].errors?.['email']">Correo inválido</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Teléfono</label>
+      <input 
+        type="tel" 
+        id="phone" 
+        formControlName="phone"
+        [class.error]="f['phone'].touched && f['phone'].errors">
+      <span class="error-msg" *ngIf="f['phone'].touched && f['phone'].errors?.['required']">El teléfono es requerido</span>
+      <span class="error-msg" *ngIf="f['phone'].touched && f['phone'].errors?.['pattern']">Teléfono inválido</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="message">Mensaje</label>
+      <textarea 
+        id="message" 
+        formControlName="message"
+        rows="5"
+        [class.error]="f['message'].touched && f['message'].errors"></textarea>
+      <span class="error-msg" *ngIf="f['message'].touched && f['message'].errors?.['required']">El mensaje es requerido</span>
+      <span class="error-msg" *ngIf="f['message'].touched && f['message'].errors?.['minlength']">Mínimo 10 caracteres</span>
+    </div>
+    
+    <button type="submit" class="btn-submit">Enviar mensaje</button>
+  </form>
+  
+  <!-- Success Modal -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="onModalOk()"></div>
+  <div class="success-modal" *ngIf="showModal" @fadeIn>
+    <div class="modal-card">
+      <div class="check-icon">✓</div>
+      <h3>¡Mensaje enviado! 💕</h3>
+      <p>Gracias por escribirnos. Te contactamos muy pronto.</p>
+      <button (click)="onModalOk()" class="btn-primary">OK</button>
+    </div>
+  </div>
+</div>

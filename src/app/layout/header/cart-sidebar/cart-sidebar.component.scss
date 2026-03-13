@@ -1,0 +1,256 @@
+@import 'variables';
+@import 'mixins';
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  animation: fadeIn 0.3s ease;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  max-width: 100%;
+  height: 100vh;
+  background: $white;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid $gray-300;
+  
+  h3 {
+    font-family: $font-display;
+    font-size: 24px;
+    font-weight: 600;
+    color: $dark;
+  }
+  
+  .close-btn {
+    color: $dark;
+    padding: 4px;
+    display: flex;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: $pink-primary;
+    }
+  }
+}
+
+.cart-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: lighten($dark, 40%);
+  
+  svg {
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: $dark;
+  }
+  
+  span {
+    font-size: 14px;
+  }
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: $gray-100;
+  border-radius: 12px;
+  position: relative;
+  
+  .item-image {
+    flex-shrink: 0;
+    
+    .placeholder-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      @include pink-gradient-placeholder;
+    }
+  }
+  
+  .item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: $dark;
+      margin-bottom: 4px;
+    }
+    
+    .item-brand {
+      font-size: 12px;
+      color: lighten($dark, 40%);
+      margin-bottom: 8px;
+    }
+    
+    .item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    
+    .item-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: $pink-primary;
+    }
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: $white;
+    border-radius: 20px;
+    padding: 4px;
+    
+    button {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: $pink-light;
+      color: $dark;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: $pink-primary;
+        color: $white;
+      }
+    }
+    
+    span {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 20px;
+      text-align: center;
+    }
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: lighten($dark, 50%);
+    padding: 4px;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: #e74c3c;
+    }
+  }
+}
+
+.cart-footer {
+  padding: 20px 24px;
+  border-top: 1px solid $gray-300;
+  background: $white;
+}
+
+.cart-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    color: $dark;
+  }
+  
+  .total-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: $pink-primary;
+  }
+}
+
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  .btn-checkout {
+    @include button-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+  }
+  
+  .btn-clear {
+    background: transparent;
+    border: 1px solid $gray-300;
+    color: lighten($dark, 30%);
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+  }
+}
+
+// Responsive
+@include mobile {
+  .cart-sidebar {
+    width: 100%;
+  }
+}

@@ -1,0 +1,36 @@
+<div class="hero-carousel" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+  <div class="slides-container">
+    <div class="slide" 
+         *ngFor="let slide of slides; let i = index"
+         [class.active]="i === currentSlide"
+         [@slideAnimation]="i === currentSlide ? 'active' : 'inactive'">
+      <div class="slide-background"></div>
+      <div class="slide-content">
+        <h1 class="slide-title">{{ slide.title }}</h1>
+        <p class="slide-subtitle">{{ slide.subtitle }}</p>
+        <button class="slide-cta" (click)="onCtaClick(slide)">{{ slide.cta }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button class="nav-arrow prev" (click)="prevSlide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button class="nav-arrow next" (click)="nextSlide()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dots Navigation -->
+  <div class="dots-navigation">
+    <button *ngFor="let slide of slides; let i = index"
+            class="dot"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)">
+    </button>
+  </div>
+</div>

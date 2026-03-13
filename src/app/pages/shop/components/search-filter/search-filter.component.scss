@@ -1,0 +1,88 @@
+@import 'variables';
+@import 'mixins';
+
+.search-filter-wrapper {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.search-bar {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    color: lighten($dark, 40%);
+    pointer-events: none;
+  }
+  
+  input {
+    width: 100%;
+    padding: 14px 40px 14px 48px;
+    border: 1px solid $gray-300;
+    border-radius: 30px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $pink-primary;
+      box-shadow: 0 0 0 3px rgba($pink-primary, 0.1);
+    }
+    
+    &::placeholder {
+      color: lighten($dark, 50%);
+    }
+  }
+  
+  .clear-btn {
+    position: absolute;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: $gray-300;
+    color: $dark;
+    border: none;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: $pink-primary;
+      color: $white;
+    }
+  }
+}
+
+.category-select {
+  padding: 14px 20px;
+  border: 1px solid $gray-300;
+  border-radius: 30px;
+  font-size: 15px;
+  background: $white;
+  cursor: pointer;
+  outline: none;
+  min-width: 200px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: $pink-primary;
+    box-shadow: 0 0 0 3px rgba($pink-primary, 0.1);
+  }
+  
+  @include mobile {
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,141 @@
+@import 'variables';
+
+// Media Queries
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media (min-width: $breakpoint-wide) {
+    @content;
+  }
+}
+
+// Flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Card Styles
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(217, 95, 128, 0.12);
+}
+
+@mixin hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-hover;
+  }
+}
+
+// Button Styles
+@mixin button-primary {
+  background: $pink-primary;
+  color: $white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-family: $font-primary;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: darken($pink-primary, 8%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-hover;
+  }
+}
+
+@mixin button-secondary {
+  background: transparent;
+  color: $pink-primary;
+  border: 2px solid $pink-primary;
+  padding: 10px 26px;
+  border-radius: 25px;
+  font-family: $font-primary;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: $pink-primary;
+    color: $white;
+  }
+}
+
+// Text Styles
+@mixin heading-style {
+  font-family: $font-display;
+  font-weight: 600;
+  color: $dark;
+}
+
+@mixin body-text {
+  font-family: $font-primary;
+  color: $dark;
+  line-height: 1.6;
+}
+
+// Placeholder Gradient
+@mixin pink-gradient-placeholder {
+  background: linear-gradient(135deg, $pink-light 0%, $pink-medium 50%, $pink-primary 100%);
+}
+
+// Input Styles
+@mixin input-style {
+  border: 1px solid $gray-300;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-family: $font-primary;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: $pink-primary;
+    box-shadow: 0 0 0 3px rgba(217, 95, 128, 0.1);
+  }
+}
+
+// Badge Styles
+@mixin badge($bg-color) {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: $bg-color;
+  color: $white;
+}
