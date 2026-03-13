@@ -85,12 +85,12 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   getRandomImageUrl(category: string): string {
     const categoryImages: { [key: string]: string } = {
-      bases: 'https://images.pexels.com/photos/6954120/pexels-photo-6954120.jpeg',
+      bases: 'https://images.pexels.com/photos/4620838/pexels-photo-4620838.jpeg',
       labios: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg',
       primers: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg',
       oferta: '', // Leave as black
       skincare: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg',
-      ojos: 'https://images.pexels.com/photos/3762757/pexels-photo-3762757.jpeg'
+      ojos: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg'
     };
     return categoryImages[category] || '';
   }
