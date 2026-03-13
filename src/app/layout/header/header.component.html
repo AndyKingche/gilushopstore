@@ -7,21 +7,20 @@
       <span></span>
     </button>
 
-    <!-- Logo -->
-    <a routerLink="/" class="logo" (click)="closeMenu()">
-      <span class="brand-title">Gilú</span>
-      <span class="brand-tagline">Beauty Shop</span>
-    </a>
-
     <!-- Desktop Navigation -->
     <nav class="nav-desktop" *ngIf="!isMobile">
-      <a *ngFor="let link of navLinks" 
-         [routerLink]="link.path" 
+      <a *ngFor="let link of navLinks"
+         [routerLink]="link.path"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: link.path === '/'}">
         {{ link.label }}
       </a>
     </nav>
+
+    <!-- Logo -->
+    <a routerLink="/" class="logo" (click)="closeMenu()">
+      <img src="assets/image/gilu-update.png" alt="Gilú Beauty Shop" />
+    </a>
 
     <!-- Search & Cart -->
     <div class="header-actions">
