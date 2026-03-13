@@ -24,8 +24,14 @@
   background: $white;
   border-radius: 16px;
   overflow: hidden;
+  position: relative;
   @include card-shadow;
   @include hover-lift;
+
+  &:hover {
+    border: 3px solid rgba(184, 213, 217, 0.7);
+    box-shadow: 0 8px 30px rgba(217, 95, 128, 0.25), 0 0 40px rgba(184, 213, 217, 0.9);
+  }
 }
 
 .video-wrapper {
