@@ -41,7 +41,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   slides: Slide[] = [
     { 
       title: 'Tu tienda de Maquillaje Favorita', 
-      subtitle: '100% Original', 
+      subtitle: 'Productos 100% Originales', 
       cta: 'Ver colección',
       category: 'todo'
     },
@@ -158,7 +158,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   }
 
   onCtaClick(slide: Slide): void {
-    if (slide.category) {
+    if (slide.category && slide.category !== 'todo') {
       this.router.navigate(['/shop'], { queryParams: { cat: slide.category } });
     } else {
       this.router.navigate(['/shop']);
