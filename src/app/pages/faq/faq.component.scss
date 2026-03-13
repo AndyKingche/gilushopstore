@@ -37,10 +37,17 @@
   font-size: 18px;
   font-weight: 600;
   color: $dark;
-  transition: background-color $transition-fast;
+  transition: all $transition-fast;
 
   &:hover {
-    background: $gray-100;
+    background: $pink-primary;
+    color: $white;
+    box-shadow: 0 4px 20px rgba(217, 95, 128, 0.3);
+    transform: translateY(-2px);
+
+    span, .arrow {
+      color: $white;
+    }
   }
 
   span {
@@ -48,7 +55,7 @@
   }
 
   .arrow {
-    transition: transform $transition-fast;
+    transition: transform $transition-fast, color $transition-fast;
     margin-left: 16px;
 
     &.active {
