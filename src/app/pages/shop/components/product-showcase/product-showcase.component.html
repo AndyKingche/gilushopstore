@@ -6,8 +6,8 @@
   </button>
 
   <div class="showcase-card">
-    <div class="card-image">
-      <span class="category-name">{{ currentCategory.name }}</span>
+    <div class="card-image" [style.background-image]="'url(' + currentCategory.imageUrl + ')'">
+      <!-- <span class="category-name">{{ currentCategory.name }}</span> -->
     </div>
     <div class="card-info">
       <h3>{{ currentCategory.name }}</h3>

@@ -1,6 +1,6 @@
 <div class="shop-page">
+  <app-product-showcase (categorySelect)="onCategorySelect($event)"></app-product-showcase>
   <div class="container">
-    <app-product-showcase (categorySelect)="onCategorySelect($event)"></app-product-showcase>
     
     <app-search-filter 
       [categories]="categories"

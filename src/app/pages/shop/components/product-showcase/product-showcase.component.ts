@@ -5,6 +5,7 @@ interface CategoryShowcase {
   name: string;
   description: string;
   brands: string[];
+  imageUrl: string;
 }
 
 @Component({
@@ -21,37 +22,43 @@ export class ProductShowcaseComponent {
       id: 'bases',
       name: 'Bases',
       description: 'Cobertura perfecta para todo tipo de piel. Desde ligeras hasta alta cobertura.',
-      brands: ['Maybelline', 'e.l.f']
+      brands: ['Maybelline', 'e.l.f'],
+      imageUrl: 'https://images.pexels.com/photos/354962/pexels-photo-354962.jpeg'
     },
     {
       id: 'labios',
       name: 'Labios',
       description: 'Labiales, gloss y tinturas para labios irresistibles.',
-      brands: ['Maybelline', 'e.l.f']
+      brands: ['Maybelline', 'e.l.f'],
+      imageUrl: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg'
     },
     {
       id: 'rostro',
       name: 'Rostro',
       description: 'Blush, polvos y productos para un acabado perfecto.',
-      brands: ['Maybelline', 'e.l.f']
+      brands: ['Maybelline', 'e.l.f'],
+      imageUrl: 'https://images.pexels.com/photos/1047573/pexels-photo-1047573.jpeg'
     },
     {
       id: 'primers',
       name: 'Primers',
       description: 'Prepara tu piel para un maquillaje que dura todo el día.',
-      brands: ['Maybelline', 'e.l.f']
+      brands: ['Maybelline', 'e.l.f'],
+      imageUrl: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg'
     },
     {
       id: 'ojos',
       name: 'Ojos',
       description: 'Delineadores, rimeles y más para mirada expresiva.',
-      brands: ['Maybelline', 'e.l.f']
+      brands: ['Maybelline', 'e.l.f'],
+      imageUrl: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg'
     },
     {
       id: 'skincare',
       name: 'Skin Care',
       description: 'Rutina coreana para una piel radiante y saludable.',
-      brands: ['Coreano']
+      brands: ['Coreano'],
+      imageUrl: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg'
     }
   ];
 
