@@ -48,12 +48,11 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 12px;
-  
+
   .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
     display: inline-block;
     padding: 6px 14px;
     border-radius: 20px;

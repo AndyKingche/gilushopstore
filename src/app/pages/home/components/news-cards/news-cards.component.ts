@@ -36,7 +36,7 @@ export class NewsCardsComponent {
       badgeColor: '#e74c3c',
       title: 'Fijador One / Size',
       description: 'Agotado temporalmente 😢',
-      image: 'https://www.bloombeauty.com.mx/cdn/shop/files/DisenosdeProductos_720x.png?v=1753916305'
+      image: 'https://www.uhlala.mx/cdn/shop/files/ONE_SIZEbyPatrickStarrrOn_TilDawnMattifyingWaterproofSettingSprayBig_BittyDuo6.jpg?v=1759515268&width=1400'
     },
     {
       badge: '10% OFF',
