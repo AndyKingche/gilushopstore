@@ -33,6 +33,11 @@
   background: $white;
   @include card-shadow;
   @include hover-lift;
+
+  &:hover {
+    border: 2px solid rgba(184, 213, 217, 0.6);
+    box-shadow: 0 8px 30px rgba(217, 95, 128, 0.25), 0 0 30px rgba(184, 213, 217, 0.8);
+  }
 }
 
 .card-image {
