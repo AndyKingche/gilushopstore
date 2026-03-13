@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class FooterComponent {
   // Placeholder contact info - replace with actual data
   address = 'Av. Quito y Atahualpa, Otavalo - Imbabura, Ecuador';
-  whatsapp = '+593 99 123 4567';
+  whatsapp = '+593 98 290 1603';
   email = 'customers@gilushop.store';
   companyName = 'IZENSHY';
   
