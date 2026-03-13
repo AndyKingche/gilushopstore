@@ -4,11 +4,11 @@
          *ngFor="let slide of slides; let i = index"
          [class.active]="i === currentSlide"
          [@slideAnimation]="i === currentSlide ? 'active' : 'inactive'">
-      <div class="slide-background" [style.background-image]="'url(' + getRandomImageUrl(slide.category) + ')'"></div>
+       <div class="slide-background" [style.background-image]="'url(' + getRandomImageUrl(slide.category) + ')'" [style.transform]="'translateY(' + backgroundParallax + 'px)'"></div>
       <div class="slide-content">
-        <h1 class="slide-title">{{ slide.title }}</h1>
-        <p class="slide-subtitle">{{ slide.subtitle }}</p>
-        <button class="slide-cta" (click)="onCtaClick(slide)">{{ slide.cta }}</button>
+         <h1 class="slide-title" [style.transform]="'translateY(' + titleParallax + 'px)'">{{ slide.title }}</h1>
+         <p class="slide-subtitle" [style.transform]="'translateY(' + subtitleParallax + 'px)'">{{ slide.subtitle }}</p>
+         <button class="slide-cta" [style.transform]="'translateY(' + buttonParallax + 'px)'" (click)="onCtaClick(slide)">{{ slide.cta }}</button>
       </div>
     </div>
   </div>

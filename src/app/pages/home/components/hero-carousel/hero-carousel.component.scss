@@ -49,6 +49,7 @@
   background-position: center;
   background-color: black;
   opacity: 1;
+  will-change: transform;
 }
 
 .slide-content {
@@ -65,18 +66,21 @@
   font-weight: 600;
   margin-bottom: 16px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform;
 }
 
 .slide-subtitle {
   font-size: clamp(16px, 2vw, 22px);
   margin-bottom: 32px;
   opacity: 0.95;
+  will-change: transform;
 }
 
 .slide-cta {
   @include button-primary;
   font-size: 16px;
   padding: 14px 36px;
+  will-change: transform;
 }
 
 // Navigation Arrows

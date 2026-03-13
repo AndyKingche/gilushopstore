@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -81,6 +81,11 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   private intervalId: any;
   isPaused = false;
 
+  backgroundParallax = 0;
+  titleParallax = 0;
+  subtitleParallax = 0;
+  buttonParallax = 0;
+
   constructor(private router: Router) {}
 
   getRandomImageUrl(category: string): string {
@@ -135,6 +140,15 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   onMouseLeave(): void {
     this.isPaused = false;
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    this.backgroundParallax = scrollTop * 0.3;
+    this.titleParallax = scrollTop * -0.2;
+    this.subtitleParallax = scrollTop * -0.15;
+    this.buttonParallax = scrollTop * -0.1;
   }
 
   onCtaClick(slide: Slide): void {
