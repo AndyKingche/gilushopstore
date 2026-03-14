@@ -120,10 +120,10 @@ export class ProductShowcaseComponent {
     },
     {
       id: 'rostro',
-      name: 'Rostro',
+      name: 'Blush',
       description: 'Blush, polvos y productos para un acabado perfecto.',
       brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/1047573/pexels-photo-1047573.jpeg',
+      imageUrl: 'https://images.pexels.com/photos/12323050/pexels-photo-12323050.jpeg',
       iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Base del compacto -->
   <rect x="30" y="110" width="140" height="58" rx="14"
