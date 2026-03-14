@@ -3,7 +3,50 @@
   
   <section class="schedule-section">
     <div class="container">
-      <h2 class="section-title">Horarios de Atención</h2>
+      <div class="section-header">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="clock-icon">
+          <!-- Background -->
+          <circle cx="100" cy="100" r="96" fill="#0D0D0D"/>
+
+          <!-- Outer ring -->
+          <circle cx="100" cy="100" r="90" stroke="#D95F80" stroke-width="2.5"/>
+          <!-- Inner ring -->
+          <circle cx="100" cy="100" r="84" stroke="#D98BA7" stroke-width="0.8" opacity="0.4"/>
+
+          <!-- Major markers (12, 3, 6, 9) -->
+          <line x1="100" y1="18"  x2="100" y2="34"  stroke="#F2BBC9" stroke-width="3" stroke-linecap="round"/>
+          <line x1="182" y1="100" x2="166" y2="100" stroke="#F2BBC9" stroke-width="3" stroke-linecap="round"/>
+          <line x1="100" y1="182" x2="100" y2="166" stroke="#F2BBC9" stroke-width="3" stroke-linecap="round"/>
+          <line x1="18"  y1="100" x2="34"  y2="100" stroke="#F2BBC9" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Minor markers -->
+          <line x1="149" y1="29"  x2="143" y2="39"  stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="171" y1="51"  x2="161" y2="57"  stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="171" y1="149" x2="161" y2="143" stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="149" y1="171" x2="143" y2="161" stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="51"  y1="171" x2="57"  y2="161" stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="29"  y1="149" x2="39"  y2="143" stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="29"  y1="51"  x2="39"  y2="57"  stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <line x1="51"  y1="29"  x2="57"  y2="39"  stroke="#D98BA7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+
+          <!-- Hour hand → #F2BBC9 (pink-light) -->
+          <line id="hour-hand" x1="100" y1="100" x2="100" y2="55"
+                stroke="#F2BBC9" stroke-width="4.5" stroke-linecap="round"/>
+
+          <!-- Minute hand → #D95F80 (pink-primary) -->
+          <line id="minute-hand" x1="100" y1="100" x2="100" y2="38"
+                stroke="#D95F80" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Second hand → #B8D5D9 (blue-soft) -->
+          <line id="second-hand" x1="100" y1="112" x2="100" y2="32"
+                stroke="#B8D5D9" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- Center -->
+          <circle cx="100" cy="100" r="5.5" fill="#D95F80"/>
+          <circle cx="100" cy="100" r="2.5" fill="#F2BBC9"/>
+        </svg>
+        <h2 class="section-title">Horarios de Atención</h2>
+      </div>
       <p class="section-subtitle">Visítanos en nuestra tienda física</p>
       <app-schedule></app-schedule>
     </div>
@@ -12,7 +55,27 @@
   <section class="contact-section">
     <div class="container">
       <h2 class="section-title">Contáctanos</h2>
-      <p class="section-subtitle">Escríbenos y te respondemos pronto</p>
+      <div class="contact-header">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="envelope-icon">
+          <!-- Círculo exterior -->
+          <circle cx="100" cy="100" r="80" stroke="#e91e8c" stroke-width="4"/>
+
+          <!-- Cuerpo del sobre -->
+          <rect x="52" y="72" width="96" height="66" rx="5"
+                stroke="#e91e8c" stroke-width="4" stroke-linejoin="round"/>
+
+          <!-- Solapa en V -->
+          <polyline points="52,72 100,112 148,72"
+                    stroke="#e91e8c" stroke-width="4" stroke-linejoin="round"/>
+
+          <!-- Pliegues inferiores -->
+          <line x1="52" y1="138" x2="85" y2="108"
+                stroke="#e91e8c" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+          <line x1="148" y1="138" x2="115" y2="108"
+                stroke="#e91e8c" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <p class="section-subtitle">Escríbenos y te respondemos pronto</p>
+      </div>
       <app-contact-form></app-contact-form>
     </div>
   </section>

@@ -10,6 +10,20 @@
   padding: 80px 0;
   background: $pink-primary;
 
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .clock-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
   .section-title {
     color: $white;
     text-align: center;
@@ -30,6 +44,25 @@
 
 .contact-section {
   padding: 80px 0;
+
+  .contact-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .envelope-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .section-subtitle {
+    text-align: left;
+    margin-bottom: 0;
+  }
 }
 
 @include mobile {
@@ -39,6 +72,16 @@
   }
 
   .schedule-section {
+    .section-header {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .clock-icon {
+      width: 40px;
+      height: 40px;
+    }
+
     .section-title {
       font-size: 24px;
     }
