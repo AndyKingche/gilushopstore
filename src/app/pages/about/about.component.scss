@@ -6,7 +6,46 @@
   padding-bottom: 0px;
 }
 
-.schedule-section,
+.schedule-section {
+  padding: 80px 0;
+  background: $pink-primary;
+
+  .section-title {
+    color: $white;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: $font-display;
+  }
+
+  .section-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 40px;
+    font-weight: 500;
+  }
+}
+
 .contact-section {
   padding: 80px 0;
+}
+
+@include mobile {
+  .schedule-section,
+  .contact-section {
+    padding: 50px 0;
+  }
+
+  .schedule-section {
+    .section-title {
+      font-size: 24px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+  }
 }

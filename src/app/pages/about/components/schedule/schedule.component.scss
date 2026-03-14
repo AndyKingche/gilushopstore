@@ -17,30 +17,30 @@
   padding: 16px 24px;
   border-bottom: 1px solid $gray-100;
   transition: all 0.3s ease;
-  
+
   &:last-child {
     border-bottom: none;
   }
-  
+
   &:hover {
     background: $gray-100;
   }
-  
+
   &.today {
     background: $pink-light;
     border-left: 3px solid $pink-primary;
-    
+
     .day-name {
       font-weight: 700;
       color: $dark;
     }
-    
+
     .hours {
       font-weight: 600;
       color: $pink-primary;
     }
   }
-  
+
   .day-name {
     font-size: 15px;
     font-weight: 500;
@@ -48,7 +48,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    
+
     .today-badge {
       background: $pink-primary;
       color: $white;
@@ -58,9 +58,27 @@
       font-weight: 600;
     }
   }
-  
+
   .hours {
     font-size: 14px;
     color: lighten($dark, 30%);
+  }
+}
+
+@include mobile {
+  .schedule-row {
+    padding: 14px 16px;
+
+    .day-name {
+      font-size: 14px;
+
+      .today-badge {
+        font-size: 10px;
+      }
+    }
+
+    .hours {
+      font-size: 13px;
+    }
   }
 }
