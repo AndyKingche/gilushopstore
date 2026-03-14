@@ -65,6 +65,20 @@
     font-weight: 600;
     color: $dark;
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .category-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ::ng-deep svg {
+        width: 56px;
+        height: 56px;
+      }
+    }
   }
   
   p {

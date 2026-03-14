@@ -10,7 +10,10 @@
       <!-- <span class="category-name">{{ currentCategory.name }}</span> -->
     </div>
     <div class="card-info">
-      <h3>{{ currentCategory.name }}</h3>
+      <h3>
+        <span class="category-icon" *ngIf="currentCategory.iconSvg" [innerHTML]="getCategoryIcon(currentCategory.iconSvg)"></span>
+        {{ currentCategory.name }}
+      </h3>
       <p>{{ currentCategory.description }}</p>
       <div class="brands">
         <span class="brand-badge" *ngFor="let brand of currentCategory.brands">{{ brand }}</span>
