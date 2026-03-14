@@ -2,33 +2,33 @@ import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 interface CategoryShowcase {
-  id: string;
-  name: string;
-  description: string;
-  brands: string[];
-  imageUrl: string;
-  iconSvg?: string;
+      id: string;
+      name: string;
+      description: string;
+      brands: string[];
+      imageUrl: string;
+      iconSvg?: string;
 }
 
 @Component({
-  selector: 'app-product-showcase',
-  templateUrl: './product-showcase.component.html',
-  styleUrls: ['./product-showcase.component.scss']
+      selector: 'app-product-showcase',
+      templateUrl: './product-showcase.component.html',
+      styleUrls: ['./product-showcase.component.scss']
 })
 export class ProductShowcaseComponent {
-  @ViewChild('showcaseSlider') showcaseSlider!: ElementRef;
-  @Output() categorySelect = new EventEmitter<string>();
+      @ViewChild('showcaseSlider') showcaseSlider!: ElementRef;
+      @Output() categorySelect = new EventEmitter<string>();
 
-  constructor(private sanitizer: DomSanitizer) { }
+      constructor(private sanitizer: DomSanitizer) { }
 
-  categories: CategoryShowcase[] = [
-    {
-      id: 'bases',
-      name: 'Bases',
-      description: 'Cobertura perfecta para todo tipo de piel. Desde ligeras hasta alta cobertura.',
-      brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/354962/pexels-photo-354962.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      categories: CategoryShowcase[] = [
+            {
+                  id: 'bases',
+                  name: 'Bases',
+                  description: 'Cobertura perfecta para todo tipo de piel. Desde ligeras hasta alta cobertura.',
+                  brands: ['Maybelline', 'e.l.f', 'NYX', 'Loreal', 'Milani'],
+                  imageUrl: 'https://images.pexels.com/photos/354962/pexels-photo-354962.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Cuerpo del frasco -->
   <rect x="62" y="80" width="76" height="96" rx="12"
         stroke="#D95F80" stroke-width="5"/>
@@ -73,14 +73,14 @@ export class ProductShowcaseComponent {
   <path d="M70 95 C70 88 74 84 78 82"
         stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
 </svg>`
-    },
-    {
-      id: 'labios',
-      name: 'Labios',
-      description: 'Labiales, gloss y tinturas para labios irresistibles.',
-      brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            },
+            {
+                  id: 'labios',
+                  name: 'Labios',
+                  description: 'Labiales, gloss y tinturas para labios irresistibles.',
+                  brands: ['Maybelline', 'e.l.f', 'Loreal', 'NYX', 'Patrick Ta', 'Rhode', 'Rare Beauty', 'Dior', 'Fenty Beauty'],
+                  imageUrl: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Tubo inferior -->
   <rect x="72" y="130" width="56" height="88" rx="8"
         stroke="#D95F80" stroke-width="5"/>
@@ -117,14 +117,14 @@ export class ProductShowcaseComponent {
   <path d="M85 54 L85 88"
         stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
 </svg>`
-    },
-    {
-      id: 'rostro',
-      name: 'Blush',
-      description: 'Blush, polvos y productos para un acabado perfecto.',
-      brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/12323050/pexels-photo-12323050.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            },
+            {
+                  id: 'rostro',
+                  name: 'Blush',
+                  description: 'Blush, polvos y productos para un acabado perfecto.',
+                  brands: ['Maybelline', 'e.l.f', 'NYX', 'Rare Beauty', 'Rhode', 'Patrick Ta'],
+                  imageUrl: 'https://images.pexels.com/photos/12323050/pexels-photo-12323050.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Base del compacto -->
   <rect x="30" y="110" width="140" height="58" rx="14"
         stroke="#D95F80" stroke-width="5"/>
@@ -170,14 +170,14 @@ export class ProductShowcaseComponent {
   <ellipse cx="100" cy="92" rx="22" ry="10"
            stroke="#D95F80" stroke-width="2.5" opacity="0.5"/>
 </svg>`
-    },
-    {
-      id: 'primers',
-      name: 'Primers',
-      description: 'Prepara tu piel para un maquillaje que dura todo el día.',
-      brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            },
+            {
+                  id: 'primers',
+                  name: 'Primers',
+                  description: 'Prepara tu piel para un maquillaje que dura todo el día.',
+                  brands: ['Maybelline', 'e.l.f', 'NYX'],
+                  imageUrl: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Cuerpo del tubo -->
   <path d="M68 200 L68 100 C68 95 72 92 76 90 L100 82 L124 90 C128 92 132 95 132 100 L132 200 Z"
         stroke="#D95F80" stroke-width="5" stroke-linejoin="round"/>
@@ -216,14 +216,73 @@ export class ProductShowcaseComponent {
   <path d="M76 102 L76 195"
         stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
 </svg>`
-    },
-    {
-      id: 'ojos',
-      name: 'Ojos',
-      description: 'Delineadores, rimeles y más para mirada expresiva.',
-      brands: ['Maybelline', 'e.l.f'],
-      imageUrl: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            },
+            {
+                  id: 'corrector',
+                  name: 'Correctores',
+                  description: 'Correctores líquidos para cubrir imperfecciones y lograr un acabado uniforme en la piel.',
+                  brands: ['Maybelline', 'e.l.f', 'Loreal', 'LA Girl', 'Too Faced'],
+                  imageUrl: 'https://images.pexels.com/photos/7290095/pexels-photo-7290095.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Punta aplicador -->
+  <path d="M94 36 C94 28 100 22 100 22 C100 22 106 28 106 36 Z"
+        stroke="#D95F80" stroke-width="4.5" stroke-linejoin="round"/>
+  <rect x="95" y="36" width="10" height="16" rx="3"
+        stroke="#D95F80" stroke-width="4"/>
+
+  <!-- Gota de producto -->
+  <path d="M100 52 C100 52 98 57 98 59 C98 61.2 102 61.2 102 59 C102 57 100 52 100 52Z"
+        stroke="#D95F80" stroke-width="3" opacity="0.8"/>
+
+  <!-- Collar twist con knurls -->
+  <rect x="82" y="50" width="36" height="12" rx="5"
+        stroke="#b8426e" stroke-width="5"/>
+  <line x1="89" y1="50" x2="89" y2="62" stroke="#b8426e" stroke-width="2.5" opacity="0.6"/>
+  <line x1="95" y1="50" x2="95" y2="62" stroke="#b8426e" stroke-width="2.5" opacity="0.6"/>
+  <line x1="100" y1="50" x2="100" y2="62" stroke="#b8426e" stroke-width="2.5" opacity="0.6"/>
+  <line x1="105" y1="50" x2="105" y2="62" stroke="#b8426e" stroke-width="2.5" opacity="0.6"/>
+  <line x1="111" y1="50" x2="111" y2="62" stroke="#b8426e" stroke-width="2.5" opacity="0.6"/>
+
+  <!-- Cuerpo del tubo -->
+  <rect x="76" y="60" width="48" height="148" rx="12"
+        stroke="#D95F80" stroke-width="5"/>
+
+  <!-- Etiqueta -->
+  <rect x="80" y="84" width="40" height="80" rx="5"
+        stroke="#D95F80" stroke-width="3" opacity="0.7"/>
+  <path d="M85 96 C85 88 115 88 115 96"
+        stroke="#b8426e" stroke-width="2.5" opacity="0.7"/>
+  <line x1="88" y1="104" x2="112" y2="104"
+        stroke="#D95F80" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+  <line x1="90" y1="113" x2="110" y2="113"
+        stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <line x1="88" y1="130" x2="112" y2="130"
+        stroke="#b8426e" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Tonos / swatches -->
+  <circle cx="90"  cy="158" r="4" stroke="#D95F80" stroke-width="2.5" opacity="0.8"/>
+  <circle cx="100" cy="158" r="4" stroke="#D95F80" stroke-width="2.5" opacity="0.8"/>
+  <circle cx="110" cy="158" r="4" stroke="#b8426e" stroke-width="2.5" opacity="0.8"/>
+  <circle cx="90"  cy="158" r="2.5" fill="#D95F80" opacity="0.4"/>
+  <circle cx="100" cy="158" r="2.5" fill="#D95F80" opacity="0.4"/>
+  <circle cx="110" cy="158" r="2.5" fill="#b8426e" opacity="0.4"/>
+
+  <!-- Tapa inferior -->
+  <path d="M76 208 C76 218 124 218 124 208"
+        stroke="#D95F80" stroke-width="5"/>
+
+  <!-- Brillo -->
+  <path d="M84 68 L84 200"
+        stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+</svg>`
+            },
+            {
+                  id: 'ojos',
+                  name: 'Pestañas / Cejas',
+                  description: 'Delineadores, rimeles y más para mirada expresiva.',
+                  brands: ['Maybelline', 'e.l.f', 'Loreal', 'Prosa', 'Got 2b'],
+                  imageUrl: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Tubo -->
   <rect x="78" y="130" width="44" height="100" rx="10"
         stroke="#D95F80" stroke-width="5"/>
@@ -280,14 +339,14 @@ export class ProductShowcaseComponent {
     <circle cx="116" cy="45" r="2"/>
   </g>
 </svg>`
-    },
-    {
-      id: 'skincare',
-      name: 'Skin Care',
-      description: 'Rutina coreana para una piel radiante y saludable.',
-      brands: ['Coreano'],
-      imageUrl: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg',
-      iconSvg: `<svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            },
+            {
+                  id: 'skincare',
+                  name: 'Skin Care',
+                  description: 'Rutina coreana para una piel radiante y saludable.',
+                  brands: ['Skin 1004', 'Medicube', 'Anua', 'Seoul 1988', 'Mixsoon', 'e.l.f'],
+                  imageUrl: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg',
+                  iconSvg: `<svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Bulbo del gotero -->
   <ellipse cx="100" cy="30" rx="16" ry="12"
            stroke="#b8426e" stroke-width="5"/>
@@ -334,44 +393,44 @@ export class ProductShowcaseComponent {
   <path d="M82 100 L82 206"
         stroke="#D95F80" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
 </svg>`
-    }
-  ];
+            }
+      ];
 
-  currentIndex = 0;
+      currentIndex = 0;
 
-  prev(): void {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-    } else {
-      this.currentIndex = this.categories.length - 1;
-    }
-  }
+      prev(): void {
+            if (this.currentIndex > 0) {
+                  this.currentIndex--;
+            } else {
+                  this.currentIndex = this.categories.length - 1;
+            }
+      }
 
-  next(): void {
-    if (this.currentIndex < this.categories.length - 1) {
-      this.currentIndex++;
-    } else {
-      this.currentIndex = 0;
-    }
-  }
+      next(): void {
+            if (this.currentIndex < this.categories.length - 1) {
+                  this.currentIndex++;
+            } else {
+                  this.currentIndex = 0;
+            }
+      }
 
-  viewProducts(categoryId: string): void {
-    this.categorySelect.emit(categoryId);
-    // Scroll to products section
-    const productsSection = document.getElementById('products-section');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
+      viewProducts(categoryId: string): void {
+            this.categorySelect.emit(categoryId);
+            // Scroll to products section
+            const productsSection = document.getElementById('products-section');
+            if (productsSection) {
+                  productsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+      }
 
-  get currentCategory(): CategoryShowcase {
-    return this.categories[this.currentIndex];
-  }
+      get currentCategory(): CategoryShowcase {
+            return this.categories[this.currentIndex];
+      }
 
-  getCategoryIcon(iconSvg: string | undefined): SafeHtml {
-    if (iconSvg) {
-      return this.sanitizer.bypassSecurityTrustHtml(iconSvg);
-    }
-    return '';
-  }
+      getCategoryIcon(iconSvg: string | undefined): SafeHtml {
+            if (iconSvg) {
+                  return this.sanitizer.bypassSecurityTrustHtml(iconSvg);
+            }
+            return '';
+      }
 }
