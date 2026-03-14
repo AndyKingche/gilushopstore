@@ -6,6 +6,7 @@ import { ShopComponent } from './shop.component';
 import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { ProductGridComponent } from './components/product-grid/product-grid.component';
+import { BannerMarqueeComponent } from './components/banner-marquee/banner-marquee.component';
 
 const routes: Routes = [
   { path: '', component: ShopComponent }
@@ -16,7 +17,8 @@ const routes: Routes = [
     ShopComponent,
     ProductShowcaseComponent,
     SearchFilterComponent,
-    ProductGridComponent
+    ProductGridComponent,
+    BannerMarqueeComponent
   ],
   imports: [
     SharedModule,

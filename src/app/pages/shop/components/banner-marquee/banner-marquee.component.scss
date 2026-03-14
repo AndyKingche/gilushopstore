@@ -1,0 +1,93 @@
+@import 'variables';
+@import 'mixins';
+
+.banner-marquee {
+  background-color: $pink-primary;
+  overflow: hidden;
+  padding: 10px 0;
+  margin-bottom: 5px;
+}
+
+.marquee-container {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: max-content;
+}
+
+.banner-image {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  margin-right: 8px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.tulip-svg {
+  filter: none;
+  width: 28px;
+  height: 28px;
+}
+
+.banner-text {
+  color: $white;
+  font-family: $font-display;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 25px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@include mobile {
+  .banner-marquee {
+    padding: 8px 0;
+  }
+  
+  .marquee-container {
+    animation: marquee 28s linear infinite;
+  }
+
+  .banner-image {
+    height: 20px;
+    margin-right: 6px;
+  }
+  
+  .tulip-svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .banner-text {
+    font-size: 9px;
+    margin-right: 18px;
+  }
+}
