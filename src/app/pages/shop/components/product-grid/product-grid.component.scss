@@ -51,7 +51,13 @@
   overflow: hidden;
   @include card-shadow;
   @include hover-lift;
-  
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+
+  &.visible {
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
   .card-image {
     height: 200px;
     @include pink-gradient-placeholder;
@@ -61,7 +67,7 @@
     justify-content: space-between;
     padding: 12px;
   }
-  
+
   .brand-badge {
     background: #D95F80;
     color: $white;
@@ -71,7 +77,7 @@
     font-weight: 700;
     text-transform: uppercase;
   }
-  
+
   .out-badge {
     background: #e74c3c;
     color: $white;
@@ -81,11 +87,11 @@
     font-weight: 700;
     text-transform: uppercase;
   }
-  
+
   .card-body {
     padding: 16px;
   }
-  
+
   .card-category {
     font-size: 12px;
     color: $pink-primary;
@@ -93,7 +99,7 @@
     font-weight: 600;
     margin-bottom: 4px;
   }
-  
+
   .card-name {
     font-family: $font-display;
     font-size: 18px;
@@ -101,7 +107,7 @@
     color: $dark;
     margin-bottom: 8px;
   }
-  
+
   .card-desc {
     font-size: 13px;
     color: lighten($dark, 40%);
@@ -112,19 +118,19 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .card-price {
     font-size: 18px;
     font-weight: 700;
     color: $pink-primary;
   }
-  
+
   .btn-cart {
     display: flex;
     align-items: center;
@@ -137,15 +143,22 @@
     font-size: 13px;
     font-weight: 600;
     transition: all 0.3s ease;
-    
+
     &:hover:not(:disabled) {
       background: darken($pink-primary, 8%);
       transform: translateY(-2px);
     }
-    
+
     &:disabled {
       background: $gray-300;
       cursor: not-allowed;
     }
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

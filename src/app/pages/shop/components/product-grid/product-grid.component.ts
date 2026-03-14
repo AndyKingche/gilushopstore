@@ -17,4 +17,16 @@ export class ProductGridComponent {
       this.cartService.addItem(product);
     }
   }
+
+  trackByProduct(index: number, product: Product): any {
+    return product.id;
+  }
+
+  getAnimationDelay(index: number): string {
+    const columns = 4; // Adjust based on screen size if needed
+    const row = Math.floor(index / columns);
+    const col = index % columns;
+    const delay = (row * 200) + (col * 100); // Row delay 200ms, column delay 100ms
+    return `${delay}ms`;
+  }
 }
