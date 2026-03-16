@@ -1,8 +1,32 @@
 <div class="cart-overlay" *ngIf="isOpen" (click)="onClose()"></div>
 
 <aside class="cart-sidebar" [@slideAnimation]="isOpen ? 'open' : 'closed'">
+  
+  <!-- User info header when logged in -->
+  <div class="user-header" *ngIf="isLoggedIn">
+    <div class="user-info">
+      <div class="user-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div class="user-details">
+        <span class="welcome-text">Hola!</span>
+        <span class="user-name">{{ userName }}</span>
+      </div>
+    </div>
+    <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+    </button>
+  </div>
+
   <div class="cart-header">
-     <h3>Tu Carrito</h3>
+    <h3>Tu Carrito</h3>
     <button class="close-btn" (click)="onClose()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>

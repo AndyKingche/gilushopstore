@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment';
 
 interface User {
   userName: string;
@@ -18,7 +17,7 @@ interface User {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   user: User = {
     userName: '',
     userFirstname: '',
@@ -35,12 +34,26 @@ export class RegisterComponent {
   isLoading = false;
   errorMessage = '';
 
-  private apiUrl = environment.apiUrl;
+  // Use the correct backend port
+  private apiUrl = 'http://localhost:8084/api/v1/gessa/user';
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
+
+  ngOnInit(): void {
+    // Check if already logged in - redirect to home if so
+    this.checkAuth();
+  }
+
+  checkAuth(): void {
+    const token = localStorage.getItem('authToken');
+    const name = localStorage.getItem('userName');
+    if (token && name) {
+      this.router.navigate(['/']);
+    }
+  }
 
   onSubmit(): void {
     this.errorMessage = '';
@@ -59,17 +72,24 @@ export class RegisterComponent {
 
     this.isLoading = true;
 
+    // Use the exact fields from UserDTO
     const userData = {
-      ...this.user,
-      userRol: 'CLIENTE', // Default role
+      userName: this.user.userName,
+      userFirstname: this.user.userFirstname,
+      userLastname: this.user.userLastname,
+      userPassword: this.user.userPassword,
+      userGender: this.user.userGender,
+      userIdentification: this.user.userIdentification,
+      userRuc: this.user.userRuc || null,
+      userRol: 'CLIENTE',
       userStatus: true,
-      enterpriseId: null
+      enterpriseId: 1
     };
 
-    this.http.post(`${this.apiUrl}/auth/register`, userData).subscribe({
+    this.http.post(`${this.apiUrl}/create-user`, userData).subscribe({
       next: (response) => {
         this.isLoading = false;
-        // Redirect to login or home after successful registration
+        // Redirect to login after successful registration
         this.router.navigate(['/auth/login']);
       },
       error: (error) => {
@@ -78,6 +98,8 @@ export class RegisterComponent {
           this.errorMessage = 'El nombre de usuario ya está en uso';
         } else if (error.status === 400) {
           this.errorMessage = 'Por favor complete todos los campos requeridos';
+        } else if (error.status === 0) {
+          this.errorMessage = 'No se pudo conectar al servidor. Intente más tarde.';
         } else {
           this.errorMessage = 'Error al crear la cuenta. Intente de nuevo más tarde.';
         }

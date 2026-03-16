@@ -11,7 +11,73 @@
       <!-- Header with gradient -->
       <div class="card-header">
         <div class="header-shine"></div>
-        <span class="header-icon">💄</span>
+        <span class="header-icon">
+        <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .ts { font-family: monospace; font-size: 8px; fill: #D95F80; opacity: 0.7; }
+          </style>
+
+          <g transform="translate(100,100)">
+
+            <!-- outer ring dashed tech -->
+            <circle cx="0" cy="0" r="95" fill="none" stroke="#F2BBC9" stroke-width="1.2" stroke-dasharray="6 4"/>
+
+            <!-- tick marks -->
+            <g opacity="0.5">
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(45)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(90)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(135)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(180)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(225)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(270)"/>
+              <line x1="0" y1="-95" x2="0" y2="-88" stroke="#D95F80" stroke-width="2" stroke-linecap="round" transform="rotate(315)"/>
+            </g>
+
+            <!-- corner brackets -->
+            <path d="M-58 -72 L-72 -72 L-72 -58" fill="none" stroke="#D98BA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M58 -72 L72 -72 L72 -58"    fill="none" stroke="#D98BA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M-58 72 L-72 72 L-72 58"    fill="none" stroke="#D98BA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M58 72 L72 72 L72 58"       fill="none" stroke="#D98BA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- side scan lines -->
+            <line x1="-76" y1="0" x2="-60" y2="0" stroke="#B8D5D9" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="60"  y1="0" x2="76"  y2="0" stroke="#B8D5D9" stroke-width="1.2" stroke-linecap="round"/>
+
+            <!-- main circle -->
+            <circle cx="0" cy="0" r="76" fill="#F2BBC9"/>
+            <!-- inner circle -->
+            <circle cx="0" cy="0" r="62" fill="#D95F80"/>
+
+            <!-- subtle inner rings -->
+            <circle cx="0" cy="0" r="62" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.15"/>
+            <circle cx="0" cy="0" r="42" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.10"/>
+
+            <!-- user head -->
+            <circle cx="0" cy="-18" r="19" fill="#FFFFFF"/>
+            <!-- user body -->
+            <path d="M-27 24 Q-27 2 0 2 Q27 2 27 24 Z" fill="#FFFFFF"/>
+
+            <!-- plus badge -->
+            <circle cx="48" cy="48" r="22" fill="#F2BBC9" stroke="#D98BA7" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <circle cx="48" cy="48" r="16" fill="#0D0D0D"/>
+            <rect x="41" y="46" width="14" height="4" rx="2" fill="#F2BBC9"/>
+            <rect x="46" y="41" width="4" height="14" rx="2" fill="#F2BBC9"/>
+
+            <!-- orbital dots -->
+            <circle cx="0"   cy="-76" r="3.5" fill="#B8D5D9"/>
+            <circle cx="76"  cy="0"   r="2.5" fill="#D98BA7"/>
+            <circle cx="-76" cy="0"   r="2.5" fill="#D98BA7"/>
+            <circle cx="0"   cy="76"  r="3.5" fill="#B8D5D9"/>
+
+            <!-- mono labels -->
+            <text x="-82" y="-50" class="ts" text-anchor="end">USR</text>
+            <text x="-82" y="-40" class="ts" text-anchor="end">NEW</text>
+            <text x="82"  y="-50" class="ts" text-anchor="start">01</text>
+            <text x="82"  y="-40" class="ts" text-anchor="start">FN</text>
+          </g>
+        </svg>
+      </span>
         <h2>Crear Cuenta</h2>
         <p>Únete a la familia Gilú Shop</p>
       </div>
@@ -21,20 +87,25 @@
         <div class="form-group">
           <label for="userName">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            Nombre de usuario
+            Email
           </label>
           <input 
-            type="text" 
+            type="email" 
             id="userName" 
             name="userName" 
             [(ngModel)]="user.userName" 
             required
+            email
             placeholder="Tu nombre de usuario"
             class="form-input"
+            #emailInput="ngModel"
           >
+          <span class="validation-error" *ngIf="emailInput.invalid && emailInput.touched">
+            Por favor ingresa un correo válido
+          </span>
         </div>
 
         <!-- Name fields row -->

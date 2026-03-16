@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { CartItem } from '../../../core/models/cart-item.model';
 import { Observable } from 'rxjs';
@@ -39,14 +40,33 @@ import { Observable } from 'rxjs';
     ])
   ]
 })
-export class CartSidebarComponent implements OnInit {
-  @Input() isOpen = false;
+export class CartSidebarComponent implements OnInit, OnChanges {
+  private _isOpen = false;
+  
+  @Input()
+  get isOpen(): boolean {
+    return this._isOpen;
+  }
+  set isOpen(value: boolean) {
+    this._isOpen = value;
+    if (value) {
+      this.checkAuth();
+      this.cdr.detectChanges();
+    }
+  }
+
   @Output() close = new EventEmitter<void>();
 
   cartItems$: Observable<CartItem[]>;
   total = 0;
+  isLoggedIn = false;
+  userName = '';
 
-  constructor(private cartService: CartService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private cartService: CartService,
+    private router: Router
+  ) {
     this.cartItems$ = this.cartService.items$;
   }
 
@@ -54,6 +74,28 @@ export class CartSidebarComponent implements OnInit {
     this.cartService.items$.subscribe(items => {
       this.total = items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isOpen'] && changes['isOpen'].currentValue === true) {
+      this.checkAuth();
+      this.cdr.detectChanges();
+    }
+  }
+
+  checkAuth(): void {
+    const token = localStorage.getItem('authToken');
+    const name = localStorage.getItem('userName');
+    this.isLoggedIn = !!token;
+    this.userName = name || '';
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userName');
+    this.isLoggedIn = false;
+    this.userName = '';
+    this.router.navigate(['/']);
   }
 
   onClose(): void {

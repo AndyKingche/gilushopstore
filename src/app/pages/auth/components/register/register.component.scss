@@ -129,12 +129,18 @@
   }
 
   .header-icon {
-    font-size: 48px;
     display: block;
     margin-bottom: 12px;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     position: relative;
     z-index: 1;
+    
+    svg {
+      width: 80px;
+      height: 80px;
+      display: block;
+      margin: 0 auto;
+    }
   }
 
   h2 {
@@ -220,6 +226,10 @@
   &:hover:not(:focus) {
     border-color: $pink-medium;
   }
+
+  &.ng-invalid.ng-touched {
+    border-color: #e74c3c;
+  }
 }
 
 .form-select {
@@ -274,6 +284,13 @@
   svg {
     flex-shrink: 0;
   }
+}
+
+.validation-error {
+  display: block;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 6px;
 }
 
 .btn-submit {

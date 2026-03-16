@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment';
 
-interface LoginCredentials {
-  userName: string;
-  userPassword: string;
+interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+interface LoginResponse {
+  jwttoken: string;
+  nombreCompleto: string;
 }
 
 @Component({
@@ -13,10 +17,10 @@ interface LoginCredentials {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  credentials: LoginCredentials = {
-    userName: '',
-    userPassword: ''
+export class LoginComponent implements OnInit {
+  credentials: LoginRequest = {
+    username: '',
+    password: ''
   };
 
   rememberMe = false;
@@ -24,34 +28,51 @@ export class LoginComponent {
   isLoading = false;
   errorMessage = '';
 
-  private apiUrl = environment.apiUrl;
+  // Use the correct backend port
+  private apiUrl = 'http://localhost:8084/api';
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    // Check if already logged in - redirect to home if so
+    this.checkAuth();
+  }
+
+  checkAuth(): void {
+    const token = localStorage.getItem('authToken');
+    const name = localStorage.getItem('userName');
+    if (token && name) {
+      this.router.navigate(['/']);
+    }
+  }
+
   onSubmit(): void {
     this.errorMessage = '';
 
-    if (!this.credentials.userName || !this.credentials.userPassword) {
+    if (!this.credentials.username || !this.credentials.password) {
       this.errorMessage = 'Por favor complete todos los campos';
       return;
     }
 
     this.isLoading = true;
 
-    this.http.post<any>(`${this.apiUrl}/auth/login`, this.credentials).subscribe({
+    const loginData = {
+      username: this.credentials.username,
+      password: this.credentials.password
+    };
+
+    this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData).subscribe({
       next: (response) => {
         this.isLoading = false;
         
-        // Store token (you might want to use a more secure storage)
-        if (response.token) {
-          localStorage.setItem('authToken', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
-        }
+        // Store token and user name in localStorage
+        localStorage.setItem('authToken', response.jwttoken);
+        localStorage.setItem('userName', response.nombreCompleto);
         
-        // Redirect to home or previous page
+        // Redirect to home after successful login
         this.router.navigate(['/']);
       },
       error: (error) => {

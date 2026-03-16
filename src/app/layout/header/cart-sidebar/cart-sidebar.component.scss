@@ -26,6 +26,67 @@
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
 }
 
+// User header when logged in
+.user-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, $pink-primary 0%, $pink-medium 100%);
+  color: $white;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba($white, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba($white, 0.3);
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+
+      .welcome-text {
+        font-size: 12px;
+        opacity: 0.85;
+      }
+
+      .user-name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .btn-logout {
+    background: rgba($white, 0.15);
+    border: none;
+    color: $white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba($white, 0.25);
+      transform: scale(1.05);
+    }
+  }
+}
+
 .cart-header {
   display: flex;
   align-items: center;
