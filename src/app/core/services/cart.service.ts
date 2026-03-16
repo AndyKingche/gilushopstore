@@ -74,7 +74,7 @@ export class CartService {
     );
     const total = this.getTotal();
     
-    const message = `Hola Gilú! 💕 Me gustaría hacer el siguiente pedido:\n\n${lines.join('\n')}\n\nTotal: $${total.toFixed(2)}\n\nQuedo atenta, gracias!`;
+    const message = `Hola Gilú! Me gustaría hacer el siguiente pedido:\n\n${lines.join('\n')}\n\nTotal: $${total.toFixed(2)}\n\nQuedo atenta, gracias!`;
     
     return `https://wa.me/${this.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
