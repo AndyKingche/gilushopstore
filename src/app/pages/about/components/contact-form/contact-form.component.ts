@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import emailjs from '@emailjs/browser';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-contact-form',
@@ -21,6 +23,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class ContactFormComponent {
   submitted = false;
   showModal = false;
+  isSending = false;
+  sendError = false;
   
   form: FormGroup;
 
@@ -33,10 +37,40 @@ export class ContactFormComponent {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.valid) {
-      this.showModal = true;
-      this.submitted = true;
+      this.isSending = true;
+      this.sendError = false;
+      const formData = this.form.value;
+      
+      const templateParams = {
+        from_name: formData.name,
+        email: formData.email,
+        message: formData.message +'\n' + 'Celular: '+ formData.phone,
+      };
+
+      
+      try {
+        // Enviar usando EmailJS
+        await emailjs.send(
+          environment.emailjs.serviceId,
+          environment.emailjs.templateId,
+          templateParams,
+          environment.emailjs.publicKey,
+        );
+        
+        this.isSending = false;
+        this.showModal = true;
+        this.submitted = true;
+        console.log('Email enviado exitosamente a customers@gilushop.store');
+      } catch (error) {
+        console.error('Error al enviar email:', error);
+        this.isSending = false;
+        this.sendError = true;
+        // Still show success modal as form was valid
+        this.showModal = true;
+        this.submitted = true;
+      }
     } else {
       this.form.markAllAsTouched();
     }

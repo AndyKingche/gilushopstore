@@ -21,6 +21,8 @@ Thumbs.db
 # Environment files
 .env
 .env.local
+src/environments/environment.prod.ts
+# Keep environment.ts (template), exclude environment.prod.ts (credentials)
 
 # Angular cache
 .angular/

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AboutComponent } from './about.component';
 import { BrandStoryComponent } from './components/brand-story/brand-story.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   ],
   imports: [
     SharedModule,
+    HttpClientModule,
     RouterModule.forChild(routes)
   ]
 })

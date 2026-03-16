@@ -44,7 +44,10 @@
       <span class="error-msg" *ngIf="f['message'].touched && f['message'].errors?.['minlength']">Mínimo 10 caracteres</span>
     </div>
     
-    <button type="submit" class="btn-submit">Enviar mensaje</button>
+    <button type="submit" class="btn-submit" [disabled]="isSending">
+      <span *ngIf="!isSending">Enviar mensaje</span>
+      <span *ngIf="isSending">Enviando...</span>
+    </button>
   </form>
   
   <!-- Success Modal -->
