@@ -8,7 +8,7 @@ import { Product } from '../models/product.model';
 })
 export class CartService {
   private cartItems$ = new BehaviorSubject<CartItem[]>([]);
-  private readonly WHATSAPP_NUMBER = '+593XXXXXXXXX'; // Replace with actual number
+  private readonly WHATSAPP_NUMBER = '+593982901603'; // Replace with actual number
 
   items$: Observable<CartItem[]> = this.cartItems$.asObservable();
 

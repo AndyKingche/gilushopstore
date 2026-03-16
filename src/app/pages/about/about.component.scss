@@ -45,6 +45,30 @@
 .contact-section {
   padding: 80px 0;
 
+  .contact-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .badge-icon {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    color: $pink-primary;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: $font-display;
+    line-height: 1.2;
+  }
+
   .contact-header {
     display: flex;
     align-items: center;
@@ -89,6 +113,22 @@
     .section-subtitle {
       font-size: 14px;
       margin-bottom: 30px;
+    }
+  }
+
+  .contact-section {
+    .contact-title-wrapper {
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .badge-icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .section-title {
+      font-size: 24px;
     }
   }
 }

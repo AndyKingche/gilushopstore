@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./brand-story.component.scss']
 })
 export class BrandStoryComponent {
-  mission = '"Acercarte el mejor maquillaje original de media y alta gama al mejor precio, porque mereces sentirte hermosa sin gastar de más."';
+  mission = '"Nuestra misión es inspirarte a brillar con confianza, ofreciéndote maquillaje original que realce tu belleza natural."';
 }
