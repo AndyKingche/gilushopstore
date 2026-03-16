@@ -1,4 +1,11 @@
 <div class="schedule-container">
+  <!-- Status indicator -->
+  <div class="store-status" [ngClass]="getStatusClass()">
+    <span class="status-dot"></span>
+    <span class="status-text">{{ getStatusText() }}</span>
+    <span class="current-time">{{ currentTime }}</span>
+  </div>
+  
   <div class="schedule-row" 
        *ngFor="let s of schedule"
        [class.today]="s.dayNum === today">

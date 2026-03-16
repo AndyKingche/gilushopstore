@@ -8,6 +8,80 @@
   border-radius: 16px;
   overflow: hidden;
   @include card-shadow;
+  
+  // Efecto parallax de profundidad
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 20px 40px rgba(217, 95, 128, 0.2),
+      0 8px 16px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(217, 95, 128, 0.1);
+  }
+}
+
+// Status indicator
+.store-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, $gray-100 0%, $gray-300 100%);
+  border-bottom: 1px solid $gray-300;
+  
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: statusPulse 1.5s infinite;
+  }
+  
+  .status-text {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .current-time {
+    font-size: 14px;
+    font-weight: 500;
+    color: lighten($dark, 30%);
+    margin-left: 8px;
+    padding-left: 12px;
+    border-left: 1px solid $gray-400;
+  }
+  
+  &.status-open {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.05) 100%);
+    border-bottom-color: rgba(46, 204, 113, 0.3);
+    
+    .status-dot {
+      background: #27ae60;
+      box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+    }
+    
+    .status-text {
+      color: #27ae60;
+    }
+  }
+  
+  &.status-closed {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(231, 76, 60, 0.05) 100%);
+    border-bottom-color: rgba(231, 76, 60, 0.3);
+    
+    .status-dot {
+      background: #e74c3c;
+      box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+    
+    .status-text {
+      color: #e74c3c;
+    }
+  }
 }
 
 .schedule-row {
@@ -17,18 +91,53 @@
   padding: 16px 24px;
   border-bottom: 1px solid $gray-100;
   transition: all 0.3s ease;
-
+  position: relative;
+  
+  // Efecto de profundidad por fila
+  transform: translateZ(0);
+  
   &:last-child {
     border-bottom: none;
   }
 
+  // Efecto hover con movimiento sutil (parallax)
   &:hover {
-    background: $gray-100;
+    background: linear-gradient(90deg, rgba(242, 187, 201, 0.15) 0%, rgba(242, 187, 201, 0.05) 100%);
+    transform: translateX(8px) translateZ(10px);
+    box-shadow: 
+      inset 4px 0 0 0 $pink-primary,
+      -4px 0 12px rgba(217, 95, 128, 0.1);
+    
+    .day-name {
+      color: $pink-primary;
+    }
+    
+    .hours {
+      color: $pink-primary;
+    }
   }
 
   &.today {
-    background: $pink-light;
-    border-left: 3px solid $pink-primary;
+    background: linear-gradient(135deg, $pink-light 0%, rgba(242, 187, 201, 0.6) 100%);
+    border-left: none;
+    position: relative;
+    
+    // Profundidad extra para el día de hoy
+    transform: translateZ(5px);
+    box-shadow: 
+      inset 4px 0 0 0 $pink-primary,
+      0 4px 12px rgba(217, 95, 128, 0.15);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: $pink-primary;
+      border-radius: 4px 0 0 4px;
+    }
 
     .day-name {
       font-weight: 700;
@@ -48,6 +157,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: color 0.3s ease;
 
     .today-badge {
       background: $pink-primary;
@@ -56,6 +166,7 @@
       border-radius: 10px;
       font-size: 11px;
       font-weight: 600;
+      animation: pulse 2s infinite;
     }
   }
 
@@ -80,5 +191,34 @@
     .hours {
       font-size: 13px;
     }
+  }
+}
+
+// Animación pulse para el badge "Hoy"
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 95, 128, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(217, 95, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 95, 128, 0);
+  }
+}
+
+// Animación para el estado de la tienda
+@keyframes statusPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+  }
+  50% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
   }
 }

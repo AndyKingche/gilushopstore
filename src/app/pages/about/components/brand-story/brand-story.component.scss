@@ -4,6 +4,29 @@
 .brand-story {
   padding: 80px 0;
   background: $white;
+  
+  // Animaciones de entrada
+  .story-text {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .story-image {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+    
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 .story-grid {
