@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+// @ts-ignore - EmailJS types issue
 import emailjs from '@emailjs/browser';
 import { environment } from '../../../../../environments/environment';
 
