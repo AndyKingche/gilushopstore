@@ -11,11 +11,33 @@ import { ProductsService } from '../../../../core/services/products.service';
 })
 export class ProductGridComponent implements OnInit, OnDestroy {
   @Input() initialLoad: boolean = true;
+  @Input() set category(categoryId: number | null) {
+    this._categoryId = categoryId;
+    this._searchTerm = null;
+    if (categoryId) {
+      this.loadProductsByCategory(categoryId);
+    } else if (!this._searchTerm) {
+      this.loadInitialProducts();
+    }
+  }
+  
+  @Input() set searchTerm(searchTerm: string | null) {
+    this._searchTerm = searchTerm;
+    this._categoryId = null;
+    if (searchTerm) {
+      this.loadProductsBySearch(searchTerm);
+    } else if (!this._categoryId) {
+      this.loadInitialProducts();
+    }
+  }
+  
   @Output() openLogin = new EventEmitter<void>();
 
   // Expose Math to template
   Math = Math;
 
+  private _categoryId: number | null = null;
+  private _searchTerm: string | null = null;
   products: Product[] = [];
   
   // Pagination state
@@ -91,6 +113,86 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     return;
   }
 
+  // Load products filtered by category
+  private loadProductsByCategory(categoryId: number): void {
+    this.isLoading = true;
+    this.offset = 0;
+    this.currentPage = 1;
+    
+    // First, get the total count for this category
+    this.productsService.getOnlineStoreProductsByCategoryCount(categoryId).subscribe({
+      next: (count) => {
+        this.totalCount = count;
+        this.totalPages = Math.ceil(count / this.pageSize);
+        this.hasMore = count > 0;
+        this.updateVisiblePages();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error getting category product count:', err);
+        this.isLoading = false;
+      }
+    });
+
+    // Load first batch of products for this category
+    this.productsService.getOnlineStoreProductsByCategory(categoryId, this.pageSize, 0).subscribe({
+      next: (products) => {
+        this.products = products;
+        this.offset = products.length;
+        this.isLoading = false;
+        
+        // Check if there are more products to load
+        this.hasMore = this.offset < this.totalCount;
+        
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading category products:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Load products filtered by search term
+  private loadProductsBySearch(searchTerm: string): void {
+    this.isLoading = true;
+    this.offset = 0;
+    this.currentPage = 1;
+    
+    // First, get the total count for this search
+    this.productsService.searchProductsCount(searchTerm).subscribe({
+      next: (count) => {
+        this.totalCount = count;
+        this.totalPages = Math.ceil(count / this.pageSize);
+        this.hasMore = count > 0;
+        this.updateVisiblePages();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error getting search product count:', err);
+        this.isLoading = false;
+      }
+    });
+
+    // Load first batch of products for this search
+    this.productsService.searchProducts(searchTerm, this.pageSize, 0).subscribe({
+      next: (products) => {
+        this.products = products;
+        this.offset = products.length;
+        this.isLoading = false;
+        
+        // Check if there are more products to load
+        this.hasMore = this.offset < this.totalCount;
+        
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading search products:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
   // Go to specific page
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages || page === this.currentPage || this.isLoading) return;
@@ -99,27 +201,70 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     this.currentPage = page;
     this.updateVisiblePages();
     
-    // Calculate offset: page 1 = 0, page 2 = 4, page 3 = 8, etc.
+    // Calculate offset: page 1 = 0, page 2 = 16, page 3 = 32, etc.
     const offset = (page - 1) * this.pageSize;
     
-    this.productsService.getOnlineStoreProducts(this.pageSize, offset).subscribe({
-      next: (products) => {
-        this.products = products;
-        this.isLoading = false;
-        
-        // Scroll to top of products section
-        const productsSection = document.getElementById('products-section');
-        if (productsSection) {
-          productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (this._searchTerm) {
+      // Load by search term
+      this.productsService.searchProducts(this._searchTerm, this.pageSize, offset).subscribe({
+        next: (products) => {
+          this.products = products;
+          this.isLoading = false;
+          
+          // Scroll to top of products section
+          const productsSection = document.getElementById('products-section');
+          if (productsSection) {
+            productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading page:', err);
+          this.isLoading = false;
         }
-        
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error loading page:', err);
-        this.isLoading = false;
-      }
-    });
+      });
+    } else if (this._categoryId) {
+      // Load by category
+      this.productsService.getOnlineStoreProductsByCategory(this._categoryId, this.pageSize, offset).subscribe({
+        next: (products) => {
+          this.products = products;
+          this.isLoading = false;
+          
+          // Scroll to top of products section
+          const productsSection = document.getElementById('products-section');
+          if (productsSection) {
+            productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading page:', err);
+          this.isLoading = false;
+        }
+      });
+    } else {
+      // Load all products
+      this.productsService.getOnlineStoreProducts(this.pageSize, offset).subscribe({
+        next: (products) => {
+          this.products = products;
+          this.isLoading = false;
+          
+          // Scroll to top of products section
+          const productsSection = document.getElementById('products-section');
+          if (productsSection) {
+            productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading page:', err);
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   nextPage(): void {
@@ -170,6 +315,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     this.hasMore = true;
     this.currentPage = 1;
     this.totalPages = 0;
+    this._categoryId = null;
+    this._searchTerm = null;
   }
 
   // Initialize with total count (called from parent)

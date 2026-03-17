@@ -11,7 +11,8 @@ import { Category } from '../../core/models/category.model';
 export class ShopComponent implements OnInit {
   categories: Category[] = [];
   searchQuery = '';
-  selectedCategory = '';
+  selectedCategory: number | null = null;
+  searchTerm: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,17 +35,27 @@ export class ShopComponent implements OnInit {
         this.searchQuery = params['q'];
       }
       if (params['cat']) {
-        this.selectedCategory = params['cat'];
+        this.selectedCategory = parseInt(params['cat'], 10);
       }
     });
   }
 
-  onSearchChange(event: { query: string; category: string }): void {
+  onSearchQueryChange(event: { query: string; category: string }): void {
     this.searchQuery = event.query;
-    this.selectedCategory = event.category;
   }
 
-  onCategorySelect(category: string): void {
-    this.selectedCategory = category;
+  onCategoryChange(categoryId: number | null): void {
+    this.selectedCategory = categoryId;
+    this.searchTerm = null;
+  }
+
+  onSearchChange(searchTerm: string | null): void {
+    this.searchTerm = searchTerm;
+    this.selectedCategory = null;
+  }
+
+  onCategorySelect(categoryId: number): void {
+    this.selectedCategory = categoryId;
+    this.searchTerm = null;
   }
 }

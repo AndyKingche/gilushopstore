@@ -64,6 +64,28 @@
       color: $white;
     }
   }
+  
+  .search-btn {
+    position: absolute;
+    right: 48px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: $pink-primary;
+    color: $white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    
+    &:hover {
+      background: darken($pink-primary, 10%);
+      transform: scale(1.1);
+    }
+  }
 }
 
 .category-select {

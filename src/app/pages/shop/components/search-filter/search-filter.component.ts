@@ -12,9 +12,12 @@ import { Category } from '../../../../core/models/category.model';
 export class SearchFilterComponent implements OnInit {
   @Input() categories: Category[] = [];
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
+  @Output() categoryChange = new EventEmitter<number | null>();
+  @Output() searchChange = new EventEmitter<string | null>();
 
   searchControl = new FormControl('');
   categoryControl = new FormControl('');
+  private searchQuery = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,12 +36,20 @@ export class SearchFilterComponent implements OnInit {
 
     this.searchControl.valueChanges.pipe(
       debounceTime(300)
-    ).subscribe(() => {
-      this.emitFilter();
+    ).subscribe((value) => {
+      this.searchQuery = value || '';
     });
 
-    this.categoryControl.valueChanges.subscribe(() => {
+    this.categoryControl.valueChanges.subscribe((value) => {
       this.emitFilter();
+      
+      // Emit category change for filtering
+      const categoryId = value ? parseInt(value, 10) : null;
+      if (categoryId && !isNaN(categoryId)) {
+        this.categoryChange.emit(categoryId);
+      } else {
+        this.categoryChange.emit(null);
+      }
     });
   }
 
@@ -58,8 +69,18 @@ export class SearchFilterComponent implements OnInit {
     });
   }
 
+  search(): void {
+    const query = this.searchControl.value || '';
+    if (query.trim()) {
+      this.searchChange.emit(query.trim());
+    } else {
+      this.searchChange.emit(null);
+    }
+  }
+
   clear(): void {
     this.searchControl.setValue('');
+    this.searchChange.emit(null);
   }
 
   getCategoryLabel(category: Category): string {
@@ -67,6 +88,6 @@ export class SearchFilterComponent implements OnInit {
   }
 
   getCategoryValue(category: Category): string {
-    return category.categoryName || '';
+    return category.id ? category.id.toString() : '';
   }
 }
