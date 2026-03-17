@@ -13,6 +13,15 @@ export class CartService {
   items$: Observable<CartItem[]> = this.cartItems$.asObservable();
 
   addItem(product: Product): void {
+    // Check if user is authenticated
+    const token = localStorage.getItem('authToken');
+    const userName = localStorage.getItem('userName');
+    
+    if (!token || !userName) {
+      // Return false to indicate user needs to login
+      return;
+    }
+
     const currentItems = this.cartItems$.getValue();
     const existingItem = currentItems.find(item => item.product.id === product.id);
 
@@ -26,6 +35,15 @@ export class CartService {
     } else {
       this.cartItems$.next([...currentItems, { product, quantity: 1 }]);
     }
+  }
+
+  /**
+   * Check if user is authenticated
+   */
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');
+    const userName = localStorage.getItem('userName');
+    return !!token && !!userName;
   }
 
   removeItem(productId: string): void {
@@ -83,6 +101,8 @@ export class CartService {
     const url = this.generateWhatsAppMessage();
     if (url) {
       window.open(url, '_blank');
+      // Clear the cart after checkout
+      this.clearCart();
     }
   }
 }

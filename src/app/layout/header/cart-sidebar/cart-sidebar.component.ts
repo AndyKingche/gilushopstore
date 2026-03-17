@@ -115,6 +115,14 @@ export class CartSidebarComponent implements OnInit, OnChanges {
   }
 
   checkout(): void {
+    // Check if user is authenticated before checkout
+    if (!this.cartService.isAuthenticated()) {
+      this.onClose();
+      // Navigate to login
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+    
     this.cartService.openWhatsApp();
   }
 }

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../../../../core/models/product.model';
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductsService } from '../../../../core/services/products.service';
@@ -10,6 +11,7 @@ import { ProductsService } from '../../../../core/services/products.service';
 })
 export class ProductGridComponent implements OnInit, OnDestroy {
   @Input() initialLoad: boolean = true;
+  @Output() openLogin = new EventEmitter<void>();
 
   // Expose Math to template
   Math = Math;
@@ -31,7 +33,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   constructor(
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -177,6 +180,13 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product): void {
+    // Check if user is authenticated before adding to cart
+    if (!this.cartService.isAuthenticated()) {
+      // Navigate to login page
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
     if (product.inStock) {
       this.cartService.addItem(product);
     }
