@@ -33,17 +33,60 @@
     </div>
   </div>
 
-  <!-- Scroll sentinel for infinite scroll -->
-  <div #scrollSentinel class="scroll-sentinel"></div>
-
   <!-- Loading indicator -->
   <div class="loading-indicator" *ngIf="isLoadingMore">
     <div class="spinner"></div>
-    <span>Cargando más productos...</span>
+    <span>Cargando...</span>
   </div>
 
-  <!-- End of list indicator -->
-  <div class="end-of-list" *ngIf="!hasMoreProducts && products.length > 0">
-    <p>Has visto todos los productos</p>
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="showPagination && !isLoadingMore">
+    <!-- Previous button -->
+    <button 
+      class="page-btn nav-btn" 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      <span>Anterior</span>
+    </button>
+    
+    <!-- First page and ellipsis -->
+    <ng-container *ngIf="visiblePages[0] > 1">
+      <button class="page-btn" (click)="goToPage(1)">1</button>
+      <span class="ellipsis" *ngIf="visiblePages[0] > 2">...</span>
+    </ng-container>
+    
+    <!-- Visible page numbers -->
+    <button 
+      *ngFor="let page of visiblePages" 
+      class="page-btn" 
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+    
+    <!-- Last page and ellipsis -->
+    <ng-container *ngIf="visiblePages[visiblePages.length - 1] < totalPages">
+      <span class="ellipsis" *ngIf="visiblePages[visiblePages.length - 1] < totalPages - 1">...</span>
+      <button class="page-btn" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+    </ng-container>
+    
+    <!-- Next button -->
+    <button 
+      class="page-btn nav-btn" 
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages">
+      <span>Siguiente</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Page info -->
+  <div class="page-info" *ngIf="showPagination && products.length > 0">
+    <span>Mostrando {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} productos</span>
   </div>
 </div>
