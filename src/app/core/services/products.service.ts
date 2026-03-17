@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,8 @@ export class ProductsService {
   /**
    * Get all categories
    */
-  getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.categoryApiUrl}/all`);
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.categoryApiUrl}/all`);
   }
 
   getById(id: string): Observable<Product> {

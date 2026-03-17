@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../../../../core/models/category.model';
 
 @Component({
   selector: 'app-search-filter',
@@ -9,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./search-filter.component.scss']
 })
 export class SearchFilterComponent implements OnInit {
-  @Input() categories: string[] = [];
+  @Input() categories: Category[] = [];
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
 
   searchControl = new FormControl('');
@@ -61,17 +62,11 @@ export class SearchFilterComponent implements OnInit {
     this.searchControl.setValue('');
   }
 
-  getCategoryLabel(category: string): string {
-    const labels: { [key: string]: string } = {
-      'bases': 'Bases',
-      'todo': 'Bases',
-      'labios': 'Labios',
-      'rostro': 'Rostro',
-      'primers': 'Primers',
-      'ojos': 'Ojos',
-      'skincare': 'Skin Care',
-      'fijacion': 'Fijación'
-    };
-    return labels[category] || category;
+  getCategoryLabel(category: Category): string {
+    return category.categoryName || 'Sin nombre';
+  }
+
+  getCategoryValue(category: Category): string {
+    return category.categoryName || '';
   }
 }

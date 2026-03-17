@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
+import { Category } from '../../core/models/category.model';
 
 @Component({
   selector: 'app-shop',
@@ -8,7 +9,7 @@ import { ProductsService } from '../../core/services/products.service';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
-  categories: string[] = [];
+  categories: Category[] = [];
   searchQuery = '';
   selectedCategory = '';
 
@@ -21,7 +22,7 @@ export class ShopComponent implements OnInit {
     // Load categories from API
     this.productsService.getCategories().subscribe({
       next: (categories) => {
-        this.categories = categories.map((cat: any) => cat.name);
+        this.categories = categories;
       },
       error: (err) => {
         console.error('Error loading categories:', err);
