@@ -13,7 +13,7 @@ export class FooterComponent {
   companyName = 'IZENSHY';
   
   socialLinks = [
-    { name: 'Facebook', icon: 'facebook', url: 'https://facebook.com/gilu' },
+    { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/share/1AWFit8kx4/?mibextid=wwXIfr' },
     { name: 'TikTok', icon: 'tiktok', url: 'https://tiktok.com/@gilu.ec' },
     { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/gilu.ec' }
   ];

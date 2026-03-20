@@ -177,6 +177,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     // Load first batch of products for this search
     this.productsService.searchProducts(searchTerm, this.pageSize, 0).subscribe({
       next: (products) => {
+        console.log(products)
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;

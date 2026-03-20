@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 interface User {
   userName: string;
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
   // Use the correct backend port
-  private apiUrl = 'http://localhost:8084/api/v1/gessa/user';
+  private apiUrl = environment.apiUrl+'api/v1/gessa/user';
 
   constructor(
     private http: HttpClient,

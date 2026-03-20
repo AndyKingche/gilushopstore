@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 interface LoginRequest {
   username: string;
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
 
   // Use the correct backend port
-  private apiUrl = 'http://localhost:8084/api';
+  private apiUrl = environment.apiUrl+'api';
 
   constructor(
     private http: HttpClient,

@@ -3,14 +3,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = 'http://localhost:8084/api/v1/gessa/stock';
-  private categoryApiUrl = 'http://localhost:8084/api/v1/gessa/category';
-  private productApiUrl = 'http://localhost:8084/api/v1/gessa/product';
+  private apiUrl = environment.apiUrl+'api/v1/gessa/stock';
+  private categoryApiUrl = environment.apiUrl+'api/v1/gessa/category';
+  private productApiUrl = environment.apiUrl+'api/v1/gessa/product';
   // Default outletId - in a real app this would come from configuration or user selection
   private outletId = 2;
 
