@@ -273,11 +273,11 @@ export class SeoService {
       sameAs: [
         'https://www.facebook.com/gilushop',
         'https://www.instagram.com/gilushop',
-        'https://wa.me/593999999999'
+        'https://wa.me/593982901603'
       ],
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+593-2-123-4567',
+        telephone: '+593982901603',
         contactType: 'customer service',
         availableLanguage: ['Spanish', 'English']
       }
