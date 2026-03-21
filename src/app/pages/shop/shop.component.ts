@@ -4,6 +4,17 @@ import { ProductsService } from '../../core/services/products.service';
 import { SeoService } from '../../core/services/seo.service';
 import { Category } from '../../core/models/category.model';
 
+// Mapping between ProductShowcase string IDs and category names
+const CATEGORY_NAME_MAP: { [key: string]: string } = {
+  'BASES': 'Bases',
+  'GLOSS': 'Labios',
+  'BLUSH': 'Blush',
+  'PRIMER': 'Primers',
+  'CORRECTOR': 'Correctores',
+  'EYESHADOW': 'Pestañas / Cejas',
+  'SKINCARE': 'Skin Care'
+};
+
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
@@ -14,6 +25,7 @@ export class ShopComponent implements OnInit {
   searchQuery = '';
   selectedCategory: number | null = null;
   searchTerm: string | null = null;
+  private pendingCategoryId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +41,11 @@ export class ShopComponent implements OnInit {
     this.productsService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
+        // Apply pending category if any
+        if (this.pendingCategoryId) {
+          this.applyCategorySelection(this.pendingCategoryId);
+          this.pendingCategoryId = null;
+        }
       },
       error: (err) => {
         console.error('Error loading categories:', err);
@@ -45,6 +62,26 @@ export class ShopComponent implements OnInit {
         this.updateCategorySeo(this.selectedCategory);
       }
     });
+  }
+
+  private applyCategorySelection(categoryId: string): void {
+    // First, try to find the category by mapped name
+    const categoryName = CATEGORY_NAME_MAP[categoryId];
+    if (categoryName) {
+      const foundCategory = this.categories.find(
+        cat => cat.categoryName?.toLowerCase() === categoryName.toLowerCase()
+      );
+      if (foundCategory) {
+        this.selectedCategory = foundCategory.id;
+        this.searchTerm = null;
+        return;
+      }
+    }
+    
+    // Fallback: try to parse as number
+    const numId = parseInt(categoryId, 10);
+    this.selectedCategory = isNaN(numId) ? null : numId;
+    this.searchTerm = null;
   }
 
   private setupSeo(): void {
@@ -111,9 +148,12 @@ export class ShopComponent implements OnInit {
   }
 
   onCategorySelect(categoryId: string): void {
-    // ProductShowcase uses string IDs, convert to number if possible
-    const numId = parseInt(categoryId, 10);
-    this.selectedCategory = isNaN(numId) ? null : numId;
-    this.searchTerm = null;
+    // If categories are not loaded yet, store the pending category
+    if (this.categories.length === 0) {
+      this.pendingCategoryId = categoryId;
+      return;
+    }
+    
+    this.applyCategorySelection(categoryId);
   }
 }

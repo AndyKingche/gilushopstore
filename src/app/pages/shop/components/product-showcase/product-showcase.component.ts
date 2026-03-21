@@ -23,7 +23,7 @@ export class ProductShowcaseComponent {
 
       categories: CategoryShowcase[] = [
             {
-                  id: 'bases',
+                  id: 'BASES',
                   name: 'Bases',
                   description: 'Cobertura perfecta para todo tipo de piel. Desde ligeras hasta alta cobertura.',
                   brands: ['Maybelline', 'e.l.f', 'NYX', 'Loreal', 'Milani'],
@@ -75,7 +75,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'labios',
+                  id: 'GLOSS',
                   name: 'Labios',
                   description: 'Labiales, gloss y tinturas para labios irresistibles.',
                   brands: ['Maybelline', 'e.l.f', 'Loreal', 'NYX', 'Patrick Ta', 'Rhode', 'Rare Beauty', 'Dior', 'Fenty Beauty'],
@@ -119,7 +119,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'rostro',
+                  id: 'BLUSH',
                   name: 'Blush',
                   description: 'Blush, polvos y productos para un acabado perfecto.',
                   brands: ['Maybelline', 'e.l.f', 'NYX', 'Rare Beauty', 'Rhode', 'Patrick Ta'],
@@ -172,7 +172,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'primers',
+                  id: 'PRIMER',
                   name: 'Primers',
                   description: 'Prepara tu piel para un maquillaje que dura todo el día.',
                   brands: ['Maybelline', 'e.l.f', 'NYX'],
@@ -218,7 +218,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'corrector',
+                  id: 'CORRECTOR',
                   name: 'Correctores',
                   description: 'Correctores líquidos para cubrir imperfecciones y lograr un acabado uniforme en la piel.',
                   brands: ['Maybelline', 'e.l.f', 'Loreal', 'LA Girl', 'Too Faced'],
@@ -277,7 +277,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'ojos',
+                  id: 'EYESHADOW',
                   name: 'Pestañas / Cejas',
                   description: 'Delineadores, rimeles y más para mirada expresiva.',
                   brands: ['Maybelline', 'e.l.f', 'Loreal', 'Prosa', 'Got 2b'],
@@ -341,7 +341,7 @@ export class ProductShowcaseComponent {
 </svg>`
             },
             {
-                  id: 'skincare',
+                  id: 'SKINCARE',
                   name: 'Skin Care',
                   description: 'Rutina coreana para una piel radiante y saludable.',
                   brands: ['Skin 1004', 'Medicube', 'Anua', 'Seoul 1988', 'Mixsoon', 'e.l.f'],

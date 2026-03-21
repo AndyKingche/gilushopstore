@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../../../core/models/category.model';
 
 @Component({
@@ -17,70 +16,39 @@ export class SearchFilterComponent implements OnInit {
 
   searchControl = new FormControl('');
   categoryControl = new FormControl('');
-  private searchQuery = '';
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (params['q']) {
-        this.searchControl.setValue(params['q']);
-      }
-      if (params['cat']) {
-        this.categoryControl.setValue(params['cat']);
-      }
-    });
-
     this.searchControl.valueChanges.pipe(
       debounceTime(300)
     ).subscribe((value) => {
-      this.searchQuery = value || '';
+      this.searchChange.emit(value || null);
     });
 
     this.categoryControl.valueChanges.subscribe((value) => {
-      this.emitFilter();
-      
-      // Emit category change for filtering
       const categoryId = value ? parseInt(value, 10) : null;
       if (categoryId && !isNaN(categoryId)) {
         this.categoryChange.emit(categoryId);
       } else {
         this.categoryChange.emit(null);
       }
-    });
-  }
-
-  emitFilter(): void {
-    const query = this.searchControl.value || '';
-    const category = this.categoryControl.value || '';
-    this.filterChange.emit({ query, category });
-    
-    // Update URL
-    const queryParams: any = {};
-    if (query) queryParams.q = query;
-    if (category) queryParams.cat = category;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams,
-      queryParamsHandling: 'merge'
+      this.filterChange.emit({ 
+        query: this.searchControl.value || '', 
+        category: value || '' 
+      });
     });
   }
 
   search(): void {
     const query = this.searchControl.value || '';
-    if (query.trim()) {
-      this.searchChange.emit(query.trim());
-    } else {
-      this.searchChange.emit(null);
-    }
+    this.searchChange.emit(query.trim() || null);
   }
 
   clear(): void {
     this.searchControl.setValue('');
+    this.categoryControl.setValue('');
     this.searchChange.emit(null);
+    this.categoryChange.emit(null);
+    this.filterChange.emit({ query: '', category: '' });
   }
 
   getCategoryLabel(category: Category): string {
