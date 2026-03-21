@@ -50,30 +50,53 @@
       height: 100%;
       object-fit: cover;
     }
+
+    // Dark gradient overlay for better play button visibility
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+      pointer-events: none;
+    }
     
     .play-button {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: rgba($white, 0.9);
+      background: rgba($white, 0.95);
       color: $pink-primary;
-      border: none;
+      border: 3px solid rgba($pink-primary, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      z-index: 2;
       
       svg {
         margin-left: 4px;
+        width: 32px;
+        height: 32px;
       }
       
       &:hover {
-        transform: translate(-50%, -50%) scale(1.1);
+        transform: translate(-50%, -50%) scale(1.15);
         background: $white;
+        border-color: $pink-primary;
+        box-shadow: 0 6px 30px rgba(217, 95, 128, 0.4);
       }
     }
   }

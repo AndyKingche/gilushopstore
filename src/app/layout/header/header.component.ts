@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { Observable } from 'rxjs';
@@ -14,7 +15,6 @@ export class HeaderComponent implements OnInit {
   isCartOpen = false;
   searchQuery = '';
   isMobile = false;
-
   navLinks = [
     { path: '/', label: 'GILÚ' },
     { path: '/shop', label: 'COMPRAR' },
@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItemCount$ = new Observable(subscriber => {
       this.cartService.items$.subscribe(items => {
@@ -34,12 +35,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
   checkScreenSize(): void {
@@ -49,21 +54,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  closeMenu(): void {
-    this.isMenuOpen = false;
-  }
-
-  toggleCart(): void {
-    this.isCartOpen = !this.isCartOpen;
-  }
-
-  closeCart(): void {
-    this.isCartOpen = false;
-  }
+  toggleMenu(): void { this.isMenuOpen = !this.isMenuOpen; }
+  closeMenu(): void { this.isMenuOpen = false; }
+  toggleCart(): void { this.isCartOpen = !this.isCartOpen; }
+  closeCart(): void { this.isCartOpen = false; }
 
   onSearch(): void {
     if (this.searchQuery.trim()) {
@@ -72,7 +66,5 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onCartClose(): void {
-    this.isCartOpen = false;
-  }
+  onCartClose(): void { this.isCartOpen = false; }
 }

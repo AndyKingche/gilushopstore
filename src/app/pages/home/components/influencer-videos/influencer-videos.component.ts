@@ -22,31 +22,31 @@ export class InfluencerVideosComponent {
       title: 'Lifter Plump Gloss', 
       influencer: 'Michela Pincay', 
       product: 'Lifter Plump',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://i.ibb.co/1hhMgp7/1.png',
       embedUrl: ''
     },
     { 
-      ytId: '1aoE8RVOcQ4', 
-      title: 'Sunkisser Blush', 
-      influencer: 'Beauty Influencer', 
-      product: 'Sunkisser Blush',
-      thumbnailUrl: '',
+      ytId: '_91R1VSkmj0', 
+      title: 'Super Stay Teddy Tint', 
+      influencer: 'Kenia Os', 
+      product: 'Lip Tint',
+      thumbnailUrl: 'https://i.ibb.co/Y4nnHSNS/2.png',
       embedUrl: ''
     },
     { 
-      ytId: 'wQyvOqu6Pgs', 
-      title: 'Lash Firework', 
-      influencer: 'MakeUp Creator', 
-      product: 'Rimel Firework',
-      thumbnailUrl: '',
+      ytId: 'kYu1N_aQNH4', 
+      title: 'Jam Session', 
+      influencer: 'Ronnie Bears', 
+      product: 'Lip Gloss',
+      thumbnailUrl: 'https://i.ibb.co/tMDb8yL2/3.png',
       embedUrl: ''
     },
     { 
-      ytId: 'uvf4F7SkJ4U', 
-      title: 'Superstay Lumi', 
-      influencer: 'Glam Latina', 
-      product: 'Base Superstay',
-      thumbnailUrl: '',
+      ytId: 'VCY7IlB7KUU', 
+      title: 'Too Faced', 
+      influencer: 'Fabilicious', 
+      product: 'Concealer',
+      thumbnailUrl: 'https://i.ibb.co/YTPqSKrB/4.png',
       embedUrl: ''
     }
   ];
@@ -54,10 +54,9 @@ export class InfluencerVideosComponent {
   playingVideo: number | null = null;
 
   constructor(private sanitizer: DomSanitizer) {
-    // Initialize thumbnail and embed URLs
+    // Initialize embed URLs (thumbnailUrl already set)
     this.videos = this.videos.map(video => ({
       ...video,
-      thumbnailUrl: `https://i.ytimg.com/vi/${video.ytId}/mqdefault.jpg`,
       embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
         `https://www.youtube.com/embed/${video.ytId}?autoplay=1&showinfo=0&rel=0&modestbranding=1&controls=1`
       )

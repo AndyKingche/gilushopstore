@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Product } from '../../../../core/models/product.model';
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductsService } from '../../../../core/services/products.service';
+import { SeoService } from '../../../../core/services/seo.service';
 
 @Component({
   selector: 'app-product-grid',
@@ -41,7 +42,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   
   // Pagination state
-  private pageSize = 16;
+  protected pageSize = 16;
   private offset = 0;
   public totalCount = 0;
   public isLoading = false;
@@ -56,7 +57,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
     private productsService: ProductsService,
-    private router: Router
+    private router: Router,
+    private seoService: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -98,6 +100,9 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
+        
+        // Add Product schema for rich snippets
+        this.addProductSchema();
         
         this.cdr.detectChanges();
       },
@@ -144,6 +149,9 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
         
+        // Add Product schema for rich snippets
+        this.addProductSchema();
+        
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -184,6 +192,9 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
+        
+        // Add Product schema for rich snippets
+        this.addProductSchema();
         
         this.cdr.detectChanges();
       },
@@ -328,13 +339,6 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product): void {
-    // Check if user is authenticated before adding to cart
-    if (!this.cartService.isAuthenticated()) {
-      // Navigate to login page
-      this.router.navigate(['/auth/login']);
-      return;
-    }
-
     if (product.inStock) {
       this.cartService.addItem(product);
     }
@@ -362,5 +366,30 @@ export class ProductGridComponent implements OnInit, OnDestroy {
 
   get showPagination(): boolean {
     return this.totalPages > 1;
+  }
+
+  /**
+   * Add Product schema structured data for SEO
+   * Uses first product as representative for the product list
+   */
+  private addProductSchema(): void {
+    if (this.products && this.products.length > 0) {
+      // Create a Product schema with the first product as example
+      // In a real product detail page, you would use that specific product
+      const firstProduct = this.products[0];
+      
+      const productSchema = this.seoService.generateProductSchema({
+        name: firstProduct.name,
+        description: firstProduct.description,
+        image: firstProduct.image || 'https://gilushop.store/assets/image/gilu-update.png',
+        price: firstProduct.price,
+        currency: 'USD',
+        brand: firstProduct.brand,
+        availability: firstProduct.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        sku: firstProduct.id
+      });
+      
+      this.seoService.setJsonLd(productSchema);
+    }
   }
 }

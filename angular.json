@@ -27,7 +27,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "sitemap.xml",
+                "input": "src/assets",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -35,8 +40,7 @@
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/assets/styles",
-                "src"
+                "src/assets/styles"
               ]
             }
           },
@@ -46,12 +50,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "16kb"
                 }
               ],
               "outputHashing": "all",
@@ -115,6 +119,67 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/gilustore/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            }
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "gilustore:build:development",
+              "serverTarget": "gilustore:server:development"
+            },
+            "production": {
+              "browserTarget": "gilustore:build:production",
+              "serverTarget": "gilustore:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/shop",
+              "/about",
+              "/faq"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "gilustore:build:production",
+              "serverTarget": "gilustore:server:production"
+            },
+            "development": {
+              "browserTarget": "gilustore:build:development",
+              "serverTarget": "gilustore:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

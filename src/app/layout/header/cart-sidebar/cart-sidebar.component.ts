@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
@@ -11,42 +12,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cart-sidebar.component.scss'],
   animations: [
     trigger('slideAnimation', [
-      state('closed', style({
-        transform: 'translateX(100%)'
-      })),
-      state('open', style({
-        transform: 'translateX(0)'
-      })),
-      transition('closed => open', [
-        animate('300ms ease-out')
-      ]),
-      transition('open => closed', [
-        animate('300ms ease-in')
-      ])
+      state('closed', style({ transform: 'translateX(100%)' })),
+      state('open', style({ transform: 'translateX(0)' })),
+      transition('closed => open', [animate('300ms ease-out')]),
+      transition('open => closed', [animate('300ms ease-in')])
     ]),
     trigger('fadeAnimation', [
-      state('closed', style({
-        opacity: 0
-      })),
-      state('open', style({
-        opacity: 1
-      })),
-      transition('closed => open', [
-        animate('300ms ease-out')
-      ]),
-      transition('open => closed', [
-        animate('300ms ease-in')
-      ])
+      state('closed', style({ opacity: 0 })),
+      state('open', style({ opacity: 1 })),
+      transition('closed => open', [animate('300ms ease-out')]),
+      transition('open => closed', [animate('300ms ease-in')])
     ])
   ]
 })
 export class CartSidebarComponent implements OnInit, OnChanges {
   private _isOpen = false;
-  
+
   @Input()
-  get isOpen(): boolean {
-    return this._isOpen;
-  }
+  get isOpen(): boolean { return this._isOpen; }
   set isOpen(value: boolean) {
     this._isOpen = value;
     if (value) {
@@ -56,7 +39,6 @@ export class CartSidebarComponent implements OnInit, OnChanges {
   }
 
   @Output() close = new EventEmitter<void>();
-
   cartItems$: Observable<CartItem[]>;
   total = 0;
   isLoggedIn = false;
@@ -65,7 +47,8 @@ export class CartSidebarComponent implements OnInit, OnChanges {
   constructor(
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItems$ = this.cartService.items$;
   }
@@ -84,45 +67,35 @@ export class CartSidebarComponent implements OnInit, OnChanges {
   }
 
   checkAuth(): void {
-    const token = localStorage.getItem('authToken');
-    const name = localStorage.getItem('userName');
-    this.isLoggedIn = !!token;
-    this.userName = name || '';
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('authToken');
+      const name = localStorage.getItem('userName');
+      this.isLoggedIn = !!token;
+      this.userName = name || '';
+    }
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userName');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userName');
+    }
     this.isLoggedIn = false;
     this.userName = '';
     this.router.navigate(['/']);
   }
 
-  onClose(): void {
-    this.close.emit();
-  }
-
-  removeItem(productId: string): void {
-    this.cartService.removeItem(productId);
-  }
-
-  updateQuantity(productId: string, quantity: number): void {
-    this.cartService.updateQuantity(productId, quantity);
-  }
-
-  clearCart(): void {
-    this.cartService.clearCart();
-  }
+  onClose(): void { this.close.emit(); }
+  removeItem(productId: string): void { this.cartService.removeItem(productId); }
+  updateQuantity(productId: string, quantity: number): void { this.cartService.updateQuantity(productId, quantity); }
+  clearCart(): void { this.cartService.clearCart(); }
 
   checkout(): void {
-    // Check if user is authenticated before checkout
     if (!this.cartService.isAuthenticated()) {
       this.onClose();
-      // Navigate to login
       this.router.navigate(['/auth/login']);
       return;
     }
-    
     this.cartService.openWhatsApp();
   }
 }

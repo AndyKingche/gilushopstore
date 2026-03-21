@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>https://gilushop.store/</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Shop Page -->
+  <url>
+    <loc>https://gilushop.store/shop</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- About Page -->
+  <url>
+    <loc>https://gilushop.store/about</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://gilushop.store/faq</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Category: Bases -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=1</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Labios -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=2</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Blush/Rostro -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=3</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Primers -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=4</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Correctores -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=5</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Ojos/Cejas -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=6</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category: Skincare -->
+  <url>
+    <loc>https://gilushop.store/shop?cat=7</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

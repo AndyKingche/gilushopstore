@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -39,67 +40,34 @@ interface Slide {
 })
 export class HeroCarouselComponent implements OnInit, OnDestroy {
   slides: Slide[] = [
-    { 
-      title: 'Tu tienda de Maquillaje Favorita', 
-      subtitle: 'Productos 100% Originales', 
-      cta: 'Ver colección',
-      category: 'todo'
-    },
-    { 
-      title: 'Nueva colección Maybelline', 
-      subtitle: 'Bases Fresh Tint', 
-      cta: 'Ver colección',
-      category: 'bases'
-    },
-    { 
-      title: 'E.l.f. Cosmetics', 
-      subtitle: 'Lip oil que duran todo el día', 
-      cta: 'Descubre más',
-      category: 'labios'
-    },
-    { 
-      title: 'Primers para piel perfecta', 
-      subtitle: 'Maybelline & e.l.f., NYX', 
-      cta: 'Ver primers',
-      category: 'primers'
-    },
-    { 
-      title: 'Semana Gilú 💕', 
-      subtitle: 'Hasta el 10% OFF en productos seleccionados', 
-      cta: 'Aprovechar',
-      category: 'oferta'
-    },
-    { 
-      title: 'Skin Care Coreano', 
-      subtitle: 'Cuida tu piel, ama tu piel', 
-      cta: 'Ver skincare',
-      category: 'skincare'
-    },
-    { 
-      title: 'Delineadores y Rimeles', 
-      subtitle: 'Ojos que hablan', 
-      cta: 'Ver productos',
-      category: 'ojos'
-    }
+    { title: 'Tu tienda de Maquillaje Favorita', subtitle: 'Productos 100% Originales', cta: 'Ver colección', category: 'todo' },
+    { title: 'Nueva colección Maybelline', subtitle: 'Bases Fresh Tint', cta: 'Ver colección', category: 'bases' },
+    { title: 'E.l.f. Cosmetics', subtitle: 'Lip oil que duran todo el día', cta: 'Descubre más', category: 'labios' },
+    { title: 'Primers para piel perfecta', subtitle: 'Maybelline & e.l.f., NYX', cta: 'Ver primers', category: 'primers' },
+    { title: 'Semana Gilú 💕', subtitle: 'Hasta el 10% OFF en productos seleccionados', cta: 'Aprovechar', category: 'oferta' },
+    { title: 'Skin Care Coreano', subtitle: 'Cuida tu piel, ama tu piel', cta: 'Ver skincare', category: 'skincare' },
+    { title: 'Delineadores y Rimeles', subtitle: 'Ojos que hablan', cta: 'Ver productos', category: 'ojos' }
   ];
 
   currentSlide = 0;
   private intervalId: any;
   isPaused = false;
-
   backgroundParallax = 0;
   titleParallax = 0;
   subtitleParallax = 0;
   buttonParallax = 0;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   getRandomImageUrl(category: string): string {
     const categoryImages: { [key: string]: string } = {
       bases: 'https://images.pexels.com/photos/4620838/pexels-photo-4620838.jpeg',
       labios: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg',
       primers: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg',
-      oferta: '', // Leave as black
+      oferta: '',
       skincare: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg',
       ojos: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg'
     };
@@ -107,7 +75,9 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.startAutoPlay();
+    if (isPlatformBrowser(this.platformId)) {
+      this.startAutoPlay();
+    }
   }
 
   ngOnDestroy(): void {
@@ -116,16 +86,12 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   startAutoPlay(): void {
     this.intervalId = setInterval(() => {
-      if (!this.isPaused) {
-        this.nextSlide();
-      }
+      if (!this.isPaused) this.nextSlide();
     }, 4000);
   }
 
   stopAutoPlay(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
   nextSlide(): void {
@@ -140,21 +106,18 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     this.currentSlide = index;
   }
 
-  onMouseEnter(): void {
-    this.isPaused = true;
-  }
-
-  onMouseLeave(): void {
-    this.isPaused = false;
-  }
+  onMouseEnter(): void { this.isPaused = true; }
+  onMouseLeave(): void { this.isPaused = false; }
 
   @HostListener('window:scroll', [])
   onScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    this.backgroundParallax = scrollTop * 0.3;
-    this.titleParallax = scrollTop * -0.2;
-    this.subtitleParallax = scrollTop * -0.15;
-    this.buttonParallax = scrollTop * -0.1;
+    if (isPlatformBrowser(this.platformId)) {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      this.backgroundParallax = scrollTop * 0.3;
+      this.titleParallax = scrollTop * -0.2;
+      this.subtitleParallax = scrollTop * -0.15;
+      this.buttonParallax = scrollTop * -0.1;
+    }
   }
 
   onCtaClick(slide: Slide): void {

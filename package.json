@@ -5,7 +5,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:ssr": "ng run gilustore:serve-ssr",
     "build": "ng build",
+    "build:ssr": "ng build --configuration=production && ng run gilustore:server",
+    "build:prerender": "ng run gilustore:prerender",
+    "serve:ssr": "node dist/gilustore/server/main.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -18,8 +22,11 @@
     "@angular/forms": "^16.2.0",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
+    "@angular/platform-server": "^16.2.12",
     "@angular/router": "^16.2.0",
     "@emailjs/browser": "^4.1.0",
+    "@nguniversal/common": "^16.2.0",
+    "@nguniversal/express-engine": "^16.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -28,6 +35,7 @@
     "@angular-devkit/build-angular": "^16.2.0",
     "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.2.0",
+    "@nguniversal/builders": "^16.2.0",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",

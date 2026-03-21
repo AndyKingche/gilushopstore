@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-join-banner',
@@ -7,23 +8,26 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class JoinBannerComponent implements OnInit, OnChanges {
   @Input() showIfNotLogged: boolean = true;
-  
+
   isLoggedIn = false;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
     this.checkAuth();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Refresh auth status when showIfNotLogged changes
     if (changes['showIfNotLogged']) {
       this.checkAuth();
     }
   }
 
   checkAuth(): void {
-    const token = localStorage.getItem('authToken');
-    const name = localStorage.getItem('userName');
-    this.isLoggedIn = !!(token && name);
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('authToken');
+      const name = localStorage.getItem('userName');
+      this.isLoggedIn = !!(token && name);
+    }
   }
 }
