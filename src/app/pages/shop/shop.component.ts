@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
 import { SeoService } from '../../core/services/seo.service';
+import { SearchService } from '../../core/services/search.service';
 import { Category } from '../../core/models/category.model';
+import { Subscription } from 'rxjs';
 
 // Mapping between ProductShowcase string IDs and category names
 const CATEGORY_NAME_MAP: { [key: string]: string } = {
@@ -20,7 +22,8 @@ const CATEGORY_NAME_MAP: { [key: string]: string } = {
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
+  private searchSubscription?: Subscription;
   categories: Category[] = [];
   searchQuery = '';
   selectedCategory: number | null = null;
@@ -30,7 +33,9 @@ export class ShopComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private searchService: SearchService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +68,33 @@ export class ShopComponent implements OnInit {
         this.updateCategorySeo(this.selectedCategory);
       }
     });
+
+    // Listen to search service for search terms from header
+    this.searchSubscription = this.searchService.searchTerm$.subscribe(term => {
+      if (term !== null && term.trim() !== '') {
+        this.searchQuery = term;
+        this.searchTerm = term;
+        this.selectedCategory = null; // Clear category when searching
+        this.updateSearchSeo(term);
+      }
+    });
+
+    // Check if there's already a search term in the service when component loads
+    const currentSearchTerm = this.searchService.getSearchTerm();
+    if (currentSearchTerm !== null && currentSearchTerm.trim() !== '') {
+      this.searchQuery = currentSearchTerm;
+      this.searchTerm = currentSearchTerm;
+      this.selectedCategory = null;
+      this.updateSearchSeo(currentSearchTerm);
+      // Force change detection to update product-grid
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      }, 0);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
   }
 
   private applyCategorySelection(categoryId: string): void {

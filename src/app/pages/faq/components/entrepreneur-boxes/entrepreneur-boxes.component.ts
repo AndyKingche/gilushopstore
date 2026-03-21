@@ -8,6 +8,7 @@ interface EntrepreneurBox {
   price: string;
   badge: string;
   badgeColor: string;
+  imageUrl: string;
 }
 
 @Component({
@@ -19,9 +20,9 @@ export class EntrepreneurBoxesComponent {
   selectedBox: EntrepreneurBox | null = null;
   
   entrepreneurBoxes: EntrepreneurBox[] = [
-    { id: 1, name: 'Cajita Básica', description: 'Incluye 20 productos esenciales para comenzar tu emprendimiento. ($11.70 por unidad)', price: '$234', badge: 'BÁSICA', badgeColor: '#B8D5D9' },
-    { id: 2, name: 'Cajita Intermedia', description: 'Incluye 40 productos para expandir tu negocio. ($11.50 por unidad)', price: '$460', badge: 'INTERMEDIA', badgeColor: '#27ae60' },
-    { id: 3, name: 'Cajita Premium', description: 'Incluye 50 productos, la mejor selección para emprendedores avanzados. ($11.50 por unidad)', price: '$565', badge: 'PREMIUM', badgeColor: '#D95F80' }
+    { id: 1, name: 'Cajita Básica', description: 'Incluye 20 productos esenciales para comenzar tu emprendimiento. ($11.70 por unidad)', price: '$234', badge: 'BÁSICA', badgeColor: '#B8D5D9', imageUrl: 'https://i.ibb.co/kgjYy4gK/LIFTER-PLUMP-2.png' },
+    { id: 2, name: 'Cajita Intermedia', description: 'Incluye 40 productos para expandir tu negocio. ($11.50 por unidad)', price: '$460', badge: 'INTERMEDIA', badgeColor: '#27ae60', imageUrl: 'https://i.ibb.co/5WVpjDQw/6.png' },
+    { id: 3, name: 'Cajita Premium', description: 'Incluye 50 productos, la mejor selección para emprendedores avanzados. ($11.50 por unidad)', price: '$565', badge: 'PREMIUM', badgeColor: '#D95F80', imageUrl: 'https://i.ibb.co/tPvbH7qW/7.png' }
   ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}

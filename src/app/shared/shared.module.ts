@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { ScrollAnimationDirective } from './directives/scroll-animation.directive';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
     JoinBannerComponent,
-    ScrollAnimationDirective
+    ScrollAnimationDirective,
+    SearchBarComponent
   ],
   exports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { ScrollAnimationDirective } from './directives/scroll-animation.directiv
     ReactiveFormsModule,
     RouterModule,
     JoinBannerComponent,
-    ScrollAnimationDirective
+    ScrollAnimationDirective,
+    SearchBarComponent
   ],
   imports: [
     CommonModule,

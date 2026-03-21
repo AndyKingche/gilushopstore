@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ShopComponent } from './shop.component';
 import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { CategoryFilterComponent } from './components/search-filter/components/category-filter/category-filter.component';
 import { ProductGridComponent } from './components/product-grid/product-grid.component';
 import { BannerMarqueeComponent } from './components/banner-marquee/banner-marquee.component';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     ShopComponent,
     ProductShowcaseComponent,
     SearchFilterComponent,
+    CategoryFilterComponent,
     ProductGridComponent,
     BannerMarqueeComponent
   ],

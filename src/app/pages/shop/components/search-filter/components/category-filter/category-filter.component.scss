@@ -1,0 +1,23 @@
+@import 'variables';
+@import 'mixins';
+
+.category-select {
+  padding: 14px 20px;
+  border: 1px solid $gray-400;
+  border-radius: 30px;
+  font-size: 15px;
+  background: $white;
+  cursor: pointer;
+  outline: none;
+  min-width: 200px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: $pink-primary;
+    box-shadow: 0 0 0 3px rgba($pink-primary, 0.1);
+  }
+  
+  @include mobile {
+    min-width: 100%;
+  }
+}

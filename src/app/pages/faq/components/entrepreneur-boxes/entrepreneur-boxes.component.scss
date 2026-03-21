@@ -61,12 +61,14 @@
 
   .card-image {
     flex: 0 0 60%;
-    @include pink-gradient-placeholder;
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     @include mobile {
       flex: 0 0 50%;

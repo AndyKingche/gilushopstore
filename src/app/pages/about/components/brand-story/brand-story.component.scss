@@ -135,11 +135,20 @@
     width: 100%;
     height: 500px;
     background: linear-gradient(135deg, $pink-primary 0%, #c44d70 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 10px 40px rgba(217, 95, 128, 0.3);
+    filter: sepia(0.2) saturate(1.3) brightness(1.05) contrast(1.1);
+    transition: filter 0.3s ease;
+    
+    &:hover {
+      filter: sepia(0.1) saturate(1.5) brightness(1.1) contrast(1.15);
+    }
     
     span {
       font-family: $font-display;

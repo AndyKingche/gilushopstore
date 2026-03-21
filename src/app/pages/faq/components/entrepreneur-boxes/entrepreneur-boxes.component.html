@@ -3,7 +3,7 @@
   
   <div class="boxes-container">
     <div class="news-card" *ngFor="let box of entrepreneurBoxes" [class.selected]="selectedBox?.id === box.id" (click)="selectBox(box)">
-      <div class="card-image">
+      <div class="card-image" [style.background-image]="'url(' + box.imageUrl + ')'">
         <span class="badge" [style.background-color]="box.badgeColor">{{ box.badge }}</span>
       </div>
       <div class="card-desc">

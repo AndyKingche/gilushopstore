@@ -1,6 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../../../core/models/category.model';
 
 @Component({
@@ -8,61 +6,31 @@ import { Category } from '../../../../core/models/category.model';
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss']
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent {
   @Input() categories: Category[] = [];
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
   @Output() categoryChange = new EventEmitter<number | null>();
   @Output() searchChange = new EventEmitter<string | null>();
 
-  searchControl = new FormControl('');
-  categoryControl = new FormControl('');
+  private currentQuery = '';
 
-  ngOnInit(): void {
-    this.searchControl.valueChanges.pipe(
-      debounceTime(300)
-    ).subscribe((value) => {
-      this.searchChange.emit(value || null);
-    });
-
-    this.categoryControl.valueChanges.subscribe((value) => {
-      const categoryId = value ? parseInt(value, 10) : null;
-      if (categoryId && !isNaN(categoryId)) {
-        this.categoryChange.emit(categoryId);
-      } else {
-        this.categoryChange.emit(null);
-      }
-      this.filterChange.emit({ 
-        query: this.searchControl.value || '', 
-        category: value || '' 
-      });
+  onSearchChange(term: string | null): void {
+    this.currentQuery = term || '';
+    this.searchChange.emit(term);
+    this.filterChange.emit({ 
+      query: this.currentQuery, 
+      category: '' 
     });
   }
 
-  search(): void {
-    const query = this.searchControl.value || '';
-    this.searchChange.emit(query.trim() || null);
+  onCategoryChange(categoryId: number | null): void {
+    this.categoryChange.emit(categoryId);
   }
 
-  clear(): void {
-    this.searchControl.setValue('');
-    this.categoryControl.setValue('');
-    this.searchChange.emit(null);
-    this.categoryChange.emit(null);
-    this.filterChange.emit({ query: '', category: '' });
-  }
-
-  getCategoryLabel(category: Category): string {
-    return category.categoryName || 'Sin nombre';
-  }
-
-  getCategoryValue(category: Category): string {
-    return category.id ? category.id.toString() : '';
-  }
-
-  get filteredCategories(): Category[] {
-    const excludedNames = ['Ropa', 'SIN DEFINICION', 'CAMISETA NEON'];
-    return this.categories
-      .filter(cat => !excludedNames.includes(cat.categoryName))
-      .sort((a, b) => (a.categoryName || '').localeCompare(b.categoryName || ''));
+  onFilterChange(event: { category: string }): void {
+    this.filterChange.emit({ 
+      query: this.currentQuery, 
+      category: event.category 
+    });
   }
 }

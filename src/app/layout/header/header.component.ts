@@ -1,18 +1,23 @@
-import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
-import { Observable } from 'rxjs';
+import { SearchService } from '../../core/services/search.service';
+import { Observable, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private routerSubscription?: Subscription;
   cartItemCount$: Observable<number>;
   isMenuOpen = false;
   isCartOpen = false;
+  searchControl = new FormControl('');
   searchQuery = '';
   isMobile = false;
   navLinks = [
@@ -25,6 +30,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
+    private searchService: SearchService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItemCount$ = new Observable(subscriber => {
@@ -38,6 +44,33 @@ export class HeaderComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.checkScreenSize();
     }
+
+    // Listen to search control changes and update search service
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(value => {
+      // Update search service with current value
+      if (!value || value.trim() === '') {
+        this.searchService.setSearchTerm(null);
+      }
+    });
+
+    // Listen to router events to sync search input when returning from shop
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      // Clear search when navigating away from shop
+      const currentUrl = event.urlAfterRedirects || event.url;
+      if (!currentUrl.startsWith('/shop')) {
+        this.searchService.setSearchTerm(null);
+        this.searchControl.setValue('', { emitEvent: false });
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
   @HostListener('window:resize')
@@ -59,10 +92,28 @@ export class HeaderComponent implements OnInit {
   toggleCart(): void { this.isCartOpen = !this.isCartOpen; }
   closeCart(): void { this.isCartOpen = false; }
 
+  search(): void {
+    const query = this.searchControl.value?.trim() || '';
+    if (query) {
+      // Set search term in service and navigate to shop
+      this.searchService.setSearchTerm(query);
+      this.router.navigate(['/shop']);
+    } else {
+      this.searchService.setSearchTerm(null);
+    }
+  }
+
+  clear(): void {
+    this.searchControl.setValue('');
+    this.searchService.setSearchTerm(null);
+  }
+
+  // Mobile search handler
   onSearch(): void {
-    if (this.searchQuery.trim()) {
-      this.router.navigate(['/shop'], { queryParams: { q: this.searchQuery.trim() } });
-      this.searchQuery = '';
+    const query = this.searchQuery?.trim() || '';
+    if (query) {
+      this.searchService.setSearchTerm(query);
+      this.router.navigate(['/shop']);
     }
   }
 

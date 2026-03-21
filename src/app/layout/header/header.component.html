@@ -25,17 +25,22 @@
     <!-- Search & Cart -->
     <div class="header-actions">
       <div class="search-box" *ngIf="!isMobile">
-        <input 
-          type="text" 
-          placeholder="Buscar productos..."
-          [(ngModel)]="searchQuery"
-          (keyup.enter)="onSearch()">
-        <button class="search-btn" (click)="onSearch()">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          placeholder="Busca tu producto favorito "
+          [formControl]="searchControl"
+          (keyup.enter)="search()" />
+        <button class="search-btn" *ngIf="searchControl.value" (mousedown)="$event.preventDefault()" (click)="search()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
+        <button class="clear-btn" *ngIf="searchControl.value" (click)="clear()">✕</button>
       </div>
 
       <button class="cart-btn" (click)="toggleCart()">

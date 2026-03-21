@@ -1,0 +1,4 @@
+<select [formControl]="categoryControl" class="category-select" (change)="onCategoryChange(categoryControl.value)">
+  <option value="">Todas las categorías</option>
+  <option *ngFor="let cat of filteredCategories" [value]="getCategoryValue(cat)">{{ getCategoryLabel(cat) }}</option>
+</select>

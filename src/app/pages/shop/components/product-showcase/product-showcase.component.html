@@ -6,7 +6,10 @@
   </button>
 
   <div class="showcase-card">
-    <div class="card-image" [style.background-image]="'url(' + currentCategory.imageUrl + ')'">
+    <div class="card-image"
+         [class.fade-out]="isAnimating"
+         [class.fade-in]="!isAnimating"
+         [style.background-image]="'url(' + currentCategory.imageUrl + ')'">
       <!-- <span class="category-name">{{ currentCategory.name }}</span> -->
     </div>
     <div class="card-info">

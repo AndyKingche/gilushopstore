@@ -33,6 +33,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+
+  &.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  &.fade-in {
+    opacity: 1;
+    transform: scale(1);
+  }
 
   .category-name {
     font-family: $font-display;
@@ -131,6 +142,11 @@
     background: $pink-primary;
     border-color: $pink-primary;
     color: $white;
+  }
+  
+  &:active {
+    opacity: 0.6;
+    transform: translateY(-50%) scale(0.95);
   }
   
   &.prev {

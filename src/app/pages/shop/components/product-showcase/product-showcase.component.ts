@@ -397,21 +397,39 @@ export class ProductShowcaseComponent {
       ];
 
       currentIndex = 0;
+      isAnimating = false;
 
       prev(): void {
-            if (this.currentIndex > 0) {
-                  this.currentIndex--;
-            } else {
-                  this.currentIndex = this.categories.length - 1;
-            }
+            this.animateTransition(() => {
+                  if (this.currentIndex > 0) {
+                        this.currentIndex--;
+                  } else {
+                        this.currentIndex = this.categories.length - 1;
+                  }
+            });
       }
 
       next(): void {
-            if (this.currentIndex < this.categories.length - 1) {
-                  this.currentIndex++;
-            } else {
-                  this.currentIndex = 0;
-            }
+            this.animateTransition(() => {
+                  if (this.currentIndex < this.categories.length - 1) {
+                        this.currentIndex++;
+                  } else {
+                        this.currentIndex = 0;
+                  }
+            });
+      }
+
+      private animateTransition(changeCallback: () => void): void {
+            if (this.isAnimating) return;
+            
+            this.isAnimating = true;
+            
+            setTimeout(() => {
+                  changeCallback();
+                  setTimeout(() => {
+                        this.isAnimating = false;
+                  }, 50);
+            }, 300);
       }
 
       viewProducts(categoryId: string): void {
