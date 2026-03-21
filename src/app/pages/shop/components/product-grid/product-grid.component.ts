@@ -62,6 +62,26 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Set SEO meta tags for product listing page with long-tail keywords
+    this.seoService.updateMetaTags({
+      title: 'Maquillaje Original Ecuador - Gilú Shop | Maybelline, e.l.f., NYX Otavalo',
+      description: 'Compra maquillaje 100% original en Gilú Shop, Otavalo Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty con envío a todo Ecuador. Precios accesibles, productos garantizados.',
+      keywords: 'maquillaje original Otavalo, comprar maquillaje Ecuador, Maybelline Ecuador precio, elf cosmetics Ecuador, NYX Ecuador, Huda Beauty Ecuador, tienda maquillaje Otavalo, maquillaje envío Ecuador, cosméticos originales Ecuador, Loreal Ecuador, Rare Beauty Ecuador, Fenty Beauty Ecuador, Dior Ecuador, Got 2b Ecuador',
+      image: 'https://gilushop.store/assets/image/gilu-update.png',
+      url: 'https://gilushop.store/shop',
+      type: 'website',
+      siteName: 'Gilú Shop'
+    });
+
+    // Set Twitter Card tags
+    this.seoService.setTwitterCard({
+      title: 'Maquillaje Original Ecuador - Gilú Shop',
+      description: 'Compra maquillaje 100% original en Gilú Shop, Otavalo Ecuador. Las mejores marcas internacionales con envío a todo Ecuador.'
+    });
+
+    // Set canonical URL for shop page
+    this.seoService.setCanonicalUrl('https://gilushop.store/shop');
+
     if (this.initialLoad) {
       this.loadInitialProducts();
     }
@@ -370,14 +390,21 @@ export class ProductGridComponent implements OnInit, OnDestroy {
 
   /**
    * Add Product schema structured data for SEO
-   * Uses first product as representative for the product list
+   * Uses ItemList schema for product listing pages
    */
   private addProductSchema(): void {
     if (this.products && this.products.length > 0) {
-      // Create a Product schema with the first product as example
-      // In a real product detail page, you would use that specific product
-      const firstProduct = this.products[0];
+      // Use ItemList schema for product listing pages
+      const productListSchema = this.seoService.generateProductListSchema(
+        this.products.map(p => ({
+          id: p.id,
+          name: p.name
+        }))
+      );
+      this.seoService.setJsonLd(productListSchema, 'schema-product-list');
       
+      // Also add first product schema for rich snippets
+      const firstProduct = this.products[0];
       const productSchema = this.seoService.generateProductSchema({
         name: firstProduct.name,
         description: firstProduct.description,
@@ -389,7 +416,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         sku: firstProduct.id
       });
       
-      this.seoService.setJsonLd(productSchema);
+      this.seoService.setJsonLd(productSchema, 'schema-product');
     }
   }
 }

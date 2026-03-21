@@ -55,6 +55,7 @@ export class ShopComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['q']) {
         this.searchQuery = params['q'];
+        this.searchTerm = params['q']; // Pass to product-grid
         this.updateSearchSeo(params['q']);
       }
       if (params['cat']) {

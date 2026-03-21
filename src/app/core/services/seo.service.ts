@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 export interface SeoConfig {
   title: string;
@@ -12,6 +12,14 @@ export interface SeoConfig {
   author?: string;
   locale?: string;
   siteName?: string;
+}
+
+export interface TwitterCardConfig {
+  title: string;
+  description: string;
+  image?: string;
+  site?: string;
+  creator?: string;
 }
 
 export interface JsonLdSchema {
@@ -29,6 +37,7 @@ export class SeoService {
   constructor(
     private title: Title,
     private meta: Meta,
+    @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -82,39 +91,42 @@ export class SeoService {
   }
 
   /**
-   * Set Open Graph meta tags
+   * Set Open Graph meta tags (all using 'property' attribute)
    */
   private setOpenGraphTags(config: SeoConfig): void {
-    // OG Title
+    // OG Title - using property attribute
     this.meta.updateTag({ property: 'og:title', content: config.title });
 
-    // OG Description
+    // OG Description - using property attribute
     this.meta.updateTag({ property: 'og:description', content: config.description });
 
-    // OG Image
+    // OG Image - using property attribute
     if (config.image) {
       this.meta.updateTag({ property: 'og:image', content: config.image });
     }
 
-    // OG URL
+    // OG URL - using property attribute
     if (config.url) {
       this.meta.updateTag({ property: 'og:url', content: config.url });
     }
 
-    // OG Type
+    // OG Type - using property attribute
     this.meta.updateTag({ property: 'og:type', content: config.type || 'website' });
 
-    // OG Locale
+    // OG Locale - using property attribute
     this.meta.updateTag({ property: 'og:locale', content: config.locale || 'es_EC' });
 
-    // OG Site Name
+    // OG Site Name - using property attribute
     this.meta.updateTag({ property: 'og:site_name', content: config.siteName || 'Gilú Shop' });
   }
 
   /**
    * Set Twitter Card meta tags
    */
-  setTwitterCard(config: SeoConfig, cardType: 'summary' | 'summary_large_image' = 'summary_large_image'): void {
+  setTwitterCard(
+    config: TwitterCardConfig,
+    cardType: 'summary' | 'summary_large_image' = 'summary_large_image'
+  ): void {
     this.meta.updateTag({ name: 'twitter:card', content: cardType });
     this.meta.updateTag({ name: 'twitter:title', content: config.title });
     this.meta.updateTag({ name: 'twitter:description', content: config.description });
@@ -122,36 +134,65 @@ export class SeoService {
     if (config.image) {
       this.meta.updateTag({ name: 'twitter:image', content: config.image });
     }
+    if (config.site) {
+      this.meta.updateTag({ name: 'twitter:site', content: config.site });
+    }
+    if (config.creator) {
+      this.meta.updateTag({ name: 'twitter:creator', content: config.creator });
+    }
   }
 
   /**
-   * Add JSON-LD structured data schema
+   * Add JSON-LD structured data schema with unique ID for SSR compatibility
    */
-  setJsonLd(schema: JsonLdSchema): void {
-    if (!this.isBrowser) return;
-
-    // Remove existing JSON-LD scripts
-    this.removeJsonLd();
+  setJsonLd(schema: JsonLdSchema, id: string = 'seo-json-ld'): void {
+    // Remove existing JSON-LD script with same ID
+    const existing = this.document.getElementById(id);
+    if (existing) {
+      existing.remove();
+    }
 
     // Create new script element
-    const script = document.createElement('script');
+    const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(schema);
-    script.id = 'seo-json-ld';
+    script.id = id;
     
-    document.head.appendChild(script);
+    this.document.head.appendChild(script);
   }
 
   /**
-   * Remove JSON-LD structured data
+   * Remove JSON-LD structured data by ID
    */
-  removeJsonLd(): void {
-    if (!this.isBrowser) return;
-
-    const existingScript = document.getElementById('seo-json-ld');
+  removeJsonLd(id: string = 'seo-json-ld'): void {
+    const existingScript = this.document.getElementById(id);
     if (existingScript) {
       existingScript.remove();
     }
+  }
+
+  /**
+   * Set canonical URL for the page
+   */
+  setCanonicalUrl(url: string): void {
+    let link: HTMLLinkElement = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!link) {
+      link = this.document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(link);
+    }
+    link.setAttribute('href', url);
+  }
+
+  /**
+   * Set hreflang for Ecuador Spanish
+   */
+  setHreflang(url: string): void {
+    const link = this.document.createElement('link');
+    link.setAttribute('rel', 'alternate');
+    link.setAttribute('hreflang', 'es-EC');
+    link.setAttribute('href', url);
+    this.document.head.appendChild(link);
   }
 
   /**
@@ -189,6 +230,70 @@ export class SeoService {
       ...(product.sku && { 
         sku: product.sku
       })
+    };
+  }
+
+  /**
+   * Generate ProductList schema for product listing pages
+   */
+  generateProductListSchema(products: Array<{
+    id: number | string;
+    name: string;
+    url?: string;
+  }>): JsonLdSchema {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Catálogo de maquillaje — Gilú Shop',
+      description: 'Catálogo de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más.',
+      itemListElement: products.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.name,
+        url: p.url || `https://gilushop.store/product/${p.id}`
+      }))
+    };
+  }
+
+  /**
+   * Generate LocalBusiness/Store schema for Otavalo, Ecuador
+   */
+  generateLocalBusinessSchema(): JsonLdSchema {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Store',
+      name: 'Gilú Shop',
+      description: 'Tienda de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
+      url: 'https://gilushop.store',
+      image: 'https://gilushop.store/assets/image/gilu-update.png',
+      telephone: '+593982901603',
+      email: 'customers@gilushop.store',
+      priceRange: '$$',
+      currenciesAccepted: 'USD',
+      paymentAccepted: 'Cash, Credit Card, Transferencia',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Otavalo',
+        addressLocality: 'Otavalo',
+        addressRegion: 'Imbabura',
+        postalCode: '100201',
+        addressCountry: 'EC'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 0.2307,
+        longitude: -78.2622
+      },
+      openingHours: 'Mo-Sa 09:00-19:00',
+      areaServed: {
+        '@type': 'Country',
+        name: 'Ecuador'
+      },
+      sameAs: [
+        'https://www.instagram.com/gilushop',
+        'https://www.facebook.com/gilushop',
+        'https://wa.me/593982901603'
+      ]
     };
   }
 
