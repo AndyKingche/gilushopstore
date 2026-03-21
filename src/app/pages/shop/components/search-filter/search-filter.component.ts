@@ -90,4 +90,11 @@ export class SearchFilterComponent implements OnInit {
   getCategoryValue(category: Category): string {
     return category.id ? category.id.toString() : '';
   }
+
+  get filteredCategories(): Category[] {
+    const excludedNames = ['Ropa', 'SIN DEFINICION', 'CAMISETA NEON'];
+    return this.categories
+      .filter(cat => !excludedNames.includes(cat.categoryName))
+      .sort((a, b) => (a.categoryName || '').localeCompare(b.categoryName || ''));
+  }
 }

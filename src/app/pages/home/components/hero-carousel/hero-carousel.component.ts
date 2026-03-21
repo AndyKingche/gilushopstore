@@ -121,11 +121,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   }
 
   onCtaClick(slide: Slide): void {
-    if (slide.category && slide.category !== 'todo') {
-      this.router.navigate(['/shop'], { queryParams: { cat: slide.category } });
-    } else {
-      this.router.navigate(['/shop']);
-    }
+    this.router.navigate(['/shop']);
   }
 
   get currentSlideData(): Slide {

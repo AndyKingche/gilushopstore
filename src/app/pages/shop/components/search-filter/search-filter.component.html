@@ -20,6 +20,6 @@
   
   <select [formControl]="categoryControl" class="category-select">
     <option value="">Todas las categorías</option>
-    <option *ngFor="let cat of categories" [value]="getCategoryValue(cat)">{{ getCategoryLabel(cat) }}</option>
+    <option *ngFor="let cat of filteredCategories" [value]="getCategoryValue(cat)">{{ getCategoryLabel(cat) }}</option>
   </select>
 </div>
