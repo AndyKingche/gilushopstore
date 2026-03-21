@@ -6,5 +6,13 @@
     color: lighten($dark, 20%);
     margin-bottom: 12px;
     line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .plan-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
   }
 }

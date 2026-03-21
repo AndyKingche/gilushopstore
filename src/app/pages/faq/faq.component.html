@@ -1,6 +1,6 @@
 <div class="faq-page">
   <section class="faq-section">
-    <div class="container">
+    <div class="faq-fullwidth">
       <h2 class="section-title">Preguntas Frecuentes</h2>
       <p class="section-subtitle">Resolvemos tus dudas</p>
 
@@ -38,6 +38,30 @@
           </button>
           <div class="faq-answer" [class.active]="isActive(2)">
             <app-entrepreneur-boxes></app-entrepreneur-boxes>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" [class.active]="isActive(3)" (click)="toggleCollapse(3)">
+            <span>¿Puedo hacer un PEDIDO ESPECÍFICO de un producto?</span>
+            <svg class="arrow" [class.active]="isActive(3)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" [class.active]="isActive(3)">
+            <app-specific-order></app-specific-order>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" [class.active]="isActive(4)" (click)="toggleCollapse(4)">
+            <span>¿Puedo ARMAR MI PROPIO COMBO?</span>
+            <svg class="arrow" [class.active]="isActive(4)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" [class.active]="isActive(4)">
+            <app-custom-combo></app-custom-combo>
           </div>
         </div>
       </div>

@@ -1,0 +1,51 @@
+@import 'variables';
+
+.custom-combo {
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: $dark;
+    margin-bottom: 12px;
+    margin-top: 0;
+
+    svg {
+      color: $pink-primary;
+      flex-shrink: 0;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: lighten($dark, 20%);
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .contact-info {
+    font-size: 15px;
+    font-weight: 500;
+    color: $dark;
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba($pink-primary, 0.08);
+    border-radius: 8px;
+    border-left: 3px solid $pink-primary;
+
+    a {
+      color: $pink-primary;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

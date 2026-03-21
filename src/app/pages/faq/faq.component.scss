@@ -10,10 +10,24 @@
 .faq-section {
   padding: 80px 0;
   background: $white;
+
+  @include mobile {
+    padding: 40px 0;
+  }
+}
+
+.faq-fullwidth {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 24px;
+
+  @include mobile {
+    padding: 0 12px;
+  }
 }
 
 .faq-list {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -40,6 +54,11 @@
   font-weight: 600;
   color: $dark;
   transition: all $transition-fast;
+
+  @include mobile {
+    padding: 16px;
+    font-size: 14px;
+  }
 
   &:hover, &.active {
     background: $pink-primary;
@@ -72,10 +91,15 @@
   transition: max-height $transition-normal, padding $transition-normal;
 
   &.active {
-    max-height: 1000px;
+    max-height: 2000px;
     padding: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include mobile {
+      padding: 16px;
+      display: block;
+    }
   }
 }
