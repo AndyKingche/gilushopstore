@@ -1,0 +1,100 @@
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/mixins';
+
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $pink-light 0%, $white 100%);
+  padding: 20px;
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.error-code {
+  font-family: $font-display;
+  font-size: clamp(80px, 15vw, 150px);
+  font-weight: 700;
+  color: $pink-primary;
+  line-height: 1;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 20px rgba(217, 95, 128, 0.3);
+}
+
+h1 {
+  font-family: $font-display;
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 600;
+  color: $dark;
+  margin-bottom: 16px;
+}
+
+p {
+  font-size: 16px;
+  color: lighten($dark, 30%);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    svg {
+      flex-shrink: 0;
+    }
+  }
+  
+  .btn-primary {
+    background: $pink-primary;
+    color: $white;
+    border: none;
+    
+    &:hover {
+      background: darken($pink-primary, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(217, 95, 128, 0.3);
+    }
+  }
+  
+  .btn-secondary {
+    background: $white;
+    color: $pink-primary;
+    border: 2px solid $pink-primary;
+    
+    &:hover {
+      background: $pink-primary;
+      color: $white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(217, 95, 128, 0.3);
+    }
+  }
+}
+
+@include mobile {
+  .actions {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

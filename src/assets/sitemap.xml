@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
   <!-- Home Page -->
   <url>
     <loc>https://gilushop.store/</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gilushop.store/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Beauty Shop</image:title>
+      <image:caption>Tu tienda de maquillaje 100% original en Otavalo Ecuador</image:caption>
+    </image:image>
   </url>
   
   <!-- Shop Page -->
   <url>
     <loc>https://gilushop.store/shop</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://gilushop.store/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Productos</image:title>
+      <image:caption>Explora nuestra colección de maquillaje original</image:caption>
+    </image:image>
   </url>
   
   <!-- About Page -->
   <url>
     <loc>https://gilushop.store/about</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://gilushop.store/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Sobre Nosotros</image:title>
+      <image:caption>Conoce la historia de Gilú Beauty Shop</image:caption>
+    </image:image>
   </url>
   
   <!-- FAQ Page -->
   <url>
     <loc>https://gilushop.store/faq</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://gilushop.store/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Preguntas Frecuentes</image:title>
+      <image:caption>Encuentra respuestas a tus preguntas</image:caption>
+    </image:image>
   </url>
   
 </urlset>

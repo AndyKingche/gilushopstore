@@ -2,9 +2,25 @@
 User-agent: *
 Allow: /
 
+# Disallow auth and admin paths
+Disallow: /auth/
+Disallow: /api/
+Disallow: /*?*
+Disallow: /*#*
+
+# Allow important resources
+Allow: /assets/
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+
 # Sitemap
 Sitemap: https://gilushop.store/sitemap.xml
 
-# Disallow admin and auth paths
-Disallow: /auth/
-Disallow: /api/
+# Crawl-delay for polite bots
+Crawl-delay: 1

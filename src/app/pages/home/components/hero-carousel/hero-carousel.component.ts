@@ -42,9 +42,9 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   slides: Slide[] = [
     { title: 'Tu tienda de Maquillaje Favorita', subtitle: 'Productos 100% Originales', cta: 'Ver colección', category: 'todo' },
     { title: 'Nueva colección Maybelline', subtitle: 'Bases Fresh Tint', cta: 'Ver colección', category: 'bases' },
-    { title: 'E.l.f. Cosmetics', subtitle: 'Lip oil que duran todo el día', cta: 'Descubre más', category: 'labios' },
-    { title: 'Primers para piel perfecta', subtitle: 'Maybelline & e.l.f., NYX', cta: 'Ver primers', category: 'primers' },
-    { title: 'Semana Gilú 💕', subtitle: 'Hasta el 10% OFF en productos seleccionados', cta: 'Aprovechar', category: 'oferta' },
+    { title: 'E.l.f.', subtitle: 'Lip oil que duran todo el día', cta: 'Descubre más', category: 'labios' },
+    { title: 'Primers para piel perfecta', subtitle: 'Maybelline & E.L.F., NYX', cta: 'Ver primers', category: 'primers' },
+    { title: 'Semana Gilú 💕', subtitle: 'Hasta el 10% OFF en productos seleccionados. No es todos los días… pero cuando hay promos, te avisamos en nuestras redes.', cta: 'Aprovechar', category: 'oferta' },
     { title: 'Skin Care Coreano', subtitle: 'Cuida tu piel, ama tu piel', cta: 'Ver skincare', category: 'skincare' },
     { title: 'Delineadores y Rimeles', subtitle: 'Ojos que hablan', cta: 'Ver productos', category: 'ojos' }
   ];
@@ -64,10 +64,11 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   getRandomImageUrl(category: string): string {
     const categoryImages: { [key: string]: string } = {
+      todo: 'https://i.ibb.co/4ggrPtKf/gilu-wallpaper-home.png',
       bases: 'https://images.pexels.com/photos/4620838/pexels-photo-4620838.jpeg',
       labios: 'https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg',
       primers: 'https://images.pexels.com/photos/30836149/pexels-photo-30836149.jpeg',
-      oferta: '',
+      oferta: 'https://i.ibb.co/6R07PJHs/gilu-week.png',
       skincare: 'https://images.pexels.com/photos/5927811/pexels-photo-5927811.jpeg',
       ojos: 'https://images.pexels.com/photos/7712438/pexels-photo-7712438.jpeg'
     };

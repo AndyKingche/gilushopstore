@@ -5,8 +5,13 @@
          [class.active]="i === currentSlide"
          [@slideAnimation]="i === currentSlide ? 'active' : 'inactive'">
        <div class="slide-background" [style.background-image]="'url(' + getRandomImageUrl(slide.category) + ')'" [style.transform]="'translateY(' + backgroundParallax + 'px)'"></div>
-      <div class="slide-content">
+      <div class="slide-content" [class.todo-category]="slide.category === 'todo'">
          <h1 class="slide-title" [style.transform]="'translateY(' + titleParallax + 'px)'">{{ slide.title }}</h1>
+         <img *ngIf="slide.category === 'todo'"
+              src="https://i.ibb.co/n8CqzLnX/gilu-contour-1.png"
+              alt="Gilú Contour"
+              class="todo-image"
+              [style.transform]="'translateY(' + subtitleParallax + 'px)'">
          <p class="slide-subtitle" [style.transform]="'translateY(' + subtitleParallax + 'px)'">{{ slide.subtitle }}</p>
          <button class="slide-cta" [style.transform]="'translateY(' + buttonParallax + 'px)'" (click)="onCtaClick(slide)">{{ slide.cta }}</button>
       </div>

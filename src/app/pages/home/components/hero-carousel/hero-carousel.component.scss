@@ -59,6 +59,31 @@
   color: $white;
   padding: 0 20px;
   max-width: 700px;
+  
+  &.todo-category {
+    color: #FFFFFF;
+    
+    .slide-title {
+      font-size: clamp(28px, 4.5vw, 50px);
+    }
+    
+    .slide-subtitle {
+      font-size: clamp(14px, 1.8vw, 20px);
+    }
+    
+    .todo-image {
+      max-width: 100%;
+      height: auto;
+      max-height: 70px;
+      margin: 16px auto;
+      display: block;
+      will-change: transform;
+      
+      @include mobile {
+        max-height: 42px;
+      }
+    }
+  }
 }
 
 .slide-title {
