@@ -10,7 +10,7 @@
 
   <div class="product-grid" *ngIf="products && products.length > 0">
     <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct" appScrollAnimation [style.animationDelay]="getAnimationDelay(i)">
-      <div class="card-image">
+      <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null">
         <span class="brand-badge">{{ product.brand }}</span>
         <span *ngIf="!product.inStock" class="out-badge">Agotado</span>
       </div>

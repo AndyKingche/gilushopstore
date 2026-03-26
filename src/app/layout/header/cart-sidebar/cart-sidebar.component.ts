@@ -91,11 +91,6 @@ export class CartSidebarComponent implements OnInit, OnChanges {
   clearCart(): void { this.cartService.clearCart(); }
 
   checkout(): void {
-    if (!this.cartService.isAuthenticated()) {
-      this.onClose();
-      this.router.navigate(['/auth/login']);
-      return;
-    }
     this.cartService.openWhatsApp();
   }
 }
