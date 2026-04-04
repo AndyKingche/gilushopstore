@@ -68,15 +68,19 @@
 
   .card-image {
     height: 200px;
+    width: 100%;
     @include pink-gradient-placeholder;
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     padding: 12px;
-    background-size: cover;
+
+    
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #ffffff;
   }
 
   .brand-badge {
