@@ -122,8 +122,8 @@ export class ShopComponent implements OnInit, OnDestroy {
       title: 'Tienda de Maquillaje Original | Gilú Shop Ecuador',
       description: 'Explora nuestra tienda de maquillaje 100% original. Encuentra bases, labiales, correctores, skincare coreano y más de las mejores marcas internacionales.',
       keywords: 'tienda maquillaje, productos belleza, bases, labiales, corretores, skincare, Ecuador, online',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: 'https://gilushop.store/shop',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com/shop',
       type: 'website',
       locale: 'es_EC',
       siteName: 'Gilú Shop'
@@ -132,7 +132,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.seoService.setTwitterCard({
       title: 'Tienda de Maquillaje Original | Gilú Shop',
       description: 'Explora nuestra tienda de maquillaje 100% original. Las mejores marcas internacionales.',
-      image: 'https://gilushop.store/assets/image/gilu-update.png'
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png'
     });
 
     // Add WebSite schema with search capability
@@ -146,8 +146,8 @@ export class ShopComponent implements OnInit, OnDestroy {
       title: `Buscar: ${searchQuery} | Gilú Shop Ecuador`,
       description: `Resultados de búsqueda para ${searchQuery} en Gilú Shop. Maquillaje original de las mejores marcas.`,
       keywords: `buscar, ${searchQuery}, maquillaje, Ecuador`,
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: `https://gilushop.store/shop?q=${encodeURIComponent(searchQuery)}`,
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: `https://gilu-shop.com/shop?q=${encodeURIComponent(searchQuery)}`,
       type: 'website'
     });
   }
@@ -159,8 +159,8 @@ export class ShopComponent implements OnInit, OnDestroy {
         title: `${category.categoryName} | Gilú Shop Ecuador`,
         description: `Explora nuestra colección de ${category.categoryName}. Maquillaje 100% original de las mejores marcas.`,
         keywords: `${category.categoryName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
-        image: 'https://gilushop.store/assets/image/gilu-update.png',
-        url: `https://gilushop.store/shop?cat=${categoryId}`,
+        image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+        url: `https://gilu-shop.com/shop?cat=${categoryId}`,
         type: 'website'
       });
     }

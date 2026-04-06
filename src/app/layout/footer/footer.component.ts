@@ -9,7 +9,7 @@ export class FooterComponent {
   // Placeholder contact info - replace with actual data
   address = 'Av. Quito y Atahualpa, Otavalo - Imbabura, Ecuador';
   whatsapp = '+593 98 290 1603';
-  email = 'customers@gilushop.store';
+  email = 'customers@gilu-shop.com';
   companyName = 'IZENSHY';
   
   socialLinks = [

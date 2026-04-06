@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
       title: 'Gilú Shop - Maquillaje Original en Ecuador | Maybelline, e.l.f, NYX',
       description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador. Encuentra las mejores marcas: Maybelline, E.l.f. Cosmetics, Loreal, NYX, Huda Beauty, Too Faced, Victoria Secret y más.',
       keywords: 'maquillaje, cosmetics, Ecuador, Otavalo, Maybelline, e.l.f, Loreal, NYX, Huda Beauty, tienda online, beauty shop',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: 'https://gilushop.store',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com',
       type: 'website',
       locale: 'es_EC',
       siteName: 'Gilú Shop'
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.seoService.setTwitterCard({
       title: 'Gilú Shop - Maquillaje Original en Ecuador',
       description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador. Las mejores marcas internacionales.',
-      image: 'https://gilushop.store/assets/image/gilu-update.png'
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png'
     });
 
     // Generate JSON-LD structured data
@@ -40,10 +40,10 @@ export class HomeComponent implements OnInit {
       this.seoService.generateStoreSchema({
         name: 'Gilú Shop',
         description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador',
-        image: 'https://gilushop.store/assets/image/gilu-update.png',
-        url: 'https://gilushop.store',
+        image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+        url: 'https://gilu-shop.com',
         telephone: '+593-99-123-4567',
-        email: 'contacto@gilushop.store',
+        email: 'contacto@gilu-shop.com',
         address: {
           streetAddress: 'Calle Principal',
           addressLocality: 'Otavalo',

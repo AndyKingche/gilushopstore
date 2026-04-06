@@ -17,8 +17,8 @@ export class BrandStoryComponent implements OnInit {
       title: 'Nuestra Historia - Gilú Shop | Tienda de Maquillaje Original en Ecuador',
       description: 'Gilú Shop nació del amor por el maquillaje. Somos la primera tienda en Otavalo, Ecuador especializada en maquillaje de marcas internacionales originales como Maybelline, e.l.f., NYX, Loreal, Huda Beauty, Rare Beauty y más.',
       keywords: 'historia Gilú Shop, tienda maquillaje Otavalo, maquillaje Ecuador, primera tienda maquillaje Otavalo, marcas maquillaje originales, Maybelline Ecuador, elf cosmetics, tienda belleza Ecuador',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: 'https://gilushop.store/about',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com/about',
       type: 'website',
       siteName: 'Gilú Shop'
     });
@@ -27,10 +27,10 @@ export class BrandStoryComponent implements OnInit {
     this.seoService.setTwitterCard({
       title: 'Nuestra Historia - Gilú Shop',
       description: 'Somos la primera tienda en Otavalo, Ecuador especializada en maquillaje de marcas internacionales originales.',
-      image: 'https://gilushop.store/assets/image/gilu-update.png'
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png'
     });
 
     // Set canonical URL for about page
-    this.seoService.setCanonicalUrl('https://gilushop.store/about');
+    this.seoService.setCanonicalUrl('https://gilu-shop.com/about');
   }
 }

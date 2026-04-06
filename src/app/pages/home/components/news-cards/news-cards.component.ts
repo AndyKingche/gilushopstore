@@ -24,8 +24,8 @@ export class NewsCardsComponent implements OnInit {
       title: 'Novedades y Promociones Maquillaje Ecuador - Gilú Shop Otavalo',
       description: 'Descubre las últimas novedades en maquillaje y promociones especiales en Gilú Shop, Otavalo Ecuador. Maybelline, e.l.f., NYX, Huda Beauty con envío a todo Ecuador.',
       keywords: 'novedades maquillaje Ecuador, promociones cosmetics Otavalo, productos nuevos belleza Ecuador, arrivals maquillaje Ecuador, ofertas especiales Gilú Shop, descuentos maquillaje Ecuador, nuevos productos beauty Ecuador',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: 'https://gilushop.store/',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com/',
       type: 'website',
       siteName: 'Gilú Shop'
     });
@@ -34,11 +34,11 @@ export class NewsCardsComponent implements OnInit {
     this.seoService.setTwitterCard({
       title: 'Novedades y Promociones - Gilú Shop',
       description: 'Descubre las últimas novedades en maquillaje y promociones especiales en Ecuador.',
-      image: 'https://gilushop.store/assets/image/gilu-update.png'
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png'
     });
 
     // Set canonical URL for homepage
-    this.seoService.setCanonicalUrl('https://gilushop.store/');
+    this.seoService.setCanonicalUrl('https://gilu-shop.com/');
   }
 
   @ViewChild('slider') slider!: ElementRef;

@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
     this.seoService.setJsonLd(this.seoService.generateLocalBusinessSchema(), 'schema-local-business');
     
     // Set hreflang for Ecuador Spanish
-    this.seoService.setHreflang('https://gilushop.store');
+    this.seoService.setHreflang('https://gilu-shop.com');
     
     // Set canonical URL for homepage
-    this.seoService.setCanonicalUrl('https://gilushop.store');
+    this.seoService.setCanonicalUrl('https://gilu-shop.com');
   }
 }

@@ -20,7 +20,7 @@ Allow: /*.svg$
 Allow: /*.ico$
 
 # Sitemap
-Sitemap: https://gilushop.store/sitemap.xml
+Sitemap: https://gilu-shop.com/sitemap.xml
 
 # Crawl-delay for polite bots
 Crawl-delay: 1

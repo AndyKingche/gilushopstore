@@ -250,7 +250,7 @@ export class SeoService {
         '@type': 'ListItem',
         position: i + 1,
         name: p.name,
-        url: p.url || `https://gilushop.store/product/${p.id}`
+        url: p.url || `https://gilu-shop.com/product/${p.id}`
       }))
     };
   }
@@ -264,10 +264,10 @@ export class SeoService {
       '@type': 'Store',
       name: 'Gilú Shop',
       description: 'Tienda de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
-      url: 'https://gilushop.store',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
       telephone: '+593982901603',
-      email: 'customers@gilushop.store',
+      email: 'customers@gilu-shop.com',
       priceRange: '$$',
       currenciesAccepted: 'USD',
       paymentAccepted: 'Cash, Credit Card, Transferencia',
@@ -325,9 +325,9 @@ export class SeoService {
       name: store.name,
       description: store.description,
       image: store.image,
-      url: store.url || 'https://gilushop.store',
+      url: store.url || 'https://gilu-shop.com',
       telephone: store.telephone || '+593-2-123-4567',
-      email: store.email || 'contacto@gilushop.store',
+      email: store.email || 'contacto@gilu-shop.com',
       address: store.address ? {
         '@type': 'PostalAddress',
         streetAddress: store.address.streetAddress,
@@ -372,8 +372,8 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Gilú Shop',
-      url: 'https://gilushop.store',
-      logo: 'https://gilushop.store/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com',
+      logo: 'https://gilu-shop.com/assets/image/gilu-update.png',
       description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador. Maybelline, E.l.f. Cosmetics, Loreal, NYX, Huda Beauty, y más.',
       sameAs: [
         'https://www.facebook.com/gilushop',
@@ -397,12 +397,12 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Gilú Shop',
-      url: 'https://gilushop.store',
+      url: 'https://gilu-shop.com',
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://gilushop.store/shop?q={search_term_string}'
+          urlTemplate: 'https://gilu-shop.com/shop?q={search_term_string}'
         },
         'query-input': 'required name=search_term_string'
       }

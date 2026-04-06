@@ -67,8 +67,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
       title: 'Maquillaje Original Ecuador - Gilú Shop | Maybelline, e.l.f., NYX Otavalo',
       description: 'Compra maquillaje 100% original en Gilú Shop, Otavalo Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty con envío a todo Ecuador. Precios accesibles, productos garantizados.',
       keywords: 'maquillaje original Otavalo, comprar maquillaje Ecuador, Maybelline Ecuador precio, elf cosmetics Ecuador, NYX Ecuador, Huda Beauty Ecuador, tienda maquillaje Otavalo, maquillaje envío Ecuador, cosméticos originales Ecuador, Loreal Ecuador, Rare Beauty Ecuador, Fenty Beauty Ecuador, Dior Ecuador, Got 2b Ecuador',
-      image: 'https://gilushop.store/assets/image/gilu-update.png',
-      url: 'https://gilushop.store/shop',
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: 'https://gilu-shop.com/shop',
       type: 'website',
       siteName: 'Gilú Shop'
     });
@@ -80,7 +80,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     });
 
     // Set canonical URL for shop page
-    this.seoService.setCanonicalUrl('https://gilushop.store/shop');
+    this.seoService.setCanonicalUrl('https://gilu-shop.com/shop');
 
     if (this.initialLoad) {
       this.loadInitialProducts();
@@ -408,7 +408,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
       const productSchema = this.seoService.generateProductSchema({
         name: firstProduct.name,
         description: firstProduct.description,
-        image: firstProduct.image || 'https://gilushop.store/assets/image/gilu-update.png',
+        image: firstProduct.image || 'https://gilu-shop.com/assets/image/gilu-update.png',
         price: firstProduct.price,
         currency: 'USD',
         brand: firstProduct.brand,
