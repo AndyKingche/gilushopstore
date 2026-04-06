@@ -290,8 +290,8 @@ export class SeoService {
         name: 'Ecuador'
       },
       sameAs: [
-        'https://www.instagram.com/gilushop',
-        'https://www.facebook.com/gilushop',
+        'https://www.instagram.com/gilu.ec',
+        'https://www.facebook.com/share/1AWFit8kx4/?mibextid=wwXIfr',
         'https://wa.me/593982901603'
       ]
     };
