@@ -14,7 +14,7 @@ scp dist/gilustore/*.html root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp dist/gilustore/*.txt root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp dist/gilustore/*.xml root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp -r dist/gilustore/assets root@$IP:/var/www/gilushop/dist/gilustore/browser/
-scp dist/gilustore/favicon.ico root@$IP:/var/www/gilushop/dist/gilustore/browser/
+scp dist/gilustore/gilu-favicon.ico root@$IP:/var/www/gilushop/dist/gilustore/browser/
 
 echo "Uploading server files..."
 scp -r dist/gilustore/server/* root@$IP:/var/www/gilushop/dist/gilustore/server/

@@ -28,11 +28,45 @@ export interface JsonLdSchema {
   [key: string]: any;
 }
 
+export interface SeoGlobalConfig {
+  siteName: string;
+  defaultLocale: string;
+  defaultCurrency: string;
+  baseUrl: string;
+  defaultImage: string;
+  defaultDescription: string;
+  contactEmail: string;
+  contactPhone: string;
+  socialLinks: {
+    facebook: string;
+    instagram: string;
+    whatsapp: string;
+  };
+  address: {
+    streetAddress: string;
+    addressLocality: string;
+    addressRegion: string;
+    postalCode: string;
+    addressCountry: string;
+    latitude: number;
+    longitude: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SeoService {
   private isBrowser: boolean;
+  private globalConfig: SeoGlobalConfig;
+  private productSchemaCache = new Map<string, JsonLdSchema>();
+  private productListSchemaCache = new Map<string, JsonLdSchema>();
+  private localBusinessSchemaCache: JsonLdSchema | null = null;
+  private storeSchemaCache = new Map<string, JsonLdSchema>();
+  private breadcrumbSchemaCache = new Map<string, JsonLdSchema>();
+  private organizationSchemaCache: JsonLdSchema | null = null;
+  private webSiteSchemaCache: JsonLdSchema | null = null;
+  private faqSchemaCache = new Map<string, JsonLdSchema>();
 
   constructor(
     private title: Title,
@@ -41,6 +75,97 @@ export class SeoService {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+    this.globalConfig = this.getDefaultGlobalConfig();
+  }
+
+  /**
+   * Get default global configuration
+   */
+  private getDefaultGlobalConfig(): SeoGlobalConfig {
+    return {
+      siteName: 'Gilú Shop',
+      defaultLocale: 'es_EC',
+      defaultCurrency: 'USD',
+      baseUrl: 'https://gilu-shop.com',
+      defaultImage: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      defaultDescription: 'Tienda de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
+      contactEmail: 'customers@gilu-shop.com',
+      contactPhone: '+593982901603',
+      socialLinks: {
+        facebook: 'https://www.facebook.com/share/1AWFit8kx4/?mibextid=wwXIfr',
+        instagram: 'https://www.instagram.com/gilu.ec',
+        whatsapp: 'https://wa.me/593982901603'
+      },
+      address: {
+        streetAddress: 'Otavalo',
+        addressLocality: 'Otavalo',
+        addressRegion: 'Imbabura',
+        postalCode: '100201',
+        addressCountry: 'EC',
+        latitude: 0.2307,
+        longitude: -78.2622
+      }
+    };
+  }
+
+  /**
+   * Set global configuration for SEO service
+   * @param config Global configuration object
+   */
+  setGlobalConfig(config: Partial<SeoGlobalConfig>): void {
+    this.globalConfig = { ...this.getDefaultGlobalConfig(), ...config };
+    // Clear caches when config changes
+    this.clearAllCaches();
+  }
+
+  /**
+   * Get current global configuration
+   */
+  getGlobalConfig(): SeoGlobalConfig {
+    return { ...this.globalConfig };
+  }
+
+  /**
+   * Browser guard wrapper for DOM operations
+   * @param operation Function to execute only in browser
+   */
+  private guardBrowser<T>(operation: () => T): T | void {
+    if (this.isBrowser) {
+      try {
+        return operation();
+      } catch (error) {
+        console.error('[SEO] Browser operation failed:', error);
+      }
+    } else {
+      console.warn('[SEO] Skipping DOM operation in SSR mode');
+    }
+  }
+
+  /**
+   * Validate string input
+   * @param value String to validate
+   * @param fieldName Field name for error logging
+   */
+  private isValidString(value: string | undefined | null, fieldName: string): boolean {
+    if (typeof value !== 'string' || value.trim().length === 0) {
+      console.warn(`[SEO] Invalid ${fieldName}: must be a non-empty string`);
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Clear all schema caches
+   */
+  private clearAllCaches(): void {
+    this.productSchemaCache.clear();
+    this.productListSchemaCache.clear();
+    this.localBusinessSchemaCache = null;
+    this.storeSchemaCache.clear();
+    this.breadcrumbSchemaCache.clear();
+    this.organizationSchemaCache = null;
+    this.webSiteSchemaCache = null;
+    this.faqSchemaCache.clear();
   }
 
   /**
@@ -64,8 +189,12 @@ export class SeoService {
 
   /**
    * Set page title
+   * @param title Page title (required, non-empty string)
    */
   setTitle(title: string): void {
+    if (!this.isValidString(title, 'title')) {
+      return;
+    }
     this.title.setTitle(title);
   }
 
@@ -78,15 +207,23 @@ export class SeoService {
 
   /**
    * Set meta description
+   * @param description Meta description (required, non-empty string)
    */
   setMetaDescription(description: string): void {
+    if (!this.isValidString(description, 'description')) {
+      return;
+    }
     this.meta.updateTag({ name: 'description', content: description });
   }
 
   /**
    * Set meta keywords
+   * @param keywords Meta keywords (required, non-empty string)
    */
   setMetaKeywords(keywords: string): void {
+    if (!this.isValidString(keywords, 'keywords')) {
+      return;
+    }
     this.meta.updateTag({ name: 'keywords', content: keywords });
   }
 
@@ -95,18 +232,22 @@ export class SeoService {
    */
   private setOpenGraphTags(config: SeoConfig): void {
     // OG Title - using property attribute
-    this.meta.updateTag({ property: 'og:title', content: config.title });
+    if (this.isValidString(config.title, 'og:title')) {
+      this.meta.updateTag({ property: 'og:title', content: config.title });
+    }
 
     // OG Description - using property attribute
-    this.meta.updateTag({ property: 'og:description', content: config.description });
+    if (this.isValidString(config.description, 'og:description')) {
+      this.meta.updateTag({ property: 'og:description', content: config.description });
+    }
 
     // OG Image - using property attribute
-    if (config.image) {
+    if (config.image && this.isValidString(config.image, 'og:image')) {
       this.meta.updateTag({ property: 'og:image', content: config.image });
     }
 
     // OG URL - using property attribute
-    if (config.url) {
+    if (config.url && this.isValidString(config.url, 'og:url')) {
       this.meta.updateTag({ property: 'og:url', content: config.url });
     }
 
@@ -114,89 +255,136 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:type', content: config.type || 'website' });
 
     // OG Locale - using property attribute
-    this.meta.updateTag({ property: 'og:locale', content: config.locale || 'es_EC' });
+    this.meta.updateTag({ property: 'og:locale', content: config.locale || this.globalConfig.defaultLocale });
 
     // OG Site Name - using property attribute
-    this.meta.updateTag({ property: 'og:site_name', content: config.siteName || 'Gilú Shop' });
+    this.meta.updateTag({ property: 'og:site_name', content: config.siteName || this.globalConfig.siteName });
   }
 
   /**
    * Set Twitter Card meta tags
+   * @param config Twitter card configuration
+   * @param cardType Twitter card type
    */
   setTwitterCard(
     config: TwitterCardConfig,
     cardType: 'summary' | 'summary_large_image' = 'summary_large_image'
   ): void {
     this.meta.updateTag({ name: 'twitter:card', content: cardType });
-    this.meta.updateTag({ name: 'twitter:title', content: config.title });
-    this.meta.updateTag({ name: 'twitter:description', content: config.description });
-    
-    if (config.image) {
+
+    if (this.isValidString(config.title, 'twitter:title')) {
+      this.meta.updateTag({ name: 'twitter:title', content: config.title });
+    }
+
+    if (this.isValidString(config.description, 'twitter:description')) {
+      this.meta.updateTag({ name: 'twitter:description', content: config.description });
+    }
+
+    if (config.image && this.isValidString(config.image, 'twitter:image')) {
       this.meta.updateTag({ name: 'twitter:image', content: config.image });
     }
-    if (config.site) {
+    if (config.site && this.isValidString(config.site, 'twitter:site')) {
       this.meta.updateTag({ name: 'twitter:site', content: config.site });
     }
-    if (config.creator) {
+    if (config.creator && this.isValidString(config.creator, 'twitter:creator')) {
       this.meta.updateTag({ name: 'twitter:creator', content: config.creator });
     }
   }
 
   /**
    * Add JSON-LD structured data schema with unique ID for SSR compatibility
+   * @param schema JSON-LD schema object
+   * @param id Unique identifier for the script element
    */
   setJsonLd(schema: JsonLdSchema, id: string = 'seo-json-ld'): void {
-    // Remove existing JSON-LD script with same ID
-    const existing = this.document.getElementById(id);
-    if (existing) {
-      existing.remove();
+    if (!schema || typeof schema !== 'object') {
+      console.warn('[SEO] Invalid schema: must be a valid object');
+      return;
     }
 
-    // Create new script element
-    const script = this.document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(schema);
-    script.id = id;
-    
-    this.document.head.appendChild(script);
+    this.guardBrowser(() => {
+      // Remove existing JSON-LD script with same ID
+      const existing = this.document.getElementById(id);
+      if (existing) {
+        existing.remove();
+      }
+
+      // Create new script element
+      const script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(schema);
+      script.id = id;
+
+      this.document.head.appendChild(script);
+    });
   }
 
   /**
    * Remove JSON-LD structured data by ID
+   * @param id Unique identifier for the script element
    */
   removeJsonLd(id: string = 'seo-json-ld'): void {
-    const existingScript = this.document.getElementById(id);
-    if (existingScript) {
-      existingScript.remove();
+    if (!this.isValidString(id, 'json-ld id')) {
+      return;
     }
+
+    this.guardBrowser(() => {
+      const existingScript = this.document.getElementById(id);
+      if (existingScript) {
+        existingScript.remove();
+      }
+    });
   }
 
   /**
    * Set canonical URL for the page
+   * @param url Canonical URL (required, non-empty string)
    */
   setCanonicalUrl(url: string): void {
-    let link: HTMLLinkElement = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-    if (!link) {
-      link = this.document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      this.document.head.appendChild(link);
+    if (!this.isValidString(url, 'canonical URL')) {
+      return;
     }
-    link.setAttribute('href', url);
+
+    this.guardBrowser(() => {
+      let link: HTMLLinkElement = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+      if (!link) {
+        link = this.document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        this.document.head.appendChild(link);
+      }
+      link.setAttribute('href', url);
+    });
   }
 
   /**
    * Set hreflang for Ecuador Spanish
+   * @param url URL for hreflang (required, non-empty string)
    */
   setHreflang(url: string): void {
-    const link = this.document.createElement('link');
-    link.setAttribute('rel', 'alternate');
-    link.setAttribute('hreflang', 'es-EC');
-    link.setAttribute('href', url);
-    this.document.head.appendChild(link);
+    if (!this.isValidString(url, 'hreflang URL')) {
+      return;
+    }
+
+    this.guardBrowser(() => {
+      // Check if hreflang for es-EC already exists
+      const existing = this.document.querySelector('link[rel="alternate"][hreflang="es-EC"]') as HTMLLinkElement;
+      if (existing) {
+        existing.setAttribute('href', url);
+        return;
+      }
+
+      const link = this.document.createElement('link');
+      link.setAttribute('rel', 'alternate');
+      link.setAttribute('hreflang', 'es-EC');
+      link.setAttribute('href', url);
+      this.document.head.appendChild(link);
+    });
   }
 
   /**
    * Generate Product schema for structured data
+   * @param product Product data object
+   * @returns Cached or newly generated Product schema
    */
   generateProductSchema(product: {
     name: string;
@@ -208,7 +396,35 @@ export class SeoService {
     availability?: string;
     sku?: string;
   }): JsonLdSchema {
-    return {
+    // Validate required fields
+    if (!this.isValidString(product.name, 'product name') ||
+        !this.isValidString(product.description, 'product description') ||
+        !this.isValidString(product.image, 'product image') ||
+        typeof product.price !== 'number' || product.price < 0) {
+      console.warn('[SEO] Invalid product data for schema generation');
+      return {} as JsonLdSchema;
+    }
+
+    // Create cache key
+    const cacheKey = JSON.stringify({
+      name: product.name,
+      description: product.description,
+      image: product.image,
+      price: product.price,
+      currency: product.currency || this.globalConfig.defaultCurrency,
+      brand: product.brand,
+      availability: product.availability,
+      sku: product.sku
+    });
+
+    // Check cache
+    const cached = this.productSchemaCache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: product.name,
@@ -217,72 +433,118 @@ export class SeoService {
       offers: {
         '@type': 'Offer',
         price: product.price,
-        priceCurrency: product.currency || 'USD',
+        priceCurrency: product.currency || this.globalConfig.defaultCurrency,
         availability: product.availability || 'https://schema.org/InStock',
         itemCondition: 'https://schema.org/NewCondition'
       },
-      ...(product.brand && { 
+      ...(product.brand && {
         brand: {
           '@type': 'Brand',
           name: product.brand
         }
       }),
-      ...(product.sku && { 
+      ...(product.sku && {
         sku: product.sku
       })
     };
+
+    // Cache and return
+    this.productSchemaCache.set(cacheKey, schema);
+    return schema;
   }
 
   /**
    * Generate ProductList schema for product listing pages
+   * @param products Array of product objects
+   * @returns Cached or newly generated ProductList schema
    */
   generateProductListSchema(products: Array<{
     id: number | string;
     name: string;
     url?: string;
   }>): JsonLdSchema {
-    return {
+    // Validate products array
+    if (!Array.isArray(products) || products.length === 0) {
+      console.warn('[SEO] Invalid products array for ProductList schema');
+      return {} as JsonLdSchema;
+    }
+
+    // Validate each product
+    for (const product of products) {
+      if (!this.isValidString(product.name, 'product name') ||
+          (typeof product.id !== 'number' && typeof product.id !== 'string')) {
+        console.warn('[SEO] Invalid product data in products array');
+        return {} as JsonLdSchema;
+      }
+    }
+
+    // Create cache key
+    const cacheKey = JSON.stringify(products.map(p => ({
+      id: p.id,
+      name: p.name,
+      url: p.url || `${this.globalConfig.baseUrl}/product/${p.id}`
+    })));
+
+    // Check cache
+    const cached = this.productListSchemaCache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
-      name: 'Catálogo de maquillaje — Gilú Shop',
-      description: 'Catálogo de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más.',
+      name: `Catálogo de maquillaje — ${this.globalConfig.siteName}`,
+      description: this.globalConfig.defaultDescription,
       itemListElement: products.map((p, i) => ({
         '@type': 'ListItem',
         position: i + 1,
         name: p.name,
-        url: p.url || `https://gilu-shop.com/product/${p.id}`
+        url: p.url || `${this.globalConfig.baseUrl}/product/${p.id}`
       }))
     };
+
+    // Cache and return
+    this.productListSchemaCache.set(cacheKey, schema);
+    return schema;
   }
 
   /**
    * Generate LocalBusiness/Store schema for Otavalo, Ecuador
+   * @returns Cached or newly generated LocalBusiness schema
    */
   generateLocalBusinessSchema(): JsonLdSchema {
-    return {
+    // Check cache
+    if (this.localBusinessSchemaCache) {
+      return this.localBusinessSchemaCache;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'Store',
-      name: 'Gilú Shop',
-      description: 'Tienda de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
-      url: 'https://gilu-shop.com',
-      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
-      telephone: '+593982901603',
-      email: 'customers@gilu-shop.com',
+      name: this.globalConfig.siteName,
+      description: this.globalConfig.defaultDescription,
+      url: this.globalConfig.baseUrl,
+      image: this.globalConfig.defaultImage,
+      telephone: this.globalConfig.contactPhone,
+      email: this.globalConfig.contactEmail,
       priceRange: '$$',
-      currenciesAccepted: 'USD',
+      currenciesAccepted: this.globalConfig.defaultCurrency,
       paymentAccepted: 'Cash, Credit Card, Transferencia',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Otavalo',
-        addressLocality: 'Otavalo',
-        addressRegion: 'Imbabura',
-        postalCode: '100201',
-        addressCountry: 'EC'
+        streetAddress: this.globalConfig.address.streetAddress,
+        addressLocality: this.globalConfig.address.addressLocality,
+        addressRegion: this.globalConfig.address.addressRegion,
+        postalCode: this.globalConfig.address.postalCode,
+        addressCountry: this.globalConfig.address.addressCountry
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 0.2307,
-        longitude: -78.2622
+        latitude: this.globalConfig.address.latitude,
+        longitude: this.globalConfig.address.longitude
       },
       openingHours: 'Mo-Sa 09:00-19:00',
       areaServed: {
@@ -290,15 +552,21 @@ export class SeoService {
         name: 'Ecuador'
       },
       sameAs: [
-        'https://www.instagram.com/gilu.ec',
-        'https://www.facebook.com/share/1AWFit8kx4/?mibextid=wwXIfr',
-        'https://wa.me/593982901603'
+        this.globalConfig.socialLinks.instagram,
+        this.globalConfig.socialLinks.facebook,
+        this.globalConfig.socialLinks.whatsapp
       ]
     };
+
+    // Cache and return
+    this.localBusinessSchemaCache = schema;
+    return schema;
   }
 
   /**
    * Generate Store/LocalBusiness schema for structured data
+   * @param store Store data object
+   * @returns Cached or newly generated Store schema
    */
   generateStoreSchema(store: {
     name: string;
@@ -319,15 +587,33 @@ export class SeoService {
     latitude?: number;
     longitude?: number;
   }): JsonLdSchema {
-    return {
+    // Validate required fields
+    if (!this.isValidString(store.name, 'store name') ||
+        !this.isValidString(store.description, 'store description') ||
+        !this.isValidString(store.image, 'store image')) {
+      console.warn('[SEO] Invalid store data for schema generation');
+      return {} as JsonLdSchema;
+    }
+
+    // Create cache key
+    const cacheKey = JSON.stringify(store);
+
+    // Check cache
+    const cached = this.storeSchemaCache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'Store',
       name: store.name,
       description: store.description,
       image: store.image,
-      url: store.url || 'https://gilu-shop.com',
-      telephone: store.telephone || '+593-2-123-4567',
-      email: store.email || 'contacto@gilu-shop.com',
+      url: store.url || this.globalConfig.baseUrl,
+      telephone: store.telephone || this.globalConfig.contactPhone,
+      email: store.email || this.globalConfig.contactEmail,
       address: store.address ? {
         '@type': 'PostalAddress',
         streetAddress: store.address.streetAddress,
@@ -346,13 +632,44 @@ export class SeoService {
         }
       })
     };
+
+    // Cache and return
+    this.storeSchemaCache.set(cacheKey, schema);
+    return schema;
   }
 
   /**
    * Generate BreadcrumbList schema
+   * @param breadcrumbs Array of breadcrumb objects
+   * @returns Cached or newly generated BreadcrumbList schema
    */
   generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: string }>): JsonLdSchema {
-    return {
+    // Validate breadcrumbs array
+    if (!Array.isArray(breadcrumbs) || breadcrumbs.length === 0) {
+      console.warn('[SEO] Invalid breadcrumbs array for BreadcrumbList schema');
+      return {} as JsonLdSchema;
+    }
+
+    // Validate each breadcrumb
+    for (const breadcrumb of breadcrumbs) {
+      if (!this.isValidString(breadcrumb.name, 'breadcrumb name') ||
+          !this.isValidString(breadcrumb.url, 'breadcrumb url')) {
+        console.warn('[SEO] Invalid breadcrumb data in breadcrumbs array');
+        return {} as JsonLdSchema;
+      }
+    }
+
+    // Create cache key
+    const cacheKey = JSON.stringify(breadcrumbs);
+
+    // Check cache
+    const cached = this.breadcrumbSchemaCache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: breadcrumbs.map((item, index) => ({
@@ -362,58 +679,111 @@ export class SeoService {
         item: item.url
       }))
     };
+
+    // Cache and return
+    this.breadcrumbSchemaCache.set(cacheKey, schema);
+    return schema;
   }
 
   /**
    * Generate Organization schema
+   * @returns Cached or newly generated Organization schema
    */
   generateOrganizationSchema(): JsonLdSchema {
-    return {
+    // Check cache
+    if (this.organizationSchemaCache) {
+      return this.organizationSchemaCache;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'Gilú Shop',
-      url: 'https://gilu-shop.com',
-      logo: 'https://gilu-shop.com/assets/image/gilu-update.png',
-      description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador. Maybelline, E.l.f. Cosmetics, Loreal, NYX, Huda Beauty, y más.',
+      name: this.globalConfig.siteName,
+      url: this.globalConfig.baseUrl,
+      logo: this.globalConfig.defaultImage,
+      description: this.globalConfig.defaultDescription,
       sameAs: [
-        'https://www.facebook.com/gilushop',
-        'https://www.instagram.com/gilushop',
-        'https://wa.me/593982901603'
+        this.globalConfig.socialLinks.facebook,
+        this.globalConfig.socialLinks.instagram,
+        this.globalConfig.socialLinks.whatsapp
       ],
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+593982901603',
+        telephone: this.globalConfig.contactPhone,
         contactType: 'customer service',
         availableLanguage: ['Spanish', 'English']
       }
     };
+
+    // Cache and return
+    this.organizationSchemaCache = schema;
+    return schema;
   }
 
   /**
    * Generate WebSite schema with search capability
+   * @returns Cached or newly generated WebSite schema
    */
   generateWebSiteSchema(): JsonLdSchema {
-    return {
+    // Check cache
+    if (this.webSiteSchemaCache) {
+      return this.webSiteSchemaCache;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'Gilú Shop',
-      url: 'https://gilu-shop.com',
+      name: this.globalConfig.siteName,
+      url: this.globalConfig.baseUrl,
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://gilu-shop.com/shop?q={search_term_string}'
+          urlTemplate: `${this.globalConfig.baseUrl}/shop?q={search_term_string}`
         },
         'query-input': 'required name=search_term_string'
       }
     };
+
+    // Cache and return
+    this.webSiteSchemaCache = schema;
+    return schema;
   }
 
   /**
    * Generate FAQ schema
+   * @param faqs Array of FAQ objects
+   * @returns Cached or newly generated FAQ schema
    */
   generateFaqSchema(faqs: Array<{ question: string; answer: string }>): JsonLdSchema {
-    return {
+    // Validate faqs array
+    if (!Array.isArray(faqs) || faqs.length === 0) {
+      console.warn('[SEO] Invalid faqs array for FAQ schema');
+      return {} as JsonLdSchema;
+    }
+
+    // Validate each faq
+    for (const faq of faqs) {
+      if (!this.isValidString(faq.question, 'faq question') ||
+          !this.isValidString(faq.answer, 'faq answer')) {
+        console.warn('[SEO] Invalid faq data in faqs array');
+        return {} as JsonLdSchema;
+      }
+    }
+
+    // Create cache key
+    const cacheKey = JSON.stringify(faqs);
+
+    // Check cache
+    const cached = this.faqSchemaCache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Generate new schema
+    const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: faqs.map(faq => ({
@@ -425,5 +795,9 @@ export class SeoService {
         }
       }))
     };
+
+    // Cache and return
+    this.faqSchemaCache.set(cacheKey, schema);
+    return schema;
   }
 }
