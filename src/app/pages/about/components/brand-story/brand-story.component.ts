@@ -31,6 +31,6 @@ export class BrandStoryComponent implements OnInit {
     });
 
     // Set canonical URL for about page
-    //this.seoService.setCanonicalUrl('https://gilu-shop.com/about');
+    this.seoService.setCanonicalUrl('https://gilu-shop.com/about');
   }
 }

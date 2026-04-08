@@ -102,4 +102,26 @@ export class ProductsService {
   getAllCatalogBrands(): Observable<CatalogBrandDTO[]> {
     return this.http.get<CatalogBrandDTO[]>(`${this.brandApiUrl}`);
   }
+
+  /**
+   * Get paginated products for online store by brand
+   * @param brandId UUID of the brand
+   * @param pageSize Number of products per page
+   * @param offset Offset for pagination
+   */
+  getOnlineStoreProductsByBrand(brandId: number, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get<Product[]>(`${this.brandApiUrl}/online-store/${this.outletId}/brand/${brandId}`, { params });
+  }
+
+  /**
+   * Get total count of products by brand
+   * @param brandId UUID of the brand
+   */
+  getOnlineStoreProductsByBrandCount(brandId: number): Observable<number> {
+    return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brand/${brandId}/count`);
+  }
 }

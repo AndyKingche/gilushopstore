@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
 import { SeoService } from '../../core/services/seo.service';
 import { SearchService } from '../../core/services/search.service';
 import { Category } from '../../core/models/category.model';
+import { CatalogBrandDTO } from '../../core/models/brand.model';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 // Mapping between ProductShowcase string IDs and category names
 const CATEGORY_NAME_MAP: { [key: string]: string } = {
@@ -28,10 +30,12 @@ export class ShopComponent implements OnInit, OnDestroy {
   searchQuery = '';
   selectedCategory: number | null = null;
   searchTerm: string | null = null;
+  brandId: string | null = null;
   private pendingCategoryId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productsService: ProductsService,
     private seoService: SeoService,
     private searchService: SearchService,
@@ -68,6 +72,17 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.updateCategorySeo(this.selectedCategory);
       }
     });
+
+    // Handle brand parameter from route on navigation
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.route.snapshot.params)
+    ).subscribe(params => {
+      this.handleBrandParam(params);
+    });
+
+    // Handle initial brand param
+    this.handleBrandParam(this.route.snapshot.params);
 
     // Listen to search service for search terms from header
     this.searchSubscription = this.searchService.searchTerm$.subscribe(term => {
@@ -163,6 +178,39 @@ export class ShopComponent implements OnInit, OnDestroy {
         url: `https://gilu-shop.com/shop?cat=${categoryId}`,
         type: 'website'
       });
+    }
+  }
+
+  private updateBrandSeo(brand: CatalogBrandDTO): void {
+    this.seoService.updateMetaTags({
+      title: `${brand.brandName} | Gilú Shop Ecuador`,
+      description: `Explora nuestra colección de ${brand.brandName}. Maquillaje 100% original de las mejores marcas.`,
+      keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: `https://gilu-shop.com/shop/collections/${encodeURIComponent(brand.brandName)}`,
+      type: 'website'
+    });
+  }
+
+  private handleBrandParam(params: any): void {
+    if (params['marca']) {
+      this.selectedCategory = null;
+      this.searchTerm = null;
+      this.brandId = params['marca']; // marca is brand id as string
+      // Fetch brands to update SEO
+      this.productsService.getAllCatalogBrands().subscribe({
+        next: (brands) => {
+          const brand = brands.find(b => b.id === parseInt(params['marca']));
+          if (brand) {
+            this.updateBrandSeo(brand);
+          }
+        },
+        error: (err) => {
+          console.error('Error loading brands:', err);
+        }
+      });
+    } else {
+      this.brandId = null;
     }
   }
 

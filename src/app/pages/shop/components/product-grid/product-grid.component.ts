@@ -15,9 +15,10 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   @Input() set category(categoryId: number | null) {
     this._categoryId = categoryId;
     this._searchTerm = null;
+    this._brandId = null;
     if (categoryId) {
       this.loadProductsByCategory(categoryId);
-    } else if (!this._searchTerm) {
+    } else if (!this._searchTerm && !this._brandId) {
       this.loadInitialProducts();
     }
   }
@@ -25,9 +26,21 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   @Input() set searchTerm(searchTerm: string | null) {
     this._searchTerm = searchTerm;
     this._categoryId = null;
+    this._brandId = null;
     if (searchTerm) {
       this.loadProductsBySearch(searchTerm);
-    } else if (!this._categoryId) {
+    } else if (!this._categoryId && !this._brandId) {
+      this.loadInitialProducts();
+    }
+  }
+
+  @Input() set brandId(brandId: number | null) {
+    this._brandId = brandId;
+    this._categoryId = null;
+    this._searchTerm = null;
+    if (brandId) {
+      this.loadProductsByBrand(brandId);
+    } else if (!this._searchTerm && !this._categoryId) {
       this.loadInitialProducts();
     }
   }
@@ -39,6 +52,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
 
   private _categoryId: number | null = null;
   private _searchTerm: string | null = null;
+  private _brandId: number | null = null;
   products: Product[] = [];
   
   // Pagination state
@@ -188,7 +202,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    
+
     // First, get the total count for this search
     this.productsService.searchProductsCount(searchTerm).subscribe({
       next: (count) => {
@@ -211,17 +225,64 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
-        
+
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
-        
+
         // Add Product schema for rich snippets
         this.addProductSchema();
-        
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading search products:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Load products filtered by brand
+  private loadProductsByBrand(brandId: number): void {
+    this.isLoading = true;
+    this.offset = 0;
+    this.currentPage = 1;
+    console.log(brandId);
+    
+
+    // First, get the total count for this brand
+    this.productsService.getOnlineStoreProductsByBrandCount(brandId).subscribe({
+      next: (count) => {
+        this.totalCount = count;
+        this.totalPages = Math.ceil(count / this.pageSize);
+        this.hasMore = count > 0;
+        this.updateVisiblePages();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error getting brand product count:', err);
+        this.isLoading = false;
+      }
+    });
+
+    // Load first batch of products for this brand
+    this.productsService.getOnlineStoreProductsByBrand(brandId, this.pageSize, 0).subscribe({
+      next: (products) => {
+        console.log(products);
+        
+        this.products = products;
+        this.offset = products.length;
+        this.isLoading = false;
+
+        // Check if there are more products to load
+        this.hasMore = this.offset < this.totalCount;
+
+        // Add Product schema for rich snippets
+        this.addProductSchema();
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading brand products:', err);
         this.isLoading = false;
       }
     });
@@ -264,13 +325,33 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         next: (products) => {
           this.products = products;
           this.isLoading = false;
-          
+
           // Scroll to top of products section
           const productsSection = document.getElementById('products-section');
           if (productsSection) {
             productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          
+
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error loading page:', err);
+          this.isLoading = false;
+        }
+      });
+    } else if (this._brandId) {
+      // Load by brand
+      this.productsService.getOnlineStoreProductsByBrand(this._brandId, this.pageSize, offset).subscribe({
+        next: (products) => {
+          this.products = products;
+          this.isLoading = false;
+
+          // Scroll to top of products section
+          const productsSection = document.getElementById('products-section');
+          if (productsSection) {
+            productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -351,6 +432,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     this.totalPages = 0;
     this._categoryId = null;
     this._searchTerm = null;
+    this._brandId = null;
   }
 
   // Initialize with total count (called from parent)

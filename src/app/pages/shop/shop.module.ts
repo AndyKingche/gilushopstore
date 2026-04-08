@@ -10,7 +10,8 @@ import { ProductGridComponent } from './components/product-grid/product-grid.com
 import { BannerMarqueeComponent } from './components/banner-marquee/banner-marquee.component';
 
 const routes: Routes = [
-  { path: '', component: ShopComponent }
+  { path: '', component: ShopComponent },
+  { path: 'collections/:marca', component: ShopComponent }
 ];
 
 @NgModule({
