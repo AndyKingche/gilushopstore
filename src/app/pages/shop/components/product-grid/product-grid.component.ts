@@ -242,15 +242,15 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
   // Load products filtered by brand
-  private loadProductsByBrand(brandId: string): void {
+  private loadProductsByBrand(brandName: string): void {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    console.log(brandId);
+    console.log(brandName);
     
 
     // First, get the total count for this brand
-    this.productsService.getOnlineStoreProductsByBrandCount(brandId).subscribe({
+    this.productsService.getOnlineStoreProductsByBrandNameCount(brandName).subscribe({
       next: (count) => {
         this.totalCount = count;
         this.totalPages = Math.ceil(count / this.pageSize);
@@ -265,7 +265,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     });
 
     // Load first batch of products for this brand
-    this.productsService.getOnlineStoreProductsByBrand(brandId, this.pageSize, 0).subscribe({
+    this.productsService.getOnlineStoreProductsByBrandName(brandName, this.pageSize, 0).subscribe({
       next: (products) => {
         console.log(products);
         

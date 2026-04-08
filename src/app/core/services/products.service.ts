@@ -125,5 +125,26 @@ export class ProductsService {
     return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brand/${brandId}/count`);
   }
 
+  /**
+   * Get paginated products for online store by brand
+   * @param brandId ID of the brand
+   * @param pageSize Number of products per page
+   * @param offset Offset for pagination
+   */
+  getOnlineStoreProductsByBrandName(brandName: string, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get<Product[]>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}`, { params });
+  }
+
+  /**
+   * Get total count of products by brand
+   * @param brandId ID of the brand
+   */
+  getOnlineStoreProductsByBrandNameCount(brandName: string): Observable<number> {
+    return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/count`);
+  }
 
 }

@@ -155,7 +155,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToBrand(brand: CatalogBrandDTO): void {
     // Navigate to shop collections with brand id
-    this.router.navigate(['/shop', 'collections', brand.id.toString()]);
+    this.router.navigate(['/shop', 'collections', brand.brandDescription]);
     this.closeBrandsDropdown();
     this.isBrandsCollapsed = false; // Close collapse after navigation
     this.closeMenu();
