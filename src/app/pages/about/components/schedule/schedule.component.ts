@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 interface ScheduleItem {
   day: string;
@@ -18,24 +19,31 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   currentTime: string = '';
   isStoreOpen: boolean = false;
   private timeInterval: any;
-  
+  private isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
   schedule: ScheduleItem[] = [
-    { day: 'Lunes', dayNum: 1, open: '10:00', close: '19:00', isOpen: true },
-    { day: 'Martes', dayNum: 2, open: '10:00', close: '19:00', isOpen: true },
-    { day: 'Miércoles', dayNum: 3, open: '10:00', close: '19:00', isOpen: true },
-    { day: 'Jueves', dayNum: 4, open: '10:00', close: '19:00', isOpen: true },
-    { day: 'Viernes', dayNum: 5, open: '10:00', close: '19:00', isOpen: true },
-    { day: 'Sábado', dayNum: 6, open: '10:00', close: '19:00', isOpen: true },
+    { day: 'Lunes', dayNum: 1, open: '08:30', close: '19:00', isOpen: true },
+    { day: 'Martes', dayNum: 2, open: '08:30', close: '19:00', isOpen: true },
+    { day: 'Miércoles', dayNum: 3, open: '08:30', close: '19:00', isOpen: true },
+    { day: 'Jueves', dayNum: 4, open: '08:30', close: '19:00', isOpen: true },
+    { day: 'Viernes', dayNum: 5, open: '08:30', close: '19:00', isOpen: true },
+    { day: 'Sábado', dayNum: 6, open: '08:30', close: '19:00', isOpen: true },
     { day: 'Domingo', dayNum: 0, open: '11:00', close: '17:00', isOpen: true },
   ];
 
   ngOnInit(): void {
     this.today = new Date().getDay();
     this.updateTime();
-    // Actualizar cada minuto
-    this.timeInterval = setInterval(() => {
-      this.updateTime();
-    }, 60000);
+
+    if (this.isBrowser) {
+      this.timeInterval = setInterval(() => {
+        this.updateTime();
+      }, 60000);
+    }
   }
 
   ngOnDestroy(): void {
