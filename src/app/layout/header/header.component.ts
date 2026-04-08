@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -15,6 +15,7 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  @ViewChild('dropdown') dropdownElement: ElementRef;
   private routerSubscription?: Subscription;
   cartItemCount$: Observable<number>;
   isMenuOpen = false;
@@ -94,6 +95,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (this.dropdownElement && !this.dropdownElement.nativeElement.contains(event.target)) {
+      this.isBrandsDropdownOpen = false;
+    }
+  }
+
   checkScreenSize(): void {
     this.isMobile = window.innerWidth < 768;
     if (!this.isMobile) {
@@ -148,6 +156,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateToBrand(brand: CatalogBrandDTO): void {
     // Navigate to shop collections with brand id
     this.router.navigate(['/shop', 'collections', brand.id.toString()]);
+    this.closeBrandsDropdown();
+    this.isBrandsCollapsed = false; // Close collapse after navigation
+    this.closeMenu();
+  }
+
+  navigateToAll(): void {
+    // Navigate to shop to show all products
+    this.router.navigate(['/shop']);
     this.closeBrandsDropdown();
     this.isBrandsCollapsed = false; // Close collapse after navigation
     this.closeMenu();

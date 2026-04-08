@@ -17,7 +17,7 @@
       </a>
 
       <!-- Marcas Dropdown -->
-      <div class="nav-dropdown" (mouseenter)="toggleBrandsDropdown()" (mouseleave)="closeBrandsDropdown()">
+      <div class="nav-dropdown" #dropdown (mouseenter)="isBrandsDropdownOpen = true">
         <button class="nav-dropdown-toggle" (click)="toggleBrandsDropdown()">
           MARCAS
           <svg class="dropdown-arrow" [class.rotated]="isBrandsDropdownOpen" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -25,6 +25,7 @@
           </svg>
         </button>
         <div class="nav-dropdown-menu" *ngIf="isBrandsDropdownOpen">
+          <a (click)="navigateToAll()" class="dropdown-item">De Todo Un Poco</a>
           <div class="dropdown-search">
             <input
               type="text"
@@ -33,6 +34,7 @@
               (input)="filterBrands()"
               class="brand-search-input">
           </div>
+          <div *ngIf="brands.length === 0" class="loading-brands">Cargando marcas...</div>
           <a *ngFor="let brand of filteredBrands"
              (click)="navigateToBrand(brand)"
              class="dropdown-item">
@@ -115,6 +117,8 @@
 
         <!-- Brands List -->
         <div class="mobile-brands-list">
+          <a (click)="navigateToAll()" class="mobile-brand-item">De Todo Un Poco</a>
+          <div *ngIf="brands.length === 0" class="loading-brands">Cargando marcas...</div>
           <a *ngFor="let brand of filteredBrands"
              (click)="navigateToBrand(brand)"
              class="mobile-brand-item">

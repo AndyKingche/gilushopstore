@@ -105,11 +105,11 @@ export class ProductsService {
 
   /**
    * Get paginated products for online store by brand
-   * @param brandId UUID of the brand
+   * @param brandId ID of the brand
    * @param pageSize Number of products per page
    * @param offset Offset for pagination
    */
-  getOnlineStoreProductsByBrand(brandId: number, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
+  getOnlineStoreProductsByBrand(brandId: string, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('offset', offset.toString());
@@ -119,9 +119,11 @@ export class ProductsService {
 
   /**
    * Get total count of products by brand
-   * @param brandId UUID of the brand
+   * @param brandId ID of the brand
    */
-  getOnlineStoreProductsByBrandCount(brandId: number): Observable<number> {
+  getOnlineStoreProductsByBrandCount(brandId: string): Observable<number> {
     return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brand/${brandId}/count`);
   }
+
+
 }

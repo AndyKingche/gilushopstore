@@ -34,7 +34,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set brandId(brandId: number | null) {
+  @Input() set brandId(brandId: string | null) {
     this._brandId = brandId;
     this._categoryId = null;
     this._searchTerm = null;
@@ -52,7 +52,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
 
   private _categoryId: number | null = null;
   private _searchTerm: string | null = null;
-  private _brandId: number | null = null;
+  private _brandId: string | null = null;
   products: Product[] = [];
   
   // Pagination state
@@ -242,7 +242,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
   // Load products filtered by brand
-  private loadProductsByBrand(brandId: number): void {
+  private loadProductsByBrand(brandId: string): void {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
