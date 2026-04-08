@@ -196,27 +196,33 @@ export class ShopComponent implements OnInit, OnDestroy {
     if (params['marca']) {
       this.selectedCategory = null;
       this.searchTerm = null;
-      this.brandId = params['marca']; // marca is brand id as string
-      this.cdr.detectChanges(); // Forzar actualización del grid
 
-      // Scroll to products section after a short delay to ensure DOM is updated
-      setTimeout(() => {
-        const productsSection = document.getElementById('products-section');
-        if (productsSection) {
-          productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100);
-
-      // Fetch brands to update SEO
+      // Fetch brands to get the correct brandName for API calls
       this.productsService.getAllCatalogBrands().subscribe({
         next: (brands) => {
-          const brand = brands.find(b => b.id === parseInt(params['marca']));
+          const brand = brands.find(b => b.brandDescription.toLowerCase() === params['marca'].toLowerCase());
           if (brand) {
+            this.brandId = brand.brandDescription;
             this.updateBrandSeo(brand);
+          } else {
+            // Fallback to params if brand not found
+            this.brandId = params['marca'];
           }
+          this.cdr.detectChanges(); // Force grid update
+
+          // Scroll to products section after a short delay to ensure DOM is updated
+          setTimeout(() => {
+            const productsSection = document.getElementById('products-section');
+            if (productsSection) {
+              productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
         },
         error: (err) => {
           console.error('Error loading brands:', err);
+          // Fallback to params
+          this.brandId = params['marca'];
+          this.cdr.detectChanges();
         }
       });
     } else {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../../../../core/models/product.model';
 import { CartService } from '../../../../core/services/cart.service';
@@ -10,38 +10,29 @@ import { SeoService } from '../../../../core/services/seo.service';
   templateUrl: './product-grid.component.html',
   styleUrls: ['./product-grid.component.scss']
 })
-export class ProductGridComponent implements OnInit, OnDestroy {
+export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   @Input() initialLoad: boolean = true;
   @Input() set category(categoryId: number | null) {
-    this._categoryId = categoryId;
-    this._searchTerm = null;
-    this._brandId = null;
-    if (categoryId) {
-      this.loadProductsByCategory(categoryId);
-    } else if (!this._searchTerm && !this._brandId) {
-      this.loadInitialProducts();
+    if (categoryId !== this._categoryId) {
+      this._categoryId = categoryId;
+      this._searchTerm = null;
+      this._brandId = null;
     }
   }
   
   @Input() set searchTerm(searchTerm: string | null) {
-    this._searchTerm = searchTerm;
-    this._categoryId = null;
-    this._brandId = null;
-    if (searchTerm) {
-      this.loadProductsBySearch(searchTerm);
-    } else if (!this._categoryId && !this._brandId) {
-      this.loadInitialProducts();
+    if (searchTerm !== this._searchTerm) {
+      this._searchTerm = searchTerm;
+      this._categoryId = null;
+      this._brandId = null;
     }
   }
 
   @Input() set brandId(brandId: string | null) {
-    this._brandId = brandId;
-    this._categoryId = null;
-    this._searchTerm = null;
-    if (brandId) {
-      this.loadProductsByBrand(brandId);
-    } else if (!this._searchTerm && !this._categoryId) {
-      this.loadInitialProducts();
+    if (brandId !== this._brandId) {
+      this._brandId = brandId;
+      this._categoryId = null;
+      this._searchTerm = null;
     }
   }
   
@@ -96,7 +87,31 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     // Set canonical URL for shop page
     this.seoService.setCanonicalUrl('https://gilu-shop.com/shop');
 
-    if (this.initialLoad) {
+    // Load initial products or filtered based on inputs
+    this.loadProductsBasedOnInputs();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    
+    // Handle changes to inputs after initial load
+    if (changes['category'] || changes['searchTerm'] || changes['brandId']) {
+      if (!changes['initialLoad'] || !changes['initialLoad'].firstChange) {
+        this.loadProductsBasedOnInputs();
+      }
+    }
+  }
+
+  private loadProductsBasedOnInputs(): void {
+    console.log(this._brandId);
+    
+    if (this._brandId) {
+      this.loadProductsByBrand(this._brandId);
+    } else if (this._categoryId) {
+      this.loadProductsByCategory(this._categoryId);
+    } else if (this._searchTerm) {
+      this.loadProductsBySearch(this._searchTerm);
+    } else if (this.initialLoad) {
       this.loadInitialProducts();
     }
   }
@@ -264,6 +279,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
       }
     });
 
+    console.log(brandName);
+    
     // Load first batch of products for this brand
     this.productsService.getOnlineStoreProductsByBrandName(brandName, this.pageSize, 0).subscribe({
       next: (products) => {
@@ -339,9 +356,9 @@ export class ProductGridComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       });
-    } else if (this._brandId) {
-      // Load by brand
-      this.productsService.getOnlineStoreProductsByBrand(this._brandId, this.pageSize, offset).subscribe({
+     } else if (this._brandId) {
+      // Load by brand name
+      this.productsService.getOnlineStoreProductsByBrandName(this._brandId, this.pageSize, offset).subscribe({
         next: (products) => {
           this.products = products;
           this.isLoading = false;
