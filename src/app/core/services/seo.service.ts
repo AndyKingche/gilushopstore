@@ -1,6 +1,6 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 export interface SeoConfig {
   title: string;
@@ -57,7 +57,6 @@ export interface SeoGlobalConfig {
   providedIn: 'root'
 })
 export class SeoService {
-  private isBrowser: boolean;
   private globalConfig: SeoGlobalConfig;
   private productSchemaCache = new Map<string, JsonLdSchema>();
   private productListSchemaCache = new Map<string, JsonLdSchema>();
@@ -71,10 +70,8 @@ export class SeoService {
   constructor(
     private title: Title,
     private meta: Meta,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(DOCUMENT) private document: Document
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
     this.globalConfig = this.getDefaultGlobalConfig();
   }
 
@@ -88,7 +85,7 @@ export class SeoService {
       defaultCurrency: 'USD',
       baseUrl: 'https://gilu-shop.com',
       defaultImage: 'https://gilu-shop.com/assets/image/gilu-update.png',
-      defaultDescription: 'Tienda de maquillaje 100% original en Otavalo, Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
+      defaultDescription: 'Tienda de maquillaje 100% original en Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty y más marcas internacionales con envío a todo Ecuador.',
       contactEmail: 'customers@gilu-shop.com',
       contactPhone: '+593982901603',
       socialLinks: {
@@ -126,18 +123,14 @@ export class SeoService {
   }
 
   /**
-   * Browser guard wrapper for DOM operations
-   * @param operation Function to execute only in browser
-   */
-  private guardBrowser<T>(operation: () => T): T | void {
-    if (this.isBrowser) {
-      try {
-        return operation();
-      } catch (error) {
-        console.error('[SEO] Browser operation failed:', error);
-      }
-    } else {
-      console.warn('[SEO] Skipping DOM operation in SSR mode');
+    * Execute DOM operation with error handling
+    * @param operation Function to execute
+    */
+  private executeDomOperation<T>(operation: () => T): T | void {
+    try {
+      return operation();
+    } catch (error) {
+      console.error('[SEO] DOM operation failed:', error);
     }
   }
 
@@ -292,24 +285,22 @@ export class SeoService {
   }
 
   /**
-   * Add JSON-LD structured data schema with unique ID for SSR compatibility
-   * @param schema JSON-LD schema object
-   * @param id Unique identifier for the script element
-   */
+    * Add JSON-LD structured data schema with unique ID for SSR compatibility
+    * @param schema JSON-LD schema object
+    * @param id Unique identifier for the script element
+    */
   setJsonLd(schema: JsonLdSchema, id: string = 'seo-json-ld'): void {
     if (!schema || typeof schema !== 'object') {
       console.warn('[SEO] Invalid schema: must be a valid object');
       return;
     }
 
-    this.guardBrowser(() => {
-      // Remove existing JSON-LD script with same ID
+    this.executeDomOperation(() => {
       const existing = this.document.getElementById(id);
       if (existing) {
         existing.remove();
       }
 
-      // Create new script element
       const script = this.document.createElement('script');
       script.type = 'application/ld+json';
       script.text = JSON.stringify(schema);
@@ -320,15 +311,15 @@ export class SeoService {
   }
 
   /**
-   * Remove JSON-LD structured data by ID
-   * @param id Unique identifier for the script element
-   */
+    * Remove JSON-LD structured data by ID
+    * @param id Unique identifier for the script element
+    */
   removeJsonLd(id: string = 'seo-json-ld'): void {
     if (!this.isValidString(id, 'json-ld id')) {
       return;
     }
 
-    this.guardBrowser(() => {
+    this.executeDomOperation(() => {
       const existingScript = this.document.getElementById(id);
       if (existingScript) {
         existingScript.remove();
@@ -337,15 +328,15 @@ export class SeoService {
   }
 
   /**
-   * Set canonical URL for the page
-   * @param url Canonical URL (required, non-empty string)
-   */
+    * Set canonical URL for the page
+    * @param url Canonical URL (required, non-empty string)
+    */
   setCanonicalUrl(url: string): void {
     if (!this.isValidString(url, 'canonical URL')) {
       return;
     }
 
-    this.guardBrowser(() => {
+    this.executeDomOperation(() => {
       let link: HTMLLinkElement = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
       if (!link) {
         link = this.document.createElement('link');
@@ -357,16 +348,15 @@ export class SeoService {
   }
 
   /**
-   * Set hreflang for Ecuador Spanish
-   * @param url URL for hreflang (required, non-empty string)
-   */
+    * Set hreflang for Ecuador Spanish
+    * @param url URL for hreflang (required, non-empty string)
+    */
   setHreflang(url: string): void {
     if (!this.isValidString(url, 'hreflang URL')) {
       return;
     }
 
-    this.guardBrowser(() => {
-      // Check if hreflang for es-EC already exists
+    this.executeDomOperation(() => {
       const existing = this.document.querySelector('link[rel="alternate"][hreflang="es-EC"]') as HTMLLinkElement;
       if (existing) {
         existing.setAttribute('href', url);
