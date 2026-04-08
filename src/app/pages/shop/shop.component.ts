@@ -198,6 +198,15 @@ export class ShopComponent implements OnInit, OnDestroy {
       this.searchTerm = null;
       this.brandId = params['marca']; // marca is brand id as string
       this.cdr.detectChanges(); // Forzar actualización del grid
+
+      // Scroll to products section after a short delay to ensure DOM is updated
+      setTimeout(() => {
+        const productsSection = document.getElementById('products-section');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+
       // Fetch brands to update SEO
       this.productsService.getAllCatalogBrands().subscribe({
         next: (brands) => {

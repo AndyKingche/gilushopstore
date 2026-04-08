@@ -1,15 +1,15 @@
 <div class="shop-page">
   <app-product-showcase (categorySelect)="onCategorySelect($event)"></app-product-showcase>
   <app-banner-marquee></app-banner-marquee>
-  <div class="container">
-    
-    <app-search-filter 
+  <div class="container" id="products-section">
+
+    <app-search-filter
       [categories]="categories"
       (filterChange)="onSearchQueryChange($event)"
       (categoryChange)="onCategoryChange($event)"
       (searchChange)="onSearchChange($event)">
     </app-search-filter>
-    
+
     <app-product-grid [category]="selectedCategory" [searchTerm]="searchTerm" [brandId]="brandId"></app-product-grid>
   </div>
   
