@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
+import { CatalogBrandDTO } from '../models/brand.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +13,7 @@ export class ProductsService {
   private apiUrl = environment.apiUrl+'api/v1/gessa/stock';
   private categoryApiUrl = environment.apiUrl+'api/v1/gessa/category';
   private productApiUrl = environment.apiUrl+'api/v1/gessa/product';
+  private brandApiUrl = environment.apiUrl+'api/v1/gessa/catalog-brand';
   // Default outletId - in a real app this would come from configuration or user selection
   private outletId = 2;
 
@@ -92,5 +94,12 @@ export class ProductsService {
 
   getById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
+  }
+
+  /**
+   * Get all catalog brands
+   */
+  getAllCatalogBrands(): Observable<CatalogBrandDTO[]> {
+    return this.http.get<CatalogBrandDTO[]>(`${this.brandApiUrl}`);
   }
 }

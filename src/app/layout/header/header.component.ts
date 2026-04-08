@@ -4,6 +4,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
 import { SearchService } from '../../core/services/search.service';
+import { ProductsService } from '../../core/services/products.service';
+import { CatalogBrandDTO } from '../../core/models/brand.model';
 import { Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
@@ -20,6 +22,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchControl = new FormControl('');
   searchQuery = '';
   isMobile = false;
+  brands: CatalogBrandDTO[] = [];
+  filteredBrands: CatalogBrandDTO[] = [];
+  brandSearchTerm = '';
+  isBrandsDropdownOpen = false;
+  isBrandsCollapsed = false; // Start collapsed
   navLinks = [
     { path: '/', label: 'GILÚ' },
     { path: '/shop', label: 'COMPRAR' },
@@ -31,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private router: Router,
     private searchService: SearchService,
+    private productsService: ProductsService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItemCount$ = new Observable(subscriber => {
@@ -44,6 +52,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.checkScreenSize();
     }
+
+    // Fetch brands
+    this.productsService.getAllCatalogBrands().subscribe(brands => {
+      this.brands = brands;
+      this.filteredBrands = brands;
+    });
 
     // Listen to search control changes and update search service
     this.searchControl.valueChanges.pipe(
@@ -118,4 +132,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onCartClose(): void { this.isCartOpen = false; }
+
+  toggleBrandsDropdown(): void {
+    this.isBrandsDropdownOpen = !this.isBrandsDropdownOpen;
+  }
+
+  closeBrandsDropdown(): void {
+    this.isBrandsDropdownOpen = false;
+  }
+
+  toggleBrandsCollapse(): void {
+    this.isBrandsCollapsed = !this.isBrandsCollapsed;
+  }
+
+  navigateToBrand(brand: CatalogBrandDTO): void {
+    // Navigate to shop with brand filter
+    this.router.navigate(['/shop'], { queryParams: { brand: brand.brandUuid } });
+    this.closeBrandsDropdown();
+    this.isBrandsCollapsed = false; // Close collapse after navigation
+    this.closeMenu();
+  }
+
+  filterBrands(): void {
+    if (!this.brandSearchTerm.trim()) {
+      this.filteredBrands = this.brands;
+    } else {
+      const searchTerm = this.brandSearchTerm.toLowerCase().trim();
+      this.filteredBrands = this.brands.filter(brand =>
+        brand.brandName.toLowerCase().includes(searchTerm)
+      );
+    }
+  }
 }

@@ -15,6 +15,31 @@
          [routerLinkActiveOptions]="{exact: link.path === '/'}">
         {{ link.label }}
       </a>
+
+      <!-- Marcas Dropdown -->
+      <div class="nav-dropdown" (mouseenter)="toggleBrandsDropdown()" (mouseleave)="closeBrandsDropdown()">
+        <button class="nav-dropdown-toggle" (click)="toggleBrandsDropdown()">
+          MARCAS
+          <svg class="dropdown-arrow" [class.rotated]="isBrandsDropdownOpen" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6,9 12,15 18,9"></polyline>
+          </svg>
+        </button>
+        <div class="nav-dropdown-menu" *ngIf="isBrandsDropdownOpen">
+          <div class="dropdown-search">
+            <input
+              type="text"
+              placeholder="Buscar marca..."
+              [(ngModel)]="brandSearchTerm"
+              (input)="filterBrands()"
+              class="brand-search-input">
+          </div>
+          <a *ngFor="let brand of filteredBrands"
+             (click)="navigateToBrand(brand)"
+             class="dropdown-item">
+            {{ brand.brandName }}
+          </a>
+        </div>
+      </div>
     </nav>
 
     <!-- Logo -->
@@ -59,17 +84,49 @@
   
   <!-- Mobile Menu -->
   <nav class="nav-mobile" *ngIf="isMobile" [class.open]="isMenuOpen">
-    <a *ngFor="let link of navLinks" 
-       [routerLink]="link.path" 
+    <a *ngFor="let link of navLinks"
+       [routerLink]="link.path"
        routerLinkActive="active"
        [routerLinkActiveOptions]="{exact: link.path === '/'}"
        (click)="closeMenu()">
       {{ link.label }}
     </a>
-    
+
+    <!-- Marcas Section -->
+    <div class="mobile-brands-section">
+      <a class="mobile-brands-toggle" (click)="toggleBrandsCollapse()">
+        MARCAS
+        <svg class="collapse-arrow" [class.rotated]="!isBrandsCollapsed" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6,9 12,15 18,9"></polyline>
+        </svg>
+      </a>
+
+      <!-- Collapsible Content -->
+      <div class="mobile-brands-content" [class.expanded]="isBrandsCollapsed">
+        <!-- Brand Search -->
+        <div class="mobile-brand-search">
+          <input
+            type="text"
+            placeholder="Buscar marca..."
+            [(ngModel)]="brandSearchTerm"
+            (input)="filterBrands()"
+            class="mobile-brand-search-input">
+        </div>
+
+        <!-- Brands List -->
+        <div class="mobile-brands-list">
+          <a *ngFor="let brand of filteredBrands"
+             (click)="navigateToBrand(brand)"
+             class="mobile-brand-item">
+            {{ brand.brandName }}
+          </a>
+        </div>
+      </div>
+    </div>
+
     <div class="mobile-search">
-      <input 
-        type="text" 
+      <input
+        type="text"
         placeholder="Buscar productos..."
         [(ngModel)]="searchQuery"
         (keyup.enter)="onSearch(); closeMenu()">
