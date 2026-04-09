@@ -31,6 +31,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   selectedCategory: number | null = null;
   searchTerm: string | null = null;
   brandId: string | null = null;
+  brandNombre: string | null = null;
   private pendingCategoryId: string | null = null;
 
   constructor(
@@ -203,6 +204,7 @@ export class ShopComponent implements OnInit, OnDestroy {
           const brand = brands.find(b => b.brandDescription.toLowerCase() === params['marca'].toLowerCase());
           if (brand) {
             this.brandId = brand.brandDescription;
+            this.brandNombre = brand.brandName;
             this.updateBrandSeo(brand);
           } else {
             // Fallback to params if brand not found

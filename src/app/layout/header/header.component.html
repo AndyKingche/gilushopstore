@@ -25,7 +25,7 @@
           </svg>
         </button>
         <div class="nav-dropdown-menu" *ngIf="isBrandsDropdownOpen">
-          <a (click)="navigateToAll()" class="dropdown-item">De Todo Un Poco</a>
+          <a (click)="navigateToAll()" class="dropdown-item">Todas las Marcas</a>
           <div class="dropdown-search">
             <input
               type="text"
@@ -117,7 +117,7 @@
 
         <!-- Brands List -->
         <div class="mobile-brands-list">
-          <a (click)="navigateToAll()" class="mobile-brand-item">De Todo Un Poco</a>
+          <a (click)="navigateToAll()" class="mobile-brand-item">Todas las Marcas</a>
           <div *ngIf="brands.length === 0" class="loading-brands">Cargando marcas...</div>
           <a *ngFor="let brand of filteredBrands"
              (click)="navigateToBrand(brand)"
