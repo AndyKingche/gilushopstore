@@ -11,6 +11,13 @@
     </app-search-filter>
 
     <h1>{{brandNombre}}</h1>
+    
+    <app-badge-buttons
+      [categories]="categories"
+      [selectedIds]="selectedCategoryIds"
+      (categoryChange)="onBadgeCategoryChange($event)">
+    </app-badge-buttons>
+    
     <app-product-grid [category]="selectedCategory" [searchTerm]="searchTerm" [brandId]="brandId"></app-product-grid>
   </div>
   

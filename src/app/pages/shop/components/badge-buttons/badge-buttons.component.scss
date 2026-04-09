@@ -1,0 +1,93 @@
+@import 'variables';
+@import 'mixins';
+
+.badge-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.badge-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 2px 0;
+  flex: 1;
+  
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $gray-400;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity $transition-fast;
+  }
+  
+  &:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+  }
+}
+
+.badge-button {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  background: $dark;
+  color: $white;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+  
+  &:hover {
+    background: $pink-medium;
+  }
+  
+  &.active {
+    background: $pink-primary;
+    color: $white;
+  }
+}
+
+.nav-arrow {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: $white;
+  border: 1px solid $gray-300;
+  color: $dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+  
+  &:hover {
+    background: $dark;
+    color: $white;
+    border-color: $dark;
+  }
+  
+  &.left {
+    margin-right: 4px;
+  }
+  
+  &.right {
+    margin-left: 4px;
+  }
+}

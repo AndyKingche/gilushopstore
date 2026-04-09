@@ -32,6 +32,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   searchTerm: string | null = null;
   brandId: string | null = null;
   brandNombre: string | null = null;
+  selectedCategoryIds: number[] = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
   private pendingCategoryId: string | null = null;
 
   constructor(
@@ -254,5 +255,10 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
     
     this.applyCategorySelection(categoryId);
+  }
+
+  onBadgeCategoryChange(categoryId: number | null): void {
+    this.selectedCategory = categoryId;
+    this.searchTerm = null;
   }
 }
