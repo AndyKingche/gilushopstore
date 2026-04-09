@@ -147,4 +147,12 @@ export class ProductsService {
     return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/count`);
   }
 
+  /**
+   * Get categories by brand name for online store
+   * @param brandName Name of the brand
+   */
+  getCategoriesByBrandName(brandName: string): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.categoryApiUrl}/online-store/${this.outletId}/brandName/${brandName}`);
+  }
+
 }

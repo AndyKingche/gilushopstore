@@ -207,6 +207,19 @@ export class ShopComponent implements OnInit, OnDestroy {
             this.brandId = brand.brandDescription;
             this.brandNombre = brand.brandName;
             this.updateBrandSeo(brand);
+
+            // Fetch categories filtered by brand
+            this.productsService.getCategoriesByBrandName(brand.brandName).subscribe({
+              next: (categories) => {
+                console.log(categories);
+                
+                this.selectedCategoryIds = categories.map(cat => cat.id);
+                this.cdr.detectChanges();
+              },
+              error: (err) => {
+                console.error('Error loading categories by brand:', err);
+              }
+            });
           } else {
             // Fallback to params if brand not found
             this.brandId = params['marca'];
@@ -230,6 +243,8 @@ export class ShopComponent implements OnInit, OnDestroy {
       });
     } else {
       this.brandId = null;
+      // Reset to full category list when no brand is selected
+      this.selectedCategoryIds = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
     }
   }
 

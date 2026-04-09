@@ -8,11 +8,19 @@ import { Category } from '../../../../core/models/category.model';
 })
 export class SearchFilterComponent {
   @Input() categories: Category[] = [];
+  @Input() selectedCategoryIds: number[] = [];
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
   @Output() categoryChange = new EventEmitter<number | null>();
   @Output() searchChange = new EventEmitter<string | null>();
 
   private currentQuery = '';
+
+  get filteredCategories(): Category[] {
+    if (this.selectedCategoryIds.length > 0) {
+      return this.categories.filter(cat => this.selectedCategoryIds.includes(cat.id));
+    }
+    return this.categories;
+  }
 
   onSearchChange(term: string | null): void {
     this.currentQuery = term || '';
