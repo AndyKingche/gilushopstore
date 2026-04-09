@@ -25,8 +25,8 @@
 
     <div class="cart-items" *ngIf="items.length > 0">
       <div class="cart-item" *ngFor="let item of items">
-        <div class="item-image">
-          <div class="placeholder-image"></div>
+        <div class="item-image" [style.background-image]="item.product.image ? 'url(' + item.product.image + ')' : null">
+          <div class="placeholder-image" *ngIf="!item.product.image"></div>
         </div>
         <div class="item-details">
           <h4>{{ item.product.name }}</h4>
