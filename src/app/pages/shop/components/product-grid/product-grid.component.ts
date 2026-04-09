@@ -12,11 +12,17 @@ import { SeoService } from '../../../../core/services/seo.service';
 })
 export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   @Input() initialLoad: boolean = true;
+  @Input() set brandId(brandId: string | null) {
+    if (brandId !== this._brandId) {
+      this._brandId = brandId;
+      this._searchTerm = null;
+    }
+  }
+  
   @Input() set category(categoryId: number | null) {
     if (categoryId !== this._categoryId) {
       this._categoryId = categoryId;
       this._searchTerm = null;
-      this._brandId = null;
     }
   }
   
@@ -25,14 +31,6 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       this._searchTerm = searchTerm;
       this._categoryId = null;
       this._brandId = null;
-    }
-  }
-
-  @Input() set brandId(brandId: string | null) {
-    if (brandId !== this._brandId) {
-      this._brandId = brandId;
-      this._categoryId = null;
-      this._searchTerm = null;
     }
   }
   
@@ -103,9 +101,11 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private loadProductsBasedOnInputs(): void {
-    console.log(this._brandId);
+    console.log(this._brandId, this._categoryId);
     
-    if (this._brandId) {
+    if (this._brandId && this._categoryId) {
+      this.loadProductsByBrandAndCategory();
+    } else if (this._brandId) {
       this.loadProductsByBrand(this._brandId);
     } else if (this._categoryId) {
       this.loadProductsByCategory(this._categoryId);
@@ -305,6 +305,96 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
+  private loadProductsByBrandAndCategory(): void {
+    const brandName = this._brandId;
+    const categoryId = this._categoryId;
+    
+    this.isLoading = true;
+    this.offset = 0;
+    this.currentPage = 1;
+    console.log('Loading products by brand and category:', brandName, categoryId);
+
+    this.productsService.getCategories().subscribe({
+      next: (categories) => {
+        const category = categories.find(c => c.id === categoryId);
+        if (!category) {
+          this.isLoading = false;
+          return;
+        }
+      console.log(categories)
+        const categoryDescription = category.categoryDesc;
+
+        this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName, categoryDescription).subscribe({
+          next: (count) => {
+            this.totalCount = count;
+            this.totalPages = Math.ceil(count / this.pageSize);
+            this.hasMore = count > 0;
+            this.updateVisiblePages();
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error getting brand+category product count:', err);
+            this.isLoading = false;
+          }
+        });
+
+        this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName, categoryDescription, this.pageSize, 0).subscribe({
+          next: (products) => {
+            console.log(products);
+            this.products = products;
+            this.offset = products.length;
+            this.isLoading = false;
+            this.hasMore = this.offset < this.totalCount;
+            this.addProductSchema();
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error loading brand+category products:', err);
+            this.isLoading = false;
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private loadPageByBrandAndCategory(page: number, offset: number): void {
+    const brandName = this._brandId;
+    const categoryId = this._categoryId;
+    
+    if (!brandName || !categoryId) return;
+
+    this.productsService.getCategories().subscribe({
+      next: (categories) => {
+        const category = categories.find(c => c.id === categoryId);
+        if (!category) return;
+        
+        const categoryDescription = category.categoryName;
+
+        this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName, categoryDescription, this.pageSize, offset).subscribe({
+          next: (products) => {
+            this.products = products;
+            this.isLoading = false;
+            
+            const productsSection = document.getElementById('products-section');
+            if (productsSection) {
+              productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error loading page:', err);
+            this.isLoading = false;
+          }
+        });
+      }
+    });
+  }
+
   // Go to specific page
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages || page === this.currentPage || this.isLoading) return;
@@ -316,7 +406,9 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     // Calculate offset: page 1 = 0, page 2 = 16, page 3 = 32, etc.
     const offset = (page - 1) * this.pageSize;
     
-    if (this._searchTerm) {
+    if (this._brandId && this._categoryId) {
+      this.loadPageByBrandAndCategory(page, offset);
+    } else if (this._searchTerm) {
       // Load by search term
       this.productsService.searchProducts(this._searchTerm, this.pageSize, offset).subscribe({
         next: (products) => {

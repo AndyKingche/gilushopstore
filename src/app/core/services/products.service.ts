@@ -155,4 +155,16 @@ export class ProductsService {
     return this.http.get<Category[]>(`${this.categoryApiUrl}/online-store/${this.outletId}/brandName/${brandName}`);
   }
 
+  getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName: string, categoryDescription: string, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get<Product[]>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/categoryDescription/${categoryDescription}`, { params });
+  }
+
+  getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName: string, categoryDescription: string): Observable<number> {
+    return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/categoryDescription/${categoryDescription}/count`);
+  }
+
 }
