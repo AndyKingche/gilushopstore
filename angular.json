@@ -27,12 +27,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/gilu-favicon.ico",
-              "src/assets",
-              {
-                "glob": "sitemap.xml",
-                "input": "src/assets",
-                "output": "/"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
