@@ -26,6 +26,7 @@ const CATEGORY_NAME_MAP: { [key: string]: string } = {
 })
 export class ShopComponent implements OnInit, OnDestroy {
   private searchSubscription?: Subscription;
+  private routerSubscription?: Subscription;
   categories: Category[] = [];
   searchQuery = '';
   selectedCategory: number | null = null;
@@ -47,6 +48,17 @@ export class ShopComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Setup SEO for shop page
     this.setupSeo();
+
+    // Subscribe to router events to handle navigation changes
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      const params = this.route.snapshot.params;
+      this.handleBrandParam(params);
+    });
+
+    // Handle initial brand param
+    this.handleBrandParam(this.route.snapshot.params);
 
     // Load categories from API
     this.productsService.getCategories().subscribe({
@@ -75,17 +87,6 @@ export class ShopComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Handle brand parameter from route on navigation
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => this.route.snapshot.params)
-    ).subscribe(params => {
-      this.handleBrandParam(params);
-    });
-
-    // Handle initial brand param
-    this.handleBrandParam(this.route.snapshot.params);
-
     // Listen to search service for search terms from header
     this.searchSubscription = this.searchService.searchTerm$.subscribe(term => {
       if (term !== null && term.trim() !== '') {
@@ -112,6 +113,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.searchSubscription?.unsubscribe();
+    this.routerSubscription?.unsubscribe();
   }
 
   private applyCategorySelection(categoryId: string): void {
@@ -184,14 +186,24 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   private updateBrandSeo(brand: CatalogBrandDTO): void {
+    console.log(brand.brandName);
+    
     this.seoService.updateMetaTags({
-      title: `${brand.brandName} | Gilú Shop Ecuador`,
+      title: `${brand.brandName} - Ecuador | Gilú Shop Ecuador`,
       description: `Explora nuestra colección de ${brand.brandName}. Maquillaje 100% original de las mejores marcas.`,
       keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
       image: 'https://gilu-shop.com/assets/image/gilu-update.png',
       url: `https://gilu-shop.com/shop/collections/${encodeURIComponent(brand.brandName)}`,
       type: 'website'
     });
+
+    this.seoService.setJsonLd({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": `${brand.brandName} Ecuador`,
+      "url": `https://gilu-shop.com/shop/collections/${brand.brandDescription}`,
+      "description": `Productos ${brand.brandName} originales en Ecuador`
+    }, 'schema-brand');
   }
 
   private handleBrandParam(params: any): void {
@@ -243,6 +255,7 @@ export class ShopComponent implements OnInit, OnDestroy {
       });
     } else {
       this.brandId = null;
+      this.setupSeo();
       // Reset to full category list when no brand is selected
       this.selectedCategoryIds = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
     }

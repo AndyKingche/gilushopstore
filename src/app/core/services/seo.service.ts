@@ -165,8 +165,11 @@ export class SeoService {
    * Update all meta tags for a page
    */
   updateMetaTags(config: SeoConfig): void {
-    // Set title
+    this.clearMetaTags();
+    
+    // Set title (both Angular Title service and meta name="title")
     this.setTitle(config.title);
+    this.meta.updateTag({ name: 'title', content: config.title });
 
     // Set meta description
     this.setMetaDescription(config.description);
@@ -196,6 +199,36 @@ export class SeoService {
    */
   getTitle(): string {
     return this.title.getTitle();
+  }
+
+clearMetaTags(): void {
+    const selectors = [
+      'meta[name="description"]',
+      'meta[name="keywords"]',
+      'meta[name="title"]',
+      'meta[property="og:title"]',
+      'meta[property="og:description"]',
+      'meta[property="og:image"]',
+      'meta[property="og:url"]',
+      'meta[property="og:type"]',
+      'meta[property="og:locale"]',
+      'meta[property="og:site_name"]',
+      'meta[name="twitter:card"]',
+      'meta[name="twitter:title"]',
+      'meta[name="twitter:description"]',
+      'meta[name="twitter:image"]'
+    ];
+
+    selectors.forEach(selector => {
+      try {
+        const element = this.document.querySelector(selector);
+        if (element) {
+          element.remove();
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    });
   }
 
   /**
@@ -506,6 +539,7 @@ export class SeoService {
    */
   generateLocalBusinessSchema(): JsonLdSchema {
     // Check cache
+     console.log(this.globalConfig.siteName);
     if (this.localBusinessSchemaCache) {
       return this.localBusinessSchemaCache;
     }
@@ -681,6 +715,7 @@ export class SeoService {
    */
   generateOrganizationSchema(): JsonLdSchema {
     // Check cache
+    console.log(this.globalConfig.siteName);
     if (this.organizationSchemaCache) {
       return this.organizationSchemaCache;
     }
@@ -721,6 +756,8 @@ export class SeoService {
       return this.webSiteSchemaCache;
     }
 
+    console.log(this.globalConfig.siteName);
+    
     // Generate new schema
     const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
@@ -789,5 +826,11 @@ export class SeoService {
     // Cache and return
     this.faqSchemaCache.set(cacheKey, schema);
     return schema;
+  }
+
+  generateGlobalSchemas(): void {
+    this.setJsonLd(this.generateOrganizationSchema(), 'schema-org');
+    this.setJsonLd(this.generateWebSiteSchema(), 'schema-site');
+    this.setJsonLd(this.generateLocalBusinessSchema(), 'schema-local');
   }
 }

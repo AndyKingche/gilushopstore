@@ -65,7 +65,11 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    // Set SEO meta tags for product listing page with long-tail keywords
+    this.setupDefaultSeo();
+    this.loadProductsBasedOnInputs();
+  }
+
+  private setupDefaultSeo(): void {
     this.seoService.updateMetaTags({
       title: 'Maquillaje Original Ecuador - Gilú Shop | Maybelline, e.l.f., NYX Otavalo',
       description: 'Compra maquillaje 100% original en Gilú Shop, Otavalo Ecuador. Maybelline, e.l.f., NYX, L\'Oréal, Huda Beauty con envío a todo Ecuador. Precios accesibles, productos garantizados.',
@@ -76,17 +80,12 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       siteName: 'Gilú Shop'
     });
 
-    // Set Twitter Card tags
     this.seoService.setTwitterCard({
       title: 'Maquillaje Original Ecuador - Gilú Shop',
       description: 'Compra maquillaje 100% original en Gilú Shop, Otavalo Ecuador. Las mejores marcas internacionales con envío a todo Ecuador.'
     });
 
-    // Set canonical URL for shop page
     this.seoService.setCanonicalUrl('https://gilu-shop.com/shop');
-
-    // Load initial products or filtered based on inputs
-    this.loadProductsBasedOnInputs();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -106,6 +105,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     if (this._brandId && this._categoryId) {
       this.loadProductsByBrandAndCategory();
     } else if (this._brandId) {
+      //this.updateBrandSeo(this._brandId);
       this.loadProductsByBrand(this._brandId);
     } else if (this._categoryId) {
       this.loadProductsByCategory(this._categoryId);
@@ -258,6 +258,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
 
   // Load products filtered by brand
   private loadProductsByBrand(brandName: string): void {
+    //this.updateBrandSeo(brandName);
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
@@ -359,6 +360,32 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         this.isLoading = false;
       }
     });
+  }
+
+  private updateBrandSeo(brandName: string): void {
+    const brand = brandName.trim();
+
+    this.seoService.updateMetaTags({
+      title: `${brand} Ecuador | Comprar ${brand} Original | Gilú Shop`,
+      description: `Compra productos ${brand} originales en Ecuador. Envíos rápidos a todo el país desde Gilú Shop.`,
+      keywords: `${brand} Ecuador, comprar ${brand} Ecuador, ${brand} original Ecuador, maquillaje ${brand}`,
+      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      url: `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`,
+      type: 'website',
+      siteName: 'Gilú Shop'
+    });
+
+    this.seoService.setCanonicalUrl(
+      `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`
+    );
+
+    this.seoService.setJsonLd({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": `${brand} Ecuador`,
+      "url": `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`,
+      "description": `Productos ${brand} originales en Ecuador`
+    }, 'schema-brand');
   }
 
   private loadPageByBrandAndCategory(page: number, offset: number): void {
@@ -587,6 +614,25 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
    */
   private addProductSchema(): void {
     if (this.products && this.products.length > 0) {
+      // Breadcrumb schema
+      const breadcrumbItems: { name: string; url: string }[] = [
+        { name: 'Inicio', url: 'https://gilu-shop.com' },
+        { name: 'Tienda', url: 'https://gilu-shop.com/shop' }
+      ];
+      if (this._brandId) {
+        breadcrumbItems.push({
+          name: this._brandId,
+          url: `https://gilu-shop.com/shop/collections/${this._brandId.toLowerCase().replace(/\s+/g, '-')}`
+        });
+      } else if (this._categoryId) {
+        breadcrumbItems.push({
+          name: 'Categoría',
+          url: 'https://gilu-shop.com/shop'
+        });
+      }
+      const breadcrumb = this.seoService.generateBreadcrumbSchema(breadcrumbItems);
+      this.seoService.setJsonLd(breadcrumb, 'schema-breadcrumb');
+
       // Use ItemList schema for product listing pages
       const productListSchema = this.seoService.generateProductListSchema(
         this.products.map(p => ({

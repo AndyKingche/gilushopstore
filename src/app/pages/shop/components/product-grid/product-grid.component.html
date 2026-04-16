@@ -6,10 +6,11 @@
       <span>Cargando productos...</span>
     </div>
   </div>
-  
+
   <!-- Empty state -->
   <div class="empty-state" *ngIf="!isLoading && (!products || products.length === 0)">
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"></circle>
       <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
     </svg>
@@ -17,7 +18,7 @@
     <p>Intenta con otros términos de búsqueda</p>
   </div>
   <div class="product-grid" *ngIf="products && products.length > 0">
-    <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct" appScrollAnimation [style.animationDelay]="getAnimationDelay(i)">
+    <!-- <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct" appScrollAnimation [style.animationDelay]="getAnimationDelay(i)">
       <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null">
         <span class="brand-badge">{{ product.brand }}</span>
         <span *ngIf="!product.inStock" class="out-badge">Agotado</span>
@@ -38,6 +39,63 @@
           </button>
         </div>
       </div>
+    </div> -->
+    <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct"
+      appScrollAnimation [style.animationDelay]="getAnimationDelay(i)" itemscope itemtype="https://schema.org/Product">
+
+      <!-- <a [routerLink]="['/product', product.id]" itemprop="url"> -->
+      <a itemprop="url">
+
+
+        <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null"
+          itemprop="image" [attr.aria-label]="product.name">
+          <span class="brand-badge" itemprop="brand">
+            {{ product.brand }}
+          </span>
+
+          <span *ngIf="!product.inStock" class="out-badge">
+            Agotado
+          </span>
+        </div>
+
+      </a>
+
+      <div class="card-body">
+
+        <p class="card-category">
+          {{ product.category }}
+        </p>
+
+        <h3 class="card-name" itemprop="name">
+          {{ product.name }}
+        </h3>
+
+        <p class="card-desc" itemprop="description">
+          {{ product.description }}
+        </p>
+
+        <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+          <meta itemprop="priceCurrency" content="USD">
+
+          <span class="card-price" itemprop="price">
+            ${{ product.price.toFixed(2) }}
+          </span>
+
+          <meta itemprop="availability" [attr.content]="product.inStock 
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock'">
+
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-cart" (click)="addToCart(product)" [disabled]="!product.inStock"
+            [attr.aria-label]="'Agregar ' + product.name">
+            Agregar
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -50,51 +108,45 @@
   <!-- Pagination -->
   <div class="pagination" *ngIf="showPagination && !isLoadingMore">
     <!-- Previous button -->
-    <button 
-      class="page-btn nav-btn" 
-      (click)="previousPage()" 
-      [disabled]="currentPage === 1">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <button class="page-btn nav-btn" (click)="previousPage()" [disabled]="currentPage === 1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>
       <span>Anterior</span>
     </button>
-    
+
     <!-- First page and ellipsis -->
     <ng-container *ngIf="visiblePages[0] > 1">
       <button class="page-btn" (click)="goToPage(1)">1</button>
       <span class="ellipsis" *ngIf="visiblePages[0] > 2">...</span>
     </ng-container>
-    
+
     <!-- Visible page numbers -->
-    <button 
-      *ngFor="let page of visiblePages" 
-      class="page-btn" 
-      [class.active]="page === currentPage"
+    <button *ngFor="let page of visiblePages" class="page-btn" [class.active]="page === currentPage"
       (click)="goToPage(page)">
       {{ page }}
     </button>
-    
+
     <!-- Last page and ellipsis -->
     <ng-container *ngIf="visiblePages[visiblePages.length - 1] < totalPages">
       <span class="ellipsis" *ngIf="visiblePages[visiblePages.length - 1] < totalPages - 1">...</span>
       <button class="page-btn" (click)="goToPage(totalPages)">{{ totalPages }}</button>
     </ng-container>
-    
+
     <!-- Next button -->
-    <button 
-      class="page-btn nav-btn" 
-      (click)="nextPage()" 
-      [disabled]="currentPage === totalPages">
+    <button class="page-btn nav-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
       <span>Siguiente</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
     </button>
   </div>
-  
+
   <!-- Page info -->
   <div class="page-info" *ngIf="showPagination && products.length > 0">
-    <span>Mostrando {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} productos</span>
+    <span>Mostrando {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{
+      totalCount }} productos</span>
   </div>
 </div>

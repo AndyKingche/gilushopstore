@@ -12,10 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private seoService: SeoService) {}
 
   ngOnInit(): void {
-    // Set static JSON-LD schemas for SSR (Organization, WebSite, LocalBusiness)
-    this.seoService.setJsonLd(this.seoService.generateOrganizationSchema(), 'schema-organization');
-    this.seoService.setJsonLd(this.seoService.generateWebSiteSchema(), 'schema-website');
-    this.seoService.setJsonLd(this.seoService.generateLocalBusinessSchema(), 'schema-local-business');
+    this.seoService.generateGlobalSchemas();
     
     // Set hreflang for Ecuador Spanish
     this.seoService.setHreflang('https://gilu-shop.com');

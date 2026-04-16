@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { SeoService } from '../../core/services/seo.service';
 
 @Component({
@@ -6,15 +9,54 @@ import { SeoService } from '../../core/services/seo.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  constructor(private seoService: SeoService) {}
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  private routerSubscription?: Subscription;
+
+  constructor(
+    private seoService: SeoService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.setupSeo();
+    
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      if (event.urlAfterRedirects === '/' || event.urlAfterRedirects === '') {
+        this.setupSeo();
+      }
+    });
+
+    this.seoService.setJsonLd(
+    this.seoService.generateWebSiteSchema(),
+    'schema-website'
+  );
+
+  this.seoService.setJsonLd(
+    this.seoService.generateOrganizationSchema(),
+    'schema-organization'
+  );
+
+  this.seoService.setJsonLd(
+    this.seoService.generateLocalBusinessSchema(),
+    'schema-store'
+  );
+  }
+
+  ngAfterViewInit(): void {
+    this.setupSeo();
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
   private setupSeo(): void {
-    // Configure basic meta tags for home page
+    this.seoService.setTitle('Gilú Shop - Maquillaje Original en Ecuador | Maybelline, e.l.f, NYX');
+    
+    this.seoService.clearMetaTags();
+    
     this.seoService.updateMetaTags({
       title: 'Gilú Shop - Maquillaje Original en Ecuador | Maybelline, e.l.f, NYX',
       description: 'Tu tienda de maquillaje 100% original en Otavalo Ecuador. Encuentra las mejores marcas: Maybelline, E.l.f. Cosmetics, Loreal, NYX, Huda Beauty, Too Faced, Victoria Secret y más.',

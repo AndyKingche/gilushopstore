@@ -1,5 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { SeoService } from '../../../../core/services/seo.service';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 interface NewsCard {
   badge: string;
@@ -14,32 +13,7 @@ interface NewsCard {
   templateUrl: './news-cards.component.html',
   styleUrls: ['./news-cards.component.scss']
 })
-export class NewsCardsComponent implements OnInit {
-
-  constructor(private seoService: SeoService) {}
-
-  ngOnInit(): void {
-    // Set SEO meta tags for News section on homepage with long-tail keywords
-    this.seoService.updateMetaTags({
-      title: 'Novedades y Promociones Maquillaje Ecuador - Gilú Shop Otavalo',
-      description: 'Descubre las últimas novedades en maquillaje y promociones especiales en Gilú Shop, Otavalo Ecuador. Maybelline, e.l.f., NYX, Huda Beauty con envío a todo Ecuador.',
-      keywords: 'novedades maquillaje Ecuador, promociones cosmetics Otavalo, productos nuevos belleza Ecuador, arrivals maquillaje Ecuador, ofertas especiales Gilú Shop, descuentos maquillaje Ecuador, nuevos productos beauty Ecuador',
-      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
-      url: 'https://gilu-shop.com/',
-      type: 'website',
-      siteName: 'Gilú Shop'
-    });
-
-    // Set Twitter Card tags
-    this.seoService.setTwitterCard({
-      title: 'Novedades y Promociones - Gilú Shop',
-      description: 'Descubre las últimas novedades en maquillaje y promociones especiales en Ecuador.',
-      image: 'https://gilu-shop.com/assets/image/gilu-update.png'
-    });
-
-    // Set canonical URL for homepage
-    this.seoService.setCanonicalUrl('https://gilu-shop.com/');
-  }
+export class NewsCardsComponent {
 
   @ViewChild('slider') slider!: ElementRef;
 
