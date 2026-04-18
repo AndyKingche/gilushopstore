@@ -1,3 +1,7 @@
+<div class="loading-indicator" *ngIf="isLoadingMore">
+    <div class="spinner"></div>
+    <span>Cargando...</span>
+  </div>
 <div class="products-section" id="products-section">
   <!-- Loading state - always show when loading -->
   <div class="loading-overlay" *ngIf="isLoading">
@@ -6,6 +10,8 @@
       <span>Cargando productos...</span>
     </div>
   </div>
+  <!-- Loading indicator -->
+  
 
   <!-- Empty state -->
   <div class="empty-state" *ngIf="!isLoading && (!products || products.length === 0)">
@@ -17,6 +23,9 @@
     <h3>No se encontraron productos</h3>
     <p>Intenta con otros términos de búsqueda</p>
   </div>
+
+   
+  
   <div class="product-grid" *ngIf="products && products.length > 0">
     <!-- <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct" appScrollAnimation [style.animationDelay]="getAnimationDelay(i)">
       <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null">
@@ -99,11 +108,7 @@
     </div>
   </div>
 
-  <!-- Loading indicator -->
-  <div class="loading-indicator" *ngIf="isLoadingMore">
-    <div class="spinner"></div>
-    <span>Cargando...</span>
-  </div>
+ 
 
   <!-- Pagination -->
   <div class="pagination" *ngIf="showPagination && !isLoadingMore">

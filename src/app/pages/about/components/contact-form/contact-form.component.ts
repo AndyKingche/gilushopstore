@@ -68,7 +68,7 @@ export class ContactFormComponent {
           environment.emailjs.publicKey,
         );
         
-        console.log('Email enviado exitosamente a customers@gilu-shop.com');
+        //console.log('Email enviado exitosamente a customers@gilu-shop.com');
       } catch (error) {
         // Log del error para debugging pero no interrumpimos el flujo
         console.warn('EmailJS response error (el mensaje se mostrará como enviado):', error);

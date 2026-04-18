@@ -186,11 +186,11 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   private updateBrandSeo(brand: CatalogBrandDTO): void {
-    console.log(brand.brandName);
+    //console.log(brand.brandName);
     
     this.seoService.updateMetaTags({
       title: `${brand.brandName} - Ecuador | Gilú Shop Ecuador`,
-      description: `Explora nuestra colección de ${brand.brandName}. Maquillaje 100% original de las mejores marcas.`,
+      description: `Explora nuestra colección de ${brand.brandName} aquí en Ecuador. Maquillaje 100% original de las mejores marcas. Con envíos a todo el Ecuador y regalos en tu compra.`,
       keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
       image: 'https://gilu-shop.com/assets/image/gilu-update.png',
       url: `https://gilu-shop.com/shop/collections/${encodeURIComponent(brand.brandName)}`,
@@ -223,7 +223,7 @@ export class ShopComponent implements OnInit, OnDestroy {
             // Fetch categories filtered by brand
             this.productsService.getCategoriesByBrandName(brand.brandName).subscribe({
               next: (categories) => {
-                console.log(categories);
+                //console.log(categories);
                 
                 this.selectedCategoryIds = categories.map(cat => cat.id);
                 this.cdr.detectChanges();

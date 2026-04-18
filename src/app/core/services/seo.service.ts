@@ -539,7 +539,7 @@ clearMetaTags(): void {
    */
   generateLocalBusinessSchema(): JsonLdSchema {
     // Check cache
-     console.log(this.globalConfig.siteName);
+     //console.log(this.globalConfig.siteName);
     if (this.localBusinessSchemaCache) {
       return this.localBusinessSchemaCache;
     }
@@ -715,7 +715,7 @@ clearMetaTags(): void {
    */
   generateOrganizationSchema(): JsonLdSchema {
     // Check cache
-    console.log(this.globalConfig.siteName);
+    //console.log(this.globalConfig.siteName);
     if (this.organizationSchemaCache) {
       return this.organizationSchemaCache;
     }
@@ -756,7 +756,7 @@ clearMetaTags(): void {
       return this.webSiteSchemaCache;
     }
 
-    console.log(this.globalConfig.siteName);
+    //console.log(this.globalConfig.siteName);
     
     // Generate new schema
     const schema: JsonLdSchema = {

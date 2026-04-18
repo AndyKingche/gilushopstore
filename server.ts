@@ -83,10 +83,43 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  server.get('*', (req, res) => {
+  server.get('*', (req, res, next) => {
+    const requestedUrl = req.originalUrl;
+    
+    // Skip API routes
+    if (requestedUrl.startsWith('/api/')) {
+      return next();
+    }
+    
+    // Check for known valid routes that should return 200
+    const validRoutes = ['/', '/shop', '/about', '/faq', '/home', '/wp-content', '/assets'];
+    const hasExtension = /\.[a-zA-Z0-9]+$/.test(requestedUrl);
+    const hasQueryString = requestedUrl.includes('?');
+    const isValidRoute = validRoutes.some(route => 
+      requestedUrl === route || 
+      requestedUrl.startsWith(route + '/')
+    );
+    const isStaticFile = requestedUrl.startsWith('/assets/') || 
+                       requestedUrl.startsWith('/wp-content/') ||
+                       hasExtension;
+    
+    // Check if it's a 404 route explicitly
+    const is404Page = requestedUrl === '/404' || requestedUrl.startsWith('/404?');
+    
+    // Set cache headers
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
+    
+    if (is404Page) {
+      // Explicit 404 page - return 404 status code
+      res.status(404);
+    } else if (!isValidRoute && !isStaticFile && !hasQueryString) {
+      // Unknown route without file extension/query - it's a soft 404 scenario
+      // Return 404 status code so Google doesn't see it as soft 404
+      res.status(404);
+    }
+    
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 

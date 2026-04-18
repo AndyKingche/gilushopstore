@@ -89,7 +89,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    //console.log(changes);
     
     // Handle changes to inputs after initial load
     if (changes['category'] || changes['searchTerm'] || changes['brandId']) {
@@ -100,7 +100,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private loadProductsBasedOnInputs(): void {
-    console.log(this._brandId, this._categoryId);
+    //console.log(this._brandId, this._categoryId);
     
     if (this._brandId && this._categoryId) {
       this.loadProductsByBrandAndCategory();
@@ -143,7 +143,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     // Load first batch of products (16 initially)
     this.productsService.getOnlineStoreProducts(this.pageSize, 0).subscribe({
       next: (products) => {
-        console.log(products);
+        //console.log(products);
         
         this.products = products;
         this.offset = products.length;
@@ -236,7 +236,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     // Load first batch of products for this search
     this.productsService.searchProducts(searchTerm, this.pageSize, 0).subscribe({
       next: (products) => {
-        console.log(products)
+       // console.log(products)
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
@@ -262,7 +262,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    console.log(brandName);
+    //console.log(brandName);
     
 
     // First, get the total count for this brand
@@ -280,12 +280,12 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
 
-    console.log(brandName);
+    //console.log(brandName);
     
     // Load first batch of products for this brand
     this.productsService.getOnlineStoreProductsByBrandName(brandName, this.pageSize, 0).subscribe({
       next: (products) => {
-        console.log(products);
+        //console.log(products);
         
         this.products = products;
         this.offset = products.length;
@@ -313,7 +313,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    console.log('Loading products by brand and category:', brandName, categoryId);
+    //console.log('Loading products by brand and category:', brandName, categoryId);
 
     this.productsService.getCategories().subscribe({
       next: (categories) => {
@@ -322,7 +322,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
           this.isLoading = false;
           return;
         }
-      console.log(categories)
+      //console.log(categories)
         const categoryDescription = category.categoryDesc;
 
         this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName, categoryDescription).subscribe({
@@ -341,7 +341,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
 
         this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName, categoryDescription, this.pageSize, 0).subscribe({
           next: (products) => {
-            console.log(products);
+            //console.log(products);
             this.products = products;
             this.offset = products.length;
             this.isLoading = false;

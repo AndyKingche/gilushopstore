@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://gilu-shop.com/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Beauty Shop</image:title>
+      <image:caption>Tu tienda de maquillaje 100% original Ecuador - Otavalo</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gilu-shop.com/shop</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Productos</image:title>
+      <image:caption>Explora nuestra colección de maquillaje original</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gilu-shop.com/about</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Sobre Nosotros</image:title>
+      <image:caption>Conoce la historia de Gilú Shop</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gilu-shop.com/faq</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+     <image:image>
+      <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Sobre Nosotros</image:title>
+      <image:caption>Conoce la historia de Gilú Shop</image:caption>
+    </image:image>
+  </url>
+  <!-- <url>
+    <loc>https://gilu-shop.com/contact</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url> -->
+</urlset>
