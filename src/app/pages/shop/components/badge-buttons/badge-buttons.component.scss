@@ -32,16 +32,12 @@
     opacity: 0;
     transition: opacity $transition-fast;
   }
-  
-  &:hover::-webkit-scrollbar-thumb {
-    opacity: 1;
-  }
 }
 
 .badge-button {
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
   font-weight: 600;
   background: $dark;
   color: $white;
@@ -58,6 +54,34 @@
   &.active {
     background: $pink-primary;
     color: $white;
+    position: relative;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background: $white;
+    color: $pink-primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all $transition-fast;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+      background: $pink-medium;
+      color: $white;
+    }
   }
 }
 
@@ -89,5 +113,41 @@
   
   &.right {
     margin-left: 4px;
+  }
+}
+
+// Mobile responsive styles
+@media (max-width: 768px) {
+  .badge-container {
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .badge-button {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+
+    .close-icon {
+      top: 1px;
+      right: 1px;
+      width: 12px;
+      height: 12px;
+      font-size: 8px;
+    }
+  }
+
+  .nav-arrow {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+
+    &.left {
+      margin-right: 2px;
+    }
+
+    &.right {
+      margin-left: 2px;
+    }
   }
 }

@@ -54,6 +54,12 @@ export class BadgeButtonsComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  onRemove(event: Event, categoryId: number): void {
+    event.stopPropagation();
+    this.selectedCategoryId = null;
+    this.categoryChange.emit(null);
+  }
+
   isSelected(categoryId: number): boolean {
     return this.selectedCategoryId === categoryId;
   }

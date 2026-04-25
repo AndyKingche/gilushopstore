@@ -1,12 +1,13 @@
 <div class="badge-container">
   <button class="nav-arrow left" (click)="scroll('left')" *ngIf="showArrows">‹</button>
   <div class="badge-scroll" #scrollContainer>
-    <span 
+    <span
       *ngFor="let category of visibleCategories"
       class="badge-button"
       [class.active]="isSelected(category.id)"
       (click)="onBadgeClick(category.id)">
       {{ category.categoryName }}
+      <span class="close-icon" *ngIf="isSelected(category.id)" (click)="onRemove($event, category.id)">×</span>
     </span>
   </div>
   <button class="nav-arrow right" (click)="scroll('right')" *ngIf="showArrows">›</button>
