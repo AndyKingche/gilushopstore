@@ -9,6 +9,7 @@ import { Category } from '../../../../core/models/category.model';
 export class BadgeButtonsComponent implements AfterViewInit, OnChanges {
   @Input() categories: Category[] = [];
   @Input() selectedIds: number[] = [];
+  @Input() selectedCategory: number | null = null;
   @Output() categoryChange = new EventEmitter<number | null>();
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
@@ -29,6 +30,9 @@ export class BadgeButtonsComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['categories'] || changes['selectedIds']) {
       setTimeout(() => this.checkOverflow(), 100);
+    }
+    if (changes['selectedCategory']) {
+      this.selectedCategoryId = this.selectedCategory;
     }
   }
 
