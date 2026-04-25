@@ -1,14 +1,15 @@
 <div class="badge-container">
   <button class="nav-arrow left" (click)="scroll('left')" *ngIf="showArrows">‹</button>
   <div class="badge-scroll" #scrollContainer>
-    <span
-      *ngFor="let category of visibleCategories"
-      class="badge-button"
-      [class.active]="isSelected(category.id)"
-      (click)="onBadgeClick(category.id)">
-      {{ category.categoryName }}
+    <div class="badge-wrapper" *ngFor="let category of visibleCategories">
+      <span
+        class="badge-button"
+        [class.active]="isSelected(category.id)"
+        (click)="onBadgeClick(category.id)">
+        {{ category.categoryName }}
+      </span>
       <span class="close-icon" *ngIf="isSelected(category.id)" (click)="onRemove($event, category.id)">×</span>
-    </span>
+    </div>
   </div>
   <button class="nav-arrow right" (click)="scroll('right')" *ngIf="showArrows">›</button>
 </div>

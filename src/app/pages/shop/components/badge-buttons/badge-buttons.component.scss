@@ -17,21 +17,27 @@
   scroll-behavior: smooth;
   padding: 2px 0;
   flex: 1;
-  
+
   &::-webkit-scrollbar {
     height: 4px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $gray-400;
     border-radius: 2px;
     opacity: 0;
     transition: opacity $transition-fast;
   }
+}
+
+.badge-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .badge-button {
@@ -54,34 +60,28 @@
   &.active {
     background: $pink-primary;
     color: $white;
-    position: relative;
   }
+}
 
-  .close-icon {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 14px;
-    height: 14px;
-    background: $white;
-    color: $pink-primary;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.9;
-    transition: all $transition-fast;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+.close-icon {
+  width: 20px;
+  height: 20px;
+  background: $pink-primary;
+  color: $white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all $transition-fast;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  flex-shrink: 0;
 
-    &:hover {
-      opacity: 1;
-      transform: scale(1.1);
-      background: $pink-medium;
-      color: $white;
-    }
+  &:hover {
+    background: $pink-medium;
+    transform: scale(1.1);
   }
 }
 
@@ -123,18 +123,20 @@
     margin-bottom: 12px;
   }
 
+  .badge-wrapper {
+    gap: 3px;
+  }
+
   .badge-button {
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 10px;
+  }
 
-    .close-icon {
-      top: 1px;
-      right: 1px;
-      width: 12px;
-      height: 12px;
-      font-size: 8px;
-    }
+  .close-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
   }
 
   .nav-arrow {
