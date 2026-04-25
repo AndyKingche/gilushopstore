@@ -320,17 +320,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://gilu-shop.com/shop/collections/aoyi</loc>
-    <lastmod>2026-04-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.84</priority>
-    <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/aoyi--1.webp</image:loc>
-      <image:title>AOYI Ecuador | Gilú Shop AOYI</image:title>
-      <image:caption>Explora nuestra colección de AOYI</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://gilu-shop.com/shop/collections/vogue</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -760,17 +749,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://gilu-shop.com/shop/collections/star-wars</loc>
-    <lastmod>2026-04-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-    <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/star-wars--1.webp</image:loc>
-      <image:title>Star Wars Ecuador | Gilú Shop Star Wars</image:title>
-      <image:caption>Explora nuestra colección de Star Wars</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://gilu-shop.com/shop/collections/star-face</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -790,17 +768,6 @@
       <image:loc>https://gilu-shop.com/assests/image/numbuzin--1.webp</image:loc>
       <image:title>Numbuzin Ecuador | Gilú Shop Numbuzin</image:title>
       <image:caption>Explora nuestra colección de Numbuzin</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://gilu-shop.com/shop/collections/sacara</loc>
-    <lastmod>2026-04-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.83</priority>
-    <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/sacara--1.webp</image:loc>
-      <image:title>Sacara Ecuador | Gilú Shop Sacara</image:title>
-      <image:caption>Explora nuestra colección de Sacara</image:caption>
     </image:image>
   </url>
 </urlset>

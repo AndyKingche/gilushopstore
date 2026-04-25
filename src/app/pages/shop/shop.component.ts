@@ -186,13 +186,15 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   private updateBrandSeo(brand: CatalogBrandDTO): void {
-    //console.log(brand.brandName);
+    //console.log(brand.brandDescription);
     
     this.seoService.updateMetaTags({
+      
+      
       title: `${brand.brandName} - Ecuador | Gilú Shop Ecuador`,
       description: `Explora nuestra colección de ${brand.brandName} aquí en Ecuador. Maquillaje 100% original de las mejores marcas. Con envíos a todo el Ecuador y regalos en tu compra.`,
       keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
-      image: 'https://gilu-shop.com/assets/image/gilu-update.png',
+      image: `https://gilu-shop.com/assets/image/${brand.brandDescription}--1.webp`,
       url: `https://gilu-shop.com/shop/collections/${encodeURIComponent(brand.brandName)}`,
       type: 'website'
     });
