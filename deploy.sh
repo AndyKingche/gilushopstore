@@ -13,7 +13,6 @@ scp -P $PORT dist/gilustore/*.js root@$IP:/var/www/gilushop/dist/gilustore/brows
 scp -P $PORT dist/gilustore/*.css root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp -P $PORT dist/gilustore/*.html root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp -P $PORT dist/gilustore/*.txt root@$IP:/var/www/gilushop/dist/gilustore/browser/
-scp -P $PORT dist/gilustore/*.xml root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp -P $PORT -r dist/gilustore/assets root@$IP:/var/www/gilushop/dist/gilustore/browser/
 scp -P $PORT dist/gilustore/gilu-favicon.ico root@$IP:/var/www/gilushop/dist/gilustore/browser/
 

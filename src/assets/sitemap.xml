@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://gilu-shop.com/sitemap-pages.xml</loc>
+    <loc>https://gilu-shop.com/assets/sitemap-pages.xml</loc>
     <lastmod>2026-04-16</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://gilu-shop.com/sitemap-brands.xml</loc>
+    <loc>https://gilu-shop.com/assets/sitemap-brands.xml</loc>
     <lastmod>2026-04-16</lastmod>
   </sitemap>
 </sitemapindex>

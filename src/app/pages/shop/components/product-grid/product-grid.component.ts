@@ -644,18 +644,29 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       
       // Also add first product schema for rich snippets
       const firstProduct = this.products[0];
-      const productSchema = this.seoService.generateProductSchema({
-        name: firstProduct.name,
-        description: firstProduct.description,
-        image: firstProduct.image || 'https://gilu-shop.com/assets/image/gilu-update.png',
-        price: firstProduct.price,
-        currency: 'USD',
-        brand: firstProduct.brand,
-        availability: firstProduct.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-        sku: firstProduct.id
-      });
-      
-      this.seoService.setJsonLd(productSchema, 'schema-product');
+      // Only generate schema if we have valid data
+      if (firstProduct.name && firstProduct.description &&
+          typeof firstProduct.price === 'number' && firstProduct.price >= 0) {
+
+        // Ensure image is a valid URL
+        let imageUrl = firstProduct.image;
+        if (!imageUrl || !imageUrl.startsWith('http')) {
+          imageUrl = 'https://gilu-shop.com/assets/image/gilu-update.png';
+        }
+
+        const productSchema = this.seoService.generateProductSchema({
+          name: firstProduct.name,
+          description: firstProduct.description,
+          image: imageUrl,
+          price: firstProduct.price,
+          currency: 'USD',
+          brand: firstProduct.brand,
+          availability: firstProduct.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          sku: firstProduct.id
+        });
+
+        this.seoService.setJsonLd(productSchema, 'schema-product');
+      }
     }
   }
 }

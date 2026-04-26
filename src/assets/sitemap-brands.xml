@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://gilu-shop.com/shop/collections/maybelline</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.98</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/maybelline--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/maybelline--1.webp</image:loc>
       <image:title>Maybelline Ecuador | Gilú Shop Maybelline</image:title>
       <image:caption>Explora nuestra colección de Maybelline</image:caption>
     </image:image>
@@ -17,7 +17,7 @@
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/elf--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/elf--1.webp</image:loc>
       <image:title>Elf Ecuador | Gilú Shop Elf</image:title>
       <image:caption>Explora nuestra colección de Elf</image:caption>
     </image:image>
@@ -28,7 +28,7 @@
     <changefreq>daily</changefreq>
     <priority>0.96</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/loreal--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/loreal--1.webp</image:loc>
       <image:title>Loreal Ecuador | Gilú Shop Loreal</image:title>
       <image:caption>Explora nuestra colección de Loreal</image:caption>
     </image:image>
@@ -39,7 +39,7 @@
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/milani--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/milani--1.webp</image:loc>
       <image:title>Milani Ecuador | Gilú Shop Milani</image:title>
       <image:caption>Explora nuestra colección de Milani</image:caption>
     </image:image>
@@ -50,7 +50,7 @@
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/nyx--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/nyx--1.webp</image:loc>
       <image:title>NYX Ecuador | Gilú Shop NYX</image:title>
       <image:caption>Explora nuestra colección de NYX</image:caption>
     </image:image>
@@ -61,7 +61,7 @@
     <changefreq>daily</changefreq>
     <priority>0.94</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/too-faced--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/too-faced--1.webp</image:loc>
       <image:title>Too Faced Ecuador | Gilú Shop Too Faced</image:title>
       <image:caption>Explora nuestra colección de Too Faced</image:caption>
     </image:image>
@@ -72,7 +72,7 @@
     <changefreq>daily</changefreq>
     <priority>0.94</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/rare-beauty--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/rare-beauty--1.webp</image:loc>
       <image:title>Rare Beauty Ecuador | Gilú Shop Rare Beauty</image:title>
       <image:caption>Explora nuestra colección de Rare Beauty</image:caption>
     </image:image>
@@ -83,7 +83,7 @@
     <changefreq>daily</changefreq>
     <priority>0.94</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/fenty-beauty--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/fenty-beauty--1.webp</image:loc>
       <image:title>Fenty Beauty Ecuador | Gilú Shop Fenty Beauty</image:title>
       <image:caption>Explora nuestra colección de Fenty Beauty</image:caption>
     </image:image>
@@ -94,7 +94,7 @@
     <changefreq>daily</changefreq>
     <priority>0.93</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/huda-beauty--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/huda-beauty--1.webp</image:loc>
       <image:title>Huda Beauty Ecuador | Gilú Shop Huda Beauty</image:title>
       <image:caption>Explora nuestra colección de Huda Beauty</image:caption>
     </image:image>
@@ -105,7 +105,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.92</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/it-cosmetics--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/it-cosmetics--1.webp</image:loc>
       <image:title>IT Cosmetics Ecuador | Gilú Shop IT Cosmetics</image:title>
       <image:caption>Explora nuestra colección de IT Cosmetics</image:caption>
     </image:image>
@@ -116,7 +116,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.92</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/wet-n-wild--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/wet-n-wild--1.webp</image:loc>
       <image:title>Wet N Wild Ecuador | Gilú Shop Wet N Wild</image:title>
       <image:caption>Explora nuestra colección de Wet N Wild</image:caption>
     </image:image>
@@ -127,7 +127,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.91</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/kiko-milano--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/kiko-milano--1.webp</image:loc>
       <image:title>Kiko Milano Ecuador | Gilú Shop Kiko Milano</image:title>
       <image:caption>Explora nuestra colección de Kiko Milano</image:caption>
     </image:image>
@@ -138,7 +138,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/got-2b--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/got-2b--1.webp</image:loc>
       <image:title>Got 2B Ecuador | Gilú Shop Got 2B</image:title>
       <image:caption>Explora nuestra colección de Got 2B</image:caption>
     </image:image>
@@ -149,7 +149,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/essence--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/essence--1.webp</image:loc>
       <image:title>Essence Ecuador | Gilú Shop Essence</image:title>
       <image:caption>Explora nuestra colección de Essence</image:caption>
     </image:image>
@@ -160,7 +160,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/revlon--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/revlon--1.webp</image:loc>
       <image:title>Revlon Ecuador | Gilú Shop Revlon</image:title>
       <image:caption>Explora nuestra colección de Revlon</image:caption>
     </image:image>
@@ -171,7 +171,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.89</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/covergirl--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/covergirl--1.webp</image:loc>
       <image:title>Covergirl Ecuador | Gilú Shop Covergirl</image:title>
       <image:caption>Explora nuestra colección de Covergirl</image:caption>
     </image:image>
@@ -182,7 +182,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/victoria-secret--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/victoria-secret--1.webp</image:loc>
       <image:title>Victoria Secret Ecuador | Gilú Shop Victoria Secret</image:title>
       <image:caption>Explora nuestra colección de Victoria Secret</image:caption>
     </image:image>
@@ -193,7 +193,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/airspun--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/airspun--1.webp</image:loc>
       <image:title>Airspun Ecuador | Gilú Shop Airspun</image:title>
       <image:caption>Explora nuestra colección de Airspun</image:caption>
     </image:image>
@@ -204,7 +204,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/beauty-creations--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/beauty-creations--1.webp</image:loc>
       <image:title>Beauty Creations Ecuador | Gilú Shop Beauty Creations</image:title>
       <image:caption>Explora nuestra colección de Beauty Creations</image:caption>
     </image:image>
@@ -215,7 +215,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/catrice--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/catrice--1.webp</image:loc>
       <image:title>Catrice Ecuador | Gilú Shop Catrice</image:title>
       <image:caption>Explora nuestra colección de Catrice</image:caption>
     </image:image>
@@ -226,7 +226,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/italia-deluxe--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/italia-deluxe--1.webp</image:loc>
       <image:title>Italia Deluxe Ecuador | Gilú Shop Italia Deluxe</image:title>
       <image:caption>Explora nuestra colección de Italia Deluxe</image:caption>
     </image:image>
@@ -237,7 +237,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/physicianas-formula--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/physicianas-formula--1.webp</image:loc>
       <image:title>Physicians Formula Ecuador | Gilú Shop Physicians Formula</image:title>
       <image:caption>Explora nuestra colección de Physicians Formula</image:caption>
     </image:image>
@@ -248,7 +248,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/mixsoon--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/mixsoon--1.webp</image:loc>
       <image:title>Mixsoon Ecuador | Gilú Shop Mixsoon</image:title>
       <image:caption>Explora nuestra colección de Mixsoon</image:caption>
     </image:image>
@@ -259,7 +259,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/patrick-ta--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/patrick-ta--1.webp</image:loc>
       <image:title>Patrick TA Ecuador | Gilú Shop Patrick TA</image:title>
       <image:caption>Explora nuestra colección de Patrick TA</image:caption>
     </image:image>
@@ -270,7 +270,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/la-girl--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/la-girl--1.webp</image:loc>
       <image:title>LA Girl Ecuador | Gilú Shop LA Girl</image:title>
       <image:caption>Explora nuestra colección de LA Girl</image:caption>
     </image:image>
@@ -281,7 +281,7 @@
     <changefreq>daily</changefreq>
     <priority>0.89</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/anua--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/anua--1.webp</image:loc>
       <image:title>Anua Ecuador | Gilú Shop Anua</image:title>
       <image:caption>Explora nuestra colección de Anua</image:caption>
     </image:image>
@@ -292,7 +292,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/axis-y--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/axis-y--1.webp</image:loc>
       <image:title>Axis-Y Ecuador | Gilú Shop Axis-Y</image:title>
       <image:caption>Explora nuestra colección de Axis-Y</image:caption>
     </image:image>
@@ -303,7 +303,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/arencia--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/arencia--1.webp</image:loc>
       <image:title>Arencia Ecuador | Gilú Shop Arencia</image:title>
       <image:caption>Explora nuestra colección de Arencia</image:caption>
     </image:image>
@@ -314,7 +314,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/benefit--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/benefit--1.webp</image:loc>
       <image:title>Benefit Ecuador | Gilú Shop Benefit</image:title>
       <image:caption>Explora nuestra colección de Benefit</image:caption>
     </image:image>
@@ -325,7 +325,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/vogue--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/vogue--1.webp</image:loc>
       <image:title>Vogue Ecuador | Gilú Shop Vogue</image:title>
       <image:caption>Explora nuestra colección de Vogue</image:caption>
     </image:image>
@@ -336,7 +336,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/sheglam--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/sheglam--1.webp</image:loc>
       <image:title>SheGlam Ecuador | Gilú Shop SheGlam</image:title>
       <image:caption>Explora nuestra colección de SheGlam</image:caption>
     </image:image>
@@ -347,7 +347,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/prosa--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/prosa--1.webp</image:loc>
       <image:title>Prosa Ecuador | Gilú Shop Prosa</image:title>
       <image:caption>Explora nuestra colección de Prosa</image:caption>
     </image:image>
@@ -358,7 +358,7 @@
     <changefreq>daily</changefreq>
     <priority>0.89</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/skin-1004--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/skin-1004--1.webp</image:loc>
       <image:title>Skin 1004 Ecuador | Gilú Shop Skin 1004</image:title>
       <image:caption>Explora nuestra colección de Skin 1004</image:caption>
     </image:image>
@@ -369,7 +369,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/tir-tir--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/tir-tir--1.webp</image:loc>
       <image:title>Tir Tir Ecuador | Gilú Shop Tir Tir</image:title>
       <image:caption>Explora nuestra colección de Tir Tir</image:caption>
     </image:image>
@@ -380,7 +380,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/the-ordinary--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/the-ordinary--1.webp</image:loc>
       <image:title>The Ordinary Ecuador | Gilú Shop The Ordinary</image:title>
       <image:caption>Explora nuestra colección de The Ordinary</image:caption>
     </image:image>
@@ -391,7 +391,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/sol-janeiro--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/sol-janeiro--1.webp</image:loc>
       <image:title>Sol Janeiro Ecuador | Gilú Shop Sol Janeiro</image:title>
       <image:caption>Explora nuestra colección de Sol Janeiro</image:caption>
     </image:image>
@@ -402,7 +402,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/one-size--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/one-size--1.webp</image:loc>
       <image:title>One Size Ecuador | Gilú Shop One Size</image:title>
       <image:caption>Explora nuestra colección de One Size</image:caption>
     </image:image>
@@ -413,7 +413,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/sephora--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/sephora--1.webp</image:loc>
       <image:title>Sephora Ecuador | Gilú Shop Sephora</image:title>
       <image:caption>Explora nuestra colección de Sephora</image:caption>
     </image:image>
@@ -424,7 +424,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/seoul-1988--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/seoul-1988--1.webp</image:loc>
       <image:title>Seoul 1988 Ecuador | Gilú Shop Seoul 1988</image:title>
       <image:caption>Explora nuestra colección de Seoul 1988</image:caption>
     </image:image>
@@ -435,7 +435,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/moira--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/moira--1.webp</image:loc>
       <image:title>Moira Ecuador | Gilú Shop Moira</image:title>
       <image:caption>Explora nuestra colección de Moira</image:caption>
     </image:image>
@@ -446,7 +446,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/dior--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/dior--1.webp</image:loc>
       <image:title>Dior Ecuador | Gilú Shop Dior</image:title>
       <image:caption>Explora nuestra colección de Dior</image:caption>
     </image:image>
@@ -457,7 +457,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/kylie-cosmetics--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/kylie-cosmetics--1.webp</image:loc>
       <image:title>Kylie Cosmetics Ecuador | Gilú Shop Kylie Cosmetics</image:title>
       <image:caption>Explora nuestra colección de Kylie Cosmetics</image:caption>
     </image:image>
@@ -468,7 +468,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/clinique--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/clinique--1.webp</image:loc>
       <image:title>Clinique Ecuador | Gilú Shop Clinique</image:title>
       <image:caption>Explora nuestra colección de Clinique</image:caption>
     </image:image>
@@ -479,7 +479,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/celimax--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/celimax--1.webp</image:loc>
       <image:title>Celimax Ecuador | Gilú Shop Celimax</image:title>
       <image:caption>Explora nuestra colección de Celimax</image:caption>
     </image:image>
@@ -490,7 +490,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/cetaphil--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/cetaphil--1.webp</image:loc>
       <image:title>Cetaphil Ecuador | Gilú Shop Cetaphil</image:title>
       <image:caption>Explora nuestra colección de Cetaphil</image:caption>
     </image:image>
@@ -501,7 +501,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/cerave--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/cerave--1.webp</image:loc>
       <image:title>Cerave Ecuador | Gilú Shop Cerave</image:title>
       <image:caption>Explora nuestra colección de Cerave</image:caption>
     </image:image>
@@ -512,7 +512,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/cica-reedle--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/cica-reedle--1.webp</image:loc>
       <image:title>Cica Reedle Ecuador | Gilú Shop Cica Reedle</image:title>
       <image:caption>Explora nuestra colección de Cica Reedle</image:caption>
     </image:image>
@@ -523,7 +523,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/gisou--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/gisou--1.webp</image:loc>
       <image:title>Gisou Ecuador | Gilú Shop Gisou</image:title>
       <image:caption>Explora nuestra colección de Gisou</image:caption>
     </image:image>
@@ -534,7 +534,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/glow-recipe--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/glow-recipe--1.webp</image:loc>
       <image:title>Glow Recipe Ecuador | Gilú Shop Glow Recipe</image:title>
       <image:caption>Explora nuestra colección de Glow Recipe</image:caption>
     </image:image>
@@ -545,7 +545,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/dr-althea--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/dr-althea--1.webp</image:loc>
       <image:title>Dr Althea Ecuador | Gilú Shop Dr Althea</image:title>
       <image:caption>Explora nuestra colección de Dr Althea</image:caption>
     </image:image>
@@ -556,7 +556,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/good-molecules--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/good-molecules--1.webp</image:loc>
       <image:title>Good Molecules Ecuador | Gilú Shop Good Molecules</image:title>
       <image:caption>Explora nuestra colección de Good Molecules</image:caption>
     </image:image>
@@ -567,7 +567,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/green-tomato--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/green-tomato--1.webp</image:loc>
       <image:title>Green Tomato Ecuador | Gilú Shop Green Tomato</image:title>
       <image:caption>Explora nuestra colección de Green Tomato</image:caption>
     </image:image>
@@ -578,7 +578,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/lancome--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/lancome--1.webp</image:loc>
       <image:title>Lancome Ecuador | Gilú Shop Lancome</image:title>
       <image:caption>Explora nuestra colección de Lancome</image:caption>
     </image:image>
@@ -589,7 +589,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/laneige--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/laneige--1.webp</image:loc>
       <image:title>Laneige Ecuador | Gilú Shop Laneige</image:title>
       <image:caption>Explora nuestra colección de Laneige</image:caption>
     </image:image>
@@ -600,7 +600,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/madeca--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/madeca--1.webp</image:loc>
       <image:title>Madeca Ecuador | Gilú Shop Madeca</image:title>
       <image:caption>Explora nuestra colección de Madeca</image:caption>
     </image:image>
@@ -611,7 +611,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/makeup-by-mario--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/makeup-by-mario--1.webp</image:loc>
       <image:title>Makeup By Mario Ecuador | Gilú Shop Makeup By Mario</image:title>
       <image:caption>Explora nuestra colección de Makeup By Mario</image:caption>
     </image:image>
@@ -622,7 +622,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/medicube--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/medicube--1.webp</image:loc>
       <image:title>Medicube Ecuador | Gilú Shop Medicube</image:title>
       <image:caption>Explora nuestra colección de Medicube</image:caption>
     </image:image>
@@ -633,7 +633,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/pixi--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/pixi--1.webp</image:loc>
       <image:title>Pixi Ecuador | Gilú Shop Pixi</image:title>
       <image:caption>Explora nuestra colección de Pixi</image:caption>
     </image:image>
@@ -644,7 +644,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/summer-fridays--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/summer-fridays--1.webp</image:loc>
       <image:title>Summer Fridays Ecuador | Gilú Shop Summer Fridays</image:title>
       <image:caption>Explora nuestra colección de Summer Fridays</image:caption>
     </image:image>
@@ -655,7 +655,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/truly--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/truly--1.webp</image:loc>
       <image:title>Truly Ecuador | Gilú Shop Truly</image:title>
       <image:caption>Explora nuestra colección de Truly</image:caption>
     </image:image>
@@ -666,7 +666,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/st-ives--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/st-ives--1.webp</image:loc>
       <image:title>St Ives Ecuador | Gilú Shop St Ives</image:title>
       <image:caption>Explora nuestra colección de St Ives</image:caption>
     </image:image>
@@ -677,7 +677,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/round-lab--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/round-lab--1.webp</image:loc>
       <image:title>Round Lab Ecuador | Gilú Shop Round Lab</image:title>
       <image:caption>Explora nuestra colección de Round Lab</image:caption>
     </image:image>
@@ -688,7 +688,7 @@
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/rhode--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/rhode--1.webp</image:loc>
       <image:title>Rhode Ecuador | Gilú Shop Rhode</image:title>
       <image:caption>Explora nuestra colección de Rhode</image:caption>
     </image:image>
@@ -699,7 +699,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/purito--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/purito--1.webp</image:loc>
       <image:title>Purito Ecuador | Gilú Shop Purito</image:title>
       <image:caption>Explora nuestra colección de Purito</image:caption>
     </image:image>
@@ -710,7 +710,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/refy--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/refy--1.webp</image:loc>
       <image:title>Refy Ecuador | Gilú Shop Refy</image:title>
       <image:caption>Explora nuestra colección de Refy</image:caption>
     </image:image>
@@ -721,7 +721,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/hawaiian-tropic--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/hawaiian-tropic--1.webp</image:loc>
       <image:title>Hawaiian Tropic Ecuador | Gilú Shop Hawaiian Tropic</image:title>
       <image:caption>Explora nuestra colección de Hawaiian Tropic</image:caption>
     </image:image>
@@ -732,7 +732,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/heimish--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/heimish--1.webp</image:loc>
       <image:title>Heimish Ecuador | Gilú Shop Heimish</image:title>
       <image:caption>Explora nuestra colección de Heimish</image:caption>
     </image:image>
@@ -743,7 +743,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/mary-may--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/mary-may--1.webp</image:loc>
       <image:title>Mary May Ecuador | Gilú Shop Mary May</image:title>
       <image:caption>Explora nuestra colección de Mary May</image:caption>
     </image:image>
@@ -754,7 +754,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/star-face--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/star-face--1.webp</image:loc>
       <image:title>Star Face Ecuador | Gilú Shop Star Face</image:title>
       <image:caption>Explora nuestra colección de Star Face</image:caption>
     </image:image>
@@ -765,7 +765,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
     <image:image>
-      <image:loc>https://gilu-shop.com/assests/image/numbuzin--1.webp</image:loc>
+      <image:loc>https://gilu-shop.com/assets/image/numbuzin--1.webp</image:loc>
       <image:title>Numbuzin Ecuador | Gilú Shop Numbuzin</image:title>
       <image:caption>Explora nuestra colección de Numbuzin</image:caption>
     </image:image>

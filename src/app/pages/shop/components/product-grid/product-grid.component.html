@@ -55,9 +55,10 @@
       <!-- <a [routerLink]="['/product', product.id]" itemprop="url"> -->
       <a itemprop="url">
 
+        <meta itemprop="image" [attr.content]="product.image || 'https://gilu-shop.com/assets/image/gilu-update.png'">
 
         <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null"
-          itemprop="image" [attr.aria-label]="product.name">
+          [attr.aria-label]="product.name">
           <span class="brand-badge" itemprop="brand">
             {{ product.brand }}
           </span>
@@ -86,12 +87,13 @@
         <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
 
           <meta itemprop="priceCurrency" content="USD">
+          <meta itemprop="price" [attr.content]="product.price">
 
-          <span class="card-price" itemprop="price">
+          <span class="card-price">
             ${{ product.price.toFixed(2) }}
           </span>
 
-          <meta itemprop="availability" [attr.content]="product.inStock 
+          <meta itemprop="availability" [attr.content]="product.inStock
           ? 'https://schema.org/InStock'
           : 'https://schema.org/OutOfStock'">
 

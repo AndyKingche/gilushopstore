@@ -458,7 +458,44 @@ clearMetaTags(): void {
         price: product.price,
         priceCurrency: product.currency || this.globalConfig.defaultCurrency,
         availability: product.availability || 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/NewCondition'
+        itemCondition: 'https://schema.org/NewCondition',
+        // Shipping details for Ecuador
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: '5.00',
+            currency: product.currency || this.globalConfig.defaultCurrency
+          },
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'EC'
+          },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 1,
+              maxValue: 2,
+              unitText: 'Day'
+            },
+            transitTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 2,
+              maxValue: 5,
+              unitText: 'Day'
+            }
+          }
+        },
+        // Return policy
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'EC',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 15,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn'
+        }
       },
       ...(product.brand && {
         brand: {
