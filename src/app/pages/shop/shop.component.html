@@ -11,9 +11,10 @@
       (searchChange)="onSearchChange($event)">
     </app-search-filter>
 
-    <h1>{{brandNombre}}</h1>
-    
+    <h1 *ngIf="brandNombre">{{brandNombre}}</h1>
+
     <app-badge-buttons
+      *ngIf="brandId"
       [categories]="categories"
       [selectedIds]="selectedCategoryIds"
       [selectedCategory]="selectedCategory"
