@@ -11,9 +11,8 @@
 
 .marquee-container {
   display: flex;
-  width: max-content;
+  width: fit-content;
   animation: marquee 35s linear infinite;
-  will-change: transform;
 }
 
 .marquee-content {
@@ -62,10 +61,10 @@
 
 @keyframes marquee {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
   100% {
-    transform: translate3d(-50%, 0, 0);
+    transform: translateX(-50%);
   }
 }
 
