@@ -8,13 +8,14 @@
       [selectedCategoryIds]="selectedCategoryIds"
       (filterChange)="onSearchQueryChange($event)"
       (categoryChange)="onCategoryChange($event)"
-      (searchChange)="onSearchChange($event)">
+      (searchChange)="onSearchChange($event)"
+      (isTyping)="onIsTyping($event)">
     </app-search-filter>
 
-    <h1 *ngIf="brandNombre">{{brandNombre}}</h1>
+    <h1 *ngIf="brandNombre && !isSearching">{{brandNombre}}</h1>
 
     <app-badge-buttons
-      *ngIf="brandId"
+      *ngIf="brandId && !isSearching"
       [categories]="categories"
       [selectedIds]="selectedCategoryIds"
       [selectedCategory]="selectedCategory"

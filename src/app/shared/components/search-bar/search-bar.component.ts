@@ -12,6 +12,7 @@ import { SearchService } from '../../../core/services/search.service';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() searchChange = new EventEmitter<string | null>();
+  @Output() isTyping = new EventEmitter<boolean>();
 
   searchControl = new FormControl('');
   private searchSubscription?: Subscription;
@@ -41,6 +42,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         // Emit search change manually since we're not emitting event
         this.searchChange.emit(term);
       }
+    });
+
+    // Emit typing status immediately
+    this.searchControl.valueChanges.subscribe((value) => {
+      this.isTyping.emit(!!value);
     });
 
     this.searchControl.valueChanges.pipe(

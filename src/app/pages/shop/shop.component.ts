@@ -35,6 +35,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   brandNombre: string | null = null;
   selectedCategoryIds: number[] = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
   private pendingCategoryId: string | null = null;
+  isSearching: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -285,6 +286,10 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
     
     this.applyCategorySelection(categoryId);
+  }
+
+  onIsTyping(typing: boolean): void {
+    this.isSearching = typing;
   }
 
   onBadgeCategoryChange(categoryId: number | null): void {

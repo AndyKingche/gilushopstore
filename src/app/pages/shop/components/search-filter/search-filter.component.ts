@@ -12,6 +12,7 @@ export class SearchFilterComponent {
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
   @Output() categoryChange = new EventEmitter<number | null>();
   @Output() searchChange = new EventEmitter<string | null>();
+  @Output() isTyping = new EventEmitter<boolean>();
 
   private currentQuery = '';
 
@@ -22,12 +23,16 @@ export class SearchFilterComponent {
     return this.categories;
   }
 
+  onIsTyping(typing: boolean): void {
+    this.isTyping.emit(typing);
+  }
+
   onSearchChange(term: string | null): void {
     this.currentQuery = term || '';
     this.searchChange.emit(term);
-    this.filterChange.emit({ 
-      query: this.currentQuery, 
-      category: '' 
+    this.filterChange.emit({
+      query: this.currentQuery,
+      category: ''
     });
   }
 

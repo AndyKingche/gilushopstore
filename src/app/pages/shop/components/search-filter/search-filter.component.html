@@ -1,5 +1,5 @@
 <div class="search-filter-wrapper">
-  <app-search-bar (searchChange)="onSearchChange($event)"></app-search-bar>
+  <app-search-bar (searchChange)="onSearchChange($event)" (isTyping)="onIsTyping($event)"></app-search-bar>
   
   <app-category-filter 
     [categories]="categories" 
