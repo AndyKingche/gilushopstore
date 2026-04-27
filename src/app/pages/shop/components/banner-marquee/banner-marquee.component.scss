@@ -10,9 +10,23 @@
 }
 
 .marquee-container {
-  display: flex;
-  width: fit-content;
-  animation: marquee 35s linear infinite;
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-width: max-content;
+  flex-wrap: nowrap;
+
+  animation-name: marquee;
+  animation-duration: 35s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+
+  gap: 0;
 }
 
 .marquee-content {
@@ -60,11 +74,11 @@
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
+  from {
+    transform: translate3d(0,0,0);
   }
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translate3d(-50%,0,0);
   }
 }
 
@@ -74,7 +88,8 @@
   }
   
   .marquee-container {
-    animation: marquee 20s linear infinite;
+    //animation: marquee 20s linear infinite;
+    animation-duration: 20s;
   }
 
   .banner-image {

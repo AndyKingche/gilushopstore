@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from '../models/product.model';
+import { OrderCodeService } from './order-code.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class CartService {
   private readonly WHATSAPP_NUMBER = '+593982901603';
   items$: Observable<CartItem[]> = this.cartItems$.asObservable();
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private orderCodeService: OrderCodeService
+  ) { }
 
   private getLocalStorage(key: string): string | null {
     if (isPlatformBrowser(this.platformId)) {
@@ -73,11 +77,17 @@ export class CartService {
   generateWhatsAppMessage(): string {
     const items = this.cartItems$.getValue();
     if (items.length === 0) return '';
+    const orderCode = this.orderCodeService.generateOrderCode();
+    // const lines = items.map(item =>
+    //   `• 🛍️ ${item.product.name} (${item.product.brand}) x${item.quantity} - $${item.product.price.toFixed(2)}`
+    // );
     const lines = items.map(item =>
-      `• ${item.product.name} (${item.product.brand}) x${item.quantity} - $${item.product.price.toFixed(2)}`
+      `• *${item.product.name}* (${item.product.brand})
+          Cantidad: ${item.quantity}
+          Precio: $${item.product.price.toFixed(2)}`
     );
     const total = this.getTotal();
-    const message = `Hola Gilú! Me gustaría hacer el siguiente pedido:\n\n${lines.join('\n')}\n\nTotal: $${total.toFixed(2)}\n\nQuedo atenta, gracias!`;
+    const message = `Hola *Gilú Shop*! Vengo de la tienda Online y me gustaría hacer el siguiente pedido:\n\n • Código de Orden: *${orderCode}*\n\n${lines.join('\n')}\n\n • *Total: $${total.toFixed(2)}*\n\nQuedo atenta, gracias!`;
     return `https://wa.me/${this.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
 
