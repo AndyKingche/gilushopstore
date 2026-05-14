@@ -58,6 +58,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   search(): void {
     const query = this.searchControl.value?.trim() || '';
+
     if (query) {
       this.router.navigate(['/shop']);
     }
