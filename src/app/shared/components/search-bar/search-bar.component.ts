@@ -60,7 +60,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     const query = this.searchControl.value?.trim() || '';
 
     if (query) {
-      this.router.navigate(['/shop']);
+      this.router.navigate(['/shop'], { queryParams: { q: query } }).then(() => {
+        setTimeout(() => {
+          const section = document.querySelector('.products-section');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      });
     }
   }
 

@@ -7,7 +7,7 @@ import { SeoService } from './core/services/seo.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Gilú Beauty Shop';
+  title = 'Gilú Shop';
 
   constructor(private seoService: SeoService) {}
 

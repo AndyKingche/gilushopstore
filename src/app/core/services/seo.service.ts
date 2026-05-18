@@ -165,21 +165,30 @@ export class SeoService {
    * Update all meta tags for a page
    */
   updateMetaTags(config: SeoConfig): void {
-    this.clearMetaTags();
-    
-    // Set title (both Angular Title service and meta name="title")
+    //this.clearMetaTags();
+
+    // // Set title (both Angular Title service and meta name="title")
+    // this.setTitle(config.title);
+    // this.meta.updateTag({ name: 'title', content: config.title });
+
+    // // Set meta description
+    // this.setMetaDescription(config.description);
+
+    // // Set keywords
+    // if (config.keywords) {
+    //   this.setMetaKeywords(config.keywords);
+    // }
+
+    // // Set Open Graph tags
+    // this.setOpenGraphTags(config);
     this.setTitle(config.title);
     this.meta.updateTag({ name: 'title', content: config.title });
-
-    // Set meta description
     this.setMetaDescription(config.description);
 
-    // Set keywords
     if (config.keywords) {
       this.setMetaKeywords(config.keywords);
     }
 
-    // Set Open Graph tags
     this.setOpenGraphTags(config);
   }
 
@@ -201,7 +210,7 @@ export class SeoService {
     return this.title.getTitle();
   }
 
-clearMetaTags(): void {
+  clearMetaTags(): void {
     const selectors = [
       'meta[name="description"]',
       'meta[name="keywords"]',
@@ -257,36 +266,35 @@ clearMetaTags(): void {
    * Set Open Graph meta tags (all using 'property' attribute)
    */
   private setOpenGraphTags(config: SeoConfig): void {
-    // OG Title - using property attribute
+    // OG Title
     if (this.isValidString(config.title, 'og:title')) {
       this.meta.updateTag({ property: 'og:title', content: config.title });
     }
 
-    // OG Description - using property attribute
+    // OG Description
     if (this.isValidString(config.description, 'og:description')) {
       this.meta.updateTag({ property: 'og:description', content: config.description });
     }
 
-    // OG Image - using property attribute
+    // OG Image - IMPORTANTE: usa updateTag, no clearMetaTags después
     if (config.image && this.isValidString(config.image, 'og:image')) {
       this.meta.updateTag({ property: 'og:image', content: config.image });
     }
 
-    // OG URL - using property attribute
+    // OG URL
     if (config.url && this.isValidString(config.url, 'og:url')) {
       this.meta.updateTag({ property: 'og:url', content: config.url });
     }
 
-    // OG Type - using property attribute
+    // OG Type
     this.meta.updateTag({ property: 'og:type', content: config.type || 'website' });
 
-    // OG Locale - using property attribute
+    // OG Locale
     this.meta.updateTag({ property: 'og:locale', content: config.locale || this.globalConfig.defaultLocale });
 
-    // OG Site Name - using property attribute
+    // OG Site Name
     this.meta.updateTag({ property: 'og:site_name', content: config.siteName || this.globalConfig.siteName });
   }
-
   /**
    * Set Twitter Card meta tags
    * @param config Twitter card configuration
@@ -421,9 +429,9 @@ clearMetaTags(): void {
   }): JsonLdSchema {
     // Validate required fields
     if (!this.isValidString(product.name, 'product name') ||
-        !this.isValidString(product.description, 'product description') ||
-        !this.isValidString(product.image, 'product image') ||
-        typeof product.price !== 'number' || product.price < 0) {
+      !this.isValidString(product.description, 'product description') ||
+      !this.isValidString(product.image, 'product image') ||
+      typeof product.price !== 'number' || product.price < 0) {
       console.warn('[SEO] Invalid product data for schema generation');
       return {} as JsonLdSchema;
     }
@@ -532,7 +540,7 @@ clearMetaTags(): void {
     // Validate each product
     for (const product of products) {
       if (!this.isValidString(product.name, 'product name') ||
-          (typeof product.id !== 'number' && typeof product.id !== 'string')) {
+        (typeof product.id !== 'number' && typeof product.id !== 'string')) {
         console.warn('[SEO] Invalid product data in products array');
         return {} as JsonLdSchema;
       }
@@ -576,7 +584,7 @@ clearMetaTags(): void {
    */
   generateLocalBusinessSchema(): JsonLdSchema {
     // Check cache
-     //console.log(this.globalConfig.siteName);
+    //console.log(this.globalConfig.siteName);
     if (this.localBusinessSchemaCache) {
       return this.localBusinessSchemaCache;
     }
@@ -650,8 +658,8 @@ clearMetaTags(): void {
   }): JsonLdSchema {
     // Validate required fields
     if (!this.isValidString(store.name, 'store name') ||
-        !this.isValidString(store.description, 'store description') ||
-        !this.isValidString(store.image, 'store image')) {
+      !this.isValidString(store.description, 'store description') ||
+      !this.isValidString(store.image, 'store image')) {
       console.warn('[SEO] Invalid store data for schema generation');
       return {} as JsonLdSchema;
     }
@@ -714,7 +722,7 @@ clearMetaTags(): void {
     // Validate each breadcrumb
     for (const breadcrumb of breadcrumbs) {
       if (!this.isValidString(breadcrumb.name, 'breadcrumb name') ||
-          !this.isValidString(breadcrumb.url, 'breadcrumb url')) {
+        !this.isValidString(breadcrumb.url, 'breadcrumb url')) {
         console.warn('[SEO] Invalid breadcrumb data in breadcrumbs array');
         return {} as JsonLdSchema;
       }
@@ -794,7 +802,7 @@ clearMetaTags(): void {
     }
 
     //console.log(this.globalConfig.siteName);
-    
+
     // Generate new schema
     const schema: JsonLdSchema = {
       '@context': 'https://schema.org',
@@ -831,7 +839,7 @@ clearMetaTags(): void {
     // Validate each faq
     for (const faq of faqs) {
       if (!this.isValidString(faq.question, 'faq question') ||
-          !this.isValidString(faq.answer, 'faq answer')) {
+        !this.isValidString(faq.answer, 'faq answer')) {
         console.warn('[SEO] Invalid faq data in faqs array');
         return {} as JsonLdSchema;
       }

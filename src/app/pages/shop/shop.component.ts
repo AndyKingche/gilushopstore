@@ -44,7 +44,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     private seoService: SeoService,
     private searchService: SearchService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Setup SEO for shop page
@@ -130,7 +130,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         return;
       }
     }
-    
+
     // Fallback: try to parse as number
     const numId = parseInt(categoryId, 10);
     this.selectedCategory = isNaN(numId) ? null : numId;
@@ -187,11 +187,12 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   private updateBrandSeo(brand: CatalogBrandDTO): void {
-    //console.log(brand.brandDescription);
-    
+    console.log(brand.brandDescription);
+    console.log(`https://gilu-shop.com/assets/image/${brand.brandDescription}--1.webp`);
+
     this.seoService.updateMetaTags({
-      
-      
+
+
       title: `${brand.brandName} - Ecuador | Gilú Shop Ecuador`,
       description: `Explora nuestra colección de ${brand.brandName} aquí en Ecuador. Maquillaje 100% original de las mejores marcas. Con envíos a todo el Ecuador y regalos en tu compra.`,
       keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
@@ -207,6 +208,11 @@ export class ShopComponent implements OnInit, OnDestroy {
       "url": `https://gilu-shop.com/shop/collections/${brand.brandDescription}`,
       "description": `Productos ${brand.brandName} originales en Ecuador`
     }, 'schema-brand');
+
+    const canonicalUrl = `https://gilu-shop.com/shop/collections/${brand.brandDescription}`;
+
+    this.seoService.setCanonicalUrl(canonicalUrl);
+    this.seoService.setHreflang(canonicalUrl);
   }
 
   private handleBrandParam(params: any): void {
@@ -227,7 +233,7 @@ export class ShopComponent implements OnInit, OnDestroy {
             this.productsService.getCategoriesByBrandName(brand.brandName).subscribe({
               next: (categories) => {
                 //console.log(categories);
-                
+
                 this.selectedCategoryIds = categories.map(cat => cat.id);
                 this.cdr.detectChanges();
               },
@@ -284,7 +290,7 @@ export class ShopComponent implements OnInit, OnDestroy {
       this.pendingCategoryId = categoryId;
       return;
     }
-    
+
     this.applyCategorySelection(categoryId);
   }
 

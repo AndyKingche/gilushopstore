@@ -613,11 +613,14 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
    * Uses ItemList schema for product listing pages
    */
   private addProductSchema(): void {
+    console.log(`https://gilu-shop.com/shop/collections/${this._brandId.toLowerCase().replace(/\s+/g, '-')}`);
+    console.log(this._brandId);
+    
     if (this.products && this.products.length > 0) {
       // Breadcrumb schema
       const breadcrumbItems: { name: string; url: string }[] = [
-        { name: 'Inicio', url: 'https://gilu-shop.com' },
-        { name: 'Tienda', url: 'https://gilu-shop.com/shop' }
+        { name: 'Home', url: 'https://gilu-shop.com' },
+        { name: 'Shop', url: 'https://gilu-shop.com/shop' }
       ];
       if (this._brandId) {
         breadcrumbItems.push({
@@ -651,7 +654,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         // Ensure image is a valid URL
         let imageUrl = firstProduct.image;
         if (!imageUrl || !imageUrl.startsWith('http')) {
-          imageUrl = 'https://gilu-shop.com/assets/image/gilu-update.png';
+          imageUrl = `https://gilu-shop.com/assets/image/${this._brandId}--1.webp`;
         }
 
         const productSchema = this.seoService.generateProductSchema({
