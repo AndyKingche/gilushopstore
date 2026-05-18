@@ -16,6 +16,10 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     if (brandId !== this._brandId) {
       this._brandId = brandId;
       this._searchTerm = null;
+      this._categoryId = null; // Ensure category is cleared when selecting a brand
+      if (this.initialized) {
+        this.loadProductsBasedOnInputs();
+      }
     }
   }
   
@@ -42,6 +46,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   private _categoryId: number | null = null;
   private _searchTerm: string | null = null;
   private _brandId: string | null = null;
+  private initialized = false;
   products: Product[] = [];
   
   // Pagination state
@@ -67,6 +72,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.setupDefaultSeo();
     this.loadProductsBasedOnInputs();
+    this.initialized = true;
   }
 
   private setupDefaultSeo(): void {
