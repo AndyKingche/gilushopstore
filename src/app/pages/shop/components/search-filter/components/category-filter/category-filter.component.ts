@@ -36,6 +36,8 @@ export class CategoryFilterComponent {
       this.categoryChange.emit(null);
     }
     this.filterChange.emit({ category: value || '' });
+
+    // URL navigation handled by parent (ShopComponent). Do not manipulate history here.
   }
 
   getCategoryLabel(category: Category): string {

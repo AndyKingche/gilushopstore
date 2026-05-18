@@ -12,7 +12,9 @@ import { BannerMarqueeComponent } from './components/banner-marquee/banner-marqu
 
 const routes: Routes = [
   { path: '', component: ShopComponent },
-  { path: 'collections/:marca', component: ShopComponent }
+  { path: 'collections/:marca', component: ShopComponent },
+  { path: 'collections/:marca/:category', component: ShopComponent },
+  { path: ':category', component: ShopComponent }
 ];
 
 @NgModule({

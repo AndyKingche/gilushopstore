@@ -68,6 +68,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         // Apply pending category if any
         if (this.pendingCategoryId) {
           this.applyCategorySelection(this.pendingCategoryId);
+          // Don't navigate here — we're already at the desired URL when params existed
           this.pendingCategoryId = null;
         }
       },
@@ -117,12 +118,13 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.routerSubscription?.unsubscribe();
   }
 
-  private applyCategorySelection(categoryId: string): void {
-    // First, try to find the category by mapped name
-    const categoryName = CATEGORY_NAME_MAP[categoryId];
-    if (categoryName) {
+  private applyCategorySelection(categoryIdOrSlug: string): void {
+    // Try mapping from showcase IDs (e.g. 'CORRECTOR' -> 'Correctores')
+    const mapKey = categoryIdOrSlug ? categoryIdOrSlug.toString().toUpperCase() : '';
+    const mappedName = CATEGORY_NAME_MAP[mapKey];
+    if (mappedName) {
       const foundCategory = this.categories.find(
-        cat => cat.categoryName?.toLowerCase() === categoryName.toLowerCase()
+        cat => cat.categoryName?.toLowerCase() === mappedName.toLowerCase()
       );
       if (foundCategory) {
         this.selectedCategory = foundCategory.id;
@@ -131,10 +133,44 @@ export class ShopComponent implements OnInit, OnDestroy {
       }
     }
 
+    // Try matching by slugified category name
+    const slug = categoryIdOrSlug ? categoryIdOrSlug.toString().toLowerCase() : '';
+    const foundBySlug = this.categories.find(cat => (cat.categoryName || '').toLowerCase().replace(/\s+/g, '-') === slug);
+    if (foundBySlug) {
+      this.selectedCategory = foundBySlug.id;
+      this.searchTerm = null;
+      return;
+    }
+
     // Fallback: try to parse as number
-    const numId = parseInt(categoryId, 10);
+    const numId = parseInt(categoryIdOrSlug, 10);
     this.selectedCategory = isNaN(numId) ? null : numId;
     this.searchTerm = null;
+  }
+
+  private navigateToCategorySlug(categoryId: number | null): void {
+    // If no category selected, go back to /shop (keep brand if present?)
+    if (categoryId === null) {
+      if (this.brandId) {
+        // Stay inside brand collections without specific category
+        this.router.navigate(['/shop', 'collections', this.brandId], { queryParamsHandling: 'preserve' });
+      } else {
+        this.router.navigate(['/shop'], { queryParamsHandling: 'preserve' });
+      }
+      return;
+    }
+
+    const cat = this.categories.find(c => c.id === categoryId);
+    const slug = cat && cat.categoryName
+      ? cat.categoryName.toLowerCase().replace(/\s+/g, '-')
+      : String(categoryId);
+
+    // If we're viewing a brand, navigate to /shop/collections/:marca/:category
+    if (this.brandId) {
+      this.router.navigate(['/shop', 'collections', this.brandId, slug], { queryParamsHandling: 'preserve' });
+    } else {
+      this.router.navigate(['/shop', slug], { queryParamsHandling: 'preserve' });
+    }
   }
 
   private setupSeo(): void {
@@ -235,6 +271,18 @@ export class ShopComponent implements OnInit, OnDestroy {
                 //console.log(categories);
 
                 this.selectedCategoryIds = categories.map(cat => cat.id);
+
+                // If route included a category slug, select that category for this brand
+                if (params['category']) {
+                  const routeCategory = params['category'].toString().toLowerCase();
+                  const matched = categories.find(cat => (cat.categoryName || '').toLowerCase().replace(/\s+/g, '-') === routeCategory);
+                  if (matched) {
+                    this.selectedCategory = matched.id;
+                    // Keep full category list for the brand, but mark selection
+                    this.updateCategorySeo(matched.id);
+                  }
+                }
+
                 this.cdr.detectChanges();
               },
               error: (err) => {
@@ -263,10 +311,26 @@ export class ShopComponent implements OnInit, OnDestroy {
         }
       });
     } else {
+      // Handle top-level category slug: /shop/:category
       this.brandId = null;
       this.setupSeo();
-      // Reset to full category list when no brand is selected
-      this.selectedCategoryIds = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
+
+      if (params['category']) {
+        // If categories not loaded yet, store pending and let ngOnInit categories callback apply it
+        if (this.categories.length === 0) {
+          this.pendingCategoryId = params['category'];
+        } else {
+          this.applyCategorySelection(params['category']);
+          // Restrict visible categories to the selected one
+          if (this.selectedCategory) {
+            this.selectedCategoryIds = [this.selectedCategory];
+            this.updateCategorySeo(this.selectedCategory);
+          }
+        }
+      } else {
+        // Reset to full category list when no brand/category is selected
+        this.selectedCategoryIds = [13, 14, 22, 26, 32, 41, 16, 56, 63, 44];
+      }
     }
   }
 
@@ -277,6 +341,14 @@ export class ShopComponent implements OnInit, OnDestroy {
   onCategoryChange(categoryId: number | null): void {
     this.selectedCategory = categoryId;
     this.searchTerm = null;
+    // Update URL to include category slug
+    this.navigateToCategorySlug(categoryId);
+    // Update SEO meta for category selection
+    if (categoryId !== null) {
+      this.updateCategorySeo(categoryId);
+    } else {
+      this.setupSeo();
+    }
   }
 
   onSearchChange(searchTerm: string | null): void {
