@@ -197,7 +197,7 @@ export class ShopComponent implements OnInit, OnDestroy {
       description: `Explora nuestra colección de ${brand.brandName} aquí en Ecuador. Maquillaje 100% original de las mejores marcas. Con envíos a todo el Ecuador y regalos en tu compra.`,
       keywords: `${brand.brandName.toLowerCase()}, maquillaje, Ecuador, tienda online`,
       image: `https://gilu-shop.com/assets/image/${brand.brandDescription}--1.webp`,
-      url: `https://gilu-shop.com/shop/collections/${encodeURIComponent(brand.brandName)}`,
+      url: `https://gilu-shop.com/shop/collections/${brand.brandDescription}`,
       type: 'website'
     });
 
