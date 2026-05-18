@@ -27,6 +27,9 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     if (categoryId !== this._categoryId) {
       this._categoryId = categoryId;
       this._searchTerm = null;
+      if (this.initialized) {
+        this.loadProductsBasedOnInputs();
+      }
     }
   }
   
