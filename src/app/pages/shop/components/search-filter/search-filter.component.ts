@@ -9,6 +9,7 @@ import { Category } from '../../../../core/models/category.model';
 export class SearchFilterComponent {
   @Input() categories: Category[] = [];
   @Input() selectedCategoryIds: number[] = [];
+  @Input() brandId: string | null = null;
   @Output() filterChange = new EventEmitter<{ query: string; category: string }>();
   @Output() categoryChange = new EventEmitter<number | null>();
   @Output() searchChange = new EventEmitter<string | null>();
@@ -17,7 +18,8 @@ export class SearchFilterComponent {
   private currentQuery = '';
 
   get filteredCategories(): Category[] {
-    if (this.selectedCategoryIds.length > 0) {
+    // Only restrict categories list when viewing a brand collection.
+    if (this.brandId && this.selectedCategoryIds.length > 0) {
       return this.categories.filter(cat => this.selectedCategoryIds.includes(cat.id));
     }
     return this.categories;

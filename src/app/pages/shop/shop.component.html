@@ -6,6 +6,7 @@
     <app-search-filter
       [categories]="categories"
       [selectedCategoryIds]="selectedCategoryIds"
+      [brandId]="brandId"
       (filterChange)="onSearchQueryChange($event)"
       (categoryChange)="onCategoryChange($event)"
       (searchChange)="onSearchChange($event)"

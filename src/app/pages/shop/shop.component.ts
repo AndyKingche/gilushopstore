@@ -319,11 +319,10 @@ export class ShopComponent implements OnInit, OnDestroy {
         // If categories not loaded yet, store pending and let ngOnInit categories callback apply it
         if (this.categories.length === 0) {
           this.pendingCategoryId = params['category'];
-        } else {
+          } else {
           this.applyCategorySelection(params['category']);
-          // Restrict visible categories to the selected one
+          // Keep full category list on top-level /shop; just update SEO and selection
           if (this.selectedCategory) {
-            this.selectedCategoryIds = [this.selectedCategory];
             this.updateCategorySeo(this.selectedCategory);
           }
         }

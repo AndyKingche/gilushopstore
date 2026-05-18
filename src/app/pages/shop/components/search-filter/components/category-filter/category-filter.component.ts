@@ -10,6 +10,7 @@ import { Category } from '../../../../../../core/models/category.model';
 export class CategoryFilterComponent {
   @Input() categories: Category[] = [];
   @Input() selectedCategoryIds: number[] = [];
+  @Input() brandId: string | null = null;
   @Output() categoryChange = new EventEmitter<number | null>();
   @Output() filterChange = new EventEmitter<{ category: string }>();
 
@@ -21,7 +22,8 @@ export class CategoryFilterComponent {
       .filter(cat => !excludedNames.includes(cat.categoryName))
       .sort((a, b) => (a.categoryName || '').localeCompare(b.categoryName || ''));
     
-    if (this.selectedCategoryIds.length > 0) {
+    // Only restrict categories list when viewing a brand collection
+    if (this.brandId && this.selectedCategoryIds.length > 0) {
       filtered = filtered.filter(cat => this.selectedCategoryIds.includes(cat.id));
     }
     
