@@ -408,7 +408,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         const category = categories.find(c => c.id === categoryId);
         if (!category) return;
         
-        const categoryDescription = category.categoryName;
+        const categoryDescription = category.categoryDesc;
 
         this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName, categoryDescription, this.pageSize, offset).subscribe({
           next: (products) => {
@@ -622,9 +622,9 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
    * Uses ItemList schema for product listing pages
    */
   private addProductSchema(): void {
-    console.log(`https://gilu-shop.com/shop/collections/${this._brandId.toLowerCase().replace(/\s+/g, '-')}`);
-    console.log(this._brandId);
-    
+    // Guard against null brand and only proceed if we have products
+    if (!this.products || this.products.length === 0) return;
+
     if (this.products && this.products.length > 0) {
       // Breadcrumb schema
       const breadcrumbItems: { name: string; url: string }[] = [
