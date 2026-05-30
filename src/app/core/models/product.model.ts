@@ -10,5 +10,6 @@ export interface Product {
   description: string;
   image?: string;
   inStock: boolean;
+  newProduct: boolean;
   badge?: ProductBadge;
 }
