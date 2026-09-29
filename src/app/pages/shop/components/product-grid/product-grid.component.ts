@@ -4,6 +4,7 @@ import { Product } from '../../../../core/models/product.model';
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductsService } from '../../../../core/services/products.service';
 import { SeoService } from '../../../../core/services/seo.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-grid',
@@ -681,4 +682,8 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       }
     }
   }
+
+  getImageUrl(path: string): string {
+  return `${environment.imageUrl}/${path}`;
+}
 }

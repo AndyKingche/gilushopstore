@@ -57,7 +57,7 @@
 
         <meta itemprop="image" [attr.content]="product.image || 'https://gilu-shop.com/assets/image/gilu-update.png'">
 
-        <div class="card-image" [style.background-image]="product.image ? 'url(' + product.image + ')' : null"
+        <div class="card-image" [style.background-image]="product.image ? 'url(' + getImageUrl(product.image) + ')' : null"
           [attr.aria-label]="product.name">
           <span class="brand-badge" itemprop="brand">
             {{ product.brand }}
