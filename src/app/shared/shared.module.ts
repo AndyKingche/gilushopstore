@@ -6,13 +6,15 @@ import { JoinBannerComponent } from './components/join-banner/join-banner.compon
 import { ScrollAnimationDirective } from './directives/scroll-animation.directive';
 import { PauseAnimationsOnServerDirective } from './directives/pause-animations-on-server.directive';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
     JoinBannerComponent,
     ScrollAnimationDirective,
     PauseAnimationsOnServerDirective,
-    SearchBarComponent
+    SearchBarComponent,
+    ModalComponent
   ],
   exports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     JoinBannerComponent,
     ScrollAnimationDirective,
     PauseAnimationsOnServerDirective,
-    SearchBarComponent
+    SearchBarComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

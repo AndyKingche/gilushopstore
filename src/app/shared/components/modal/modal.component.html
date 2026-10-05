@@ -1,0 +1,25 @@
+<div
+  class="modal-backdrop"
+  *ngIf="visible$ | async"
+  (click)="cerrar()"
+>
+  <div
+    class="modal-container"
+    role="dialog"
+    aria-modal="true"
+    (click)="detenerEvento($event)"
+  >
+
+    <button
+      type="button"
+      class="modal-close"
+      aria-label="Cerrar"
+      (click)="cerrar()"
+    >
+      ×
+    </button>
+
+    <ng-content></ng-content>
+
+  </div>
+</div>

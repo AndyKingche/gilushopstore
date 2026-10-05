@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { CartSidebarComponent } from './header/cart-sidebar/cart-sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 
+
 @NgModule({
   declarations: [
     HeaderComponent,

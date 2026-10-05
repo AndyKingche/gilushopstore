@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { CartItem } from '../../../core/models/cart-item.model';
 import { Observable } from 'rxjs';
+import { ModalService } from '../../../core/services/modal.service';
+declare const PPaymentButtonBox: any;
 
 @Component({
   selector: 'app-cart-sidebar',
@@ -48,6 +50,7 @@ export class CartSidebarComponent implements OnInit, OnChanges {
     private cdr: ChangeDetectorRef,
     private cartService: CartService,
     private router: Router,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItems$ = this.cartService.items$;
@@ -92,5 +95,48 @@ export class CartSidebarComponent implements OnInit, OnChanges {
 
   checkout(): void {
     this.cartService.openWhatsApp();
+  }
+
+  abrirModal(): void {
+    this.modalService.open();
+  }
+
+  cerrarModal(): void {
+    this.modalService.close();
+  }
+
+  ejecutarCajitaPagos(): void {
+    console.log('Ejecutando cajita de pagos...');
+    const clientTransactionID =
+      'ID-' + Date.now();
+
+    const ppb = new PPaymentButtonBox({
+
+      // Credenciales Payphone
+      token: '3jtUVems9W2y8PEzJhvuHq-b5ekYYeweeB67Dk-WZ7endgaQCQs5OZuThvreYQ8Imkptelo810je_yY8BTxotniVsbbMIqFc6RJyl12yicj1ZOGpLGapnSvK6ApHwAxSkLr48fwOBCJRScvmdYpDsFqqb_mC3C9lqP4aZPczUybmS3lvmgKQxw-ajVrM7zhfM_-PgOouc2Kv6FW8kLRHmPdbgn4BK7uHbyXWmwStKdl6AkkgXrbwCWi4AWv1JG2iui2QhnI--kDWaKljLVjpQlJS9txKFO2ltOHkfgC8LT9rJkvxLw1ZLSyjT7-Y0GQFOdmWgA',
+      storeId: 'ab1f3a83-071b-45c1-a8d2-1c79b05d0e5b',
+
+      // Valores en centavos
+      amount: 315,
+      amountWithoutTax: 200,
+      amountWithTax: 100,
+      tax: 15,
+
+      service: 0,
+      tip: 0,
+
+      currency: 'USD',
+
+      clientTransactionId: clientTransactionID,
+
+      reference: 'Pago de factura',
+
+      backgroundColor: '#6610f2'
+
+    });
+
+    this.modalService.open();
+
+    setTimeout(() => ppb.render('#pp-button'), 0);
   }
 }
