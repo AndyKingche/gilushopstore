@@ -99,8 +99,15 @@ export class ProductsService {
   /**
    * Get all catalog brands
    */
+  // getAllCatalogBrands(): Observable<CatalogBrandDTO[]> {
+  //   return this.http.get<CatalogBrandDTO[]>(`${this.brandApiUrl}`);
+  // }
+
+  /**
+   * Get all catalog brands
+   */
   getAllCatalogBrands(): Observable<CatalogBrandDTO[]> {
-    return this.http.get<CatalogBrandDTO[]>(`${this.brandApiUrl}`);
+    return this.http.get<CatalogBrandDTO[]>(`${this.brandApiUrl}`+'/get-brands');
   }
 
   /**

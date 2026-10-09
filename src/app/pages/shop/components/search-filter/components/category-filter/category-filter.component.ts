@@ -17,7 +17,7 @@ export class CategoryFilterComponent {
   categoryControl = new FormControl('');
 
   get filteredCategories(): Category[] {
-    const excludedNames = ['Ropa', 'SIN DEFINICION', 'CAMISETA NEON'];
+    const excludedNames = ['Ropa', 'SIN DEFINICION', 'CAMISETA NEON', 'CAJITA EMPRENDEDORA'];
     let filtered = this.categories
       .filter(cat => !excludedNames.includes(cat.categoryName))
       .sort((a, b) => (a.categoryName || '').localeCompare(b.categoryName || ''));

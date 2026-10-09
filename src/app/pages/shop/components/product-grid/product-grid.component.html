@@ -53,7 +53,7 @@
       appScrollAnimation [style.animationDelay]="getAnimationDelay(i)" itemscope itemtype="https://schema.org/Product">
 
       <!-- <a [routerLink]="['/product', product.id]" itemprop="url"> -->
-      <a itemprop="url">
+      <a itemprop="url" [routerLink]="['/product', product.id]">
 
         <meta itemprop="image" [attr.content]="product.image || 'https://gilu-shop.com/assets/image/gilu-update.png'">
 
