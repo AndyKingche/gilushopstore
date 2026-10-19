@@ -23,7 +23,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       }
     }
   }
-  
+
   @Input() set category(categoryId: number | null) {
     if (categoryId !== this._categoryId) {
       this._categoryId = categoryId;
@@ -33,7 +33,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       }
     }
   }
-  
+
   @Input() set searchTerm(searchTerm: string | null) {
     if (searchTerm !== this._searchTerm) {
       this._searchTerm = searchTerm;
@@ -41,7 +41,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       this._brandId = null;
     }
   }
-  
+
   @Output() openLogin = new EventEmitter<void>();
 
   // Expose Math to template
@@ -52,14 +52,14 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   private _brandId: string | null = null;
   private initialized = false;
   products: Product[] = [];
-  
+
   // Pagination state
   protected pageSize = 16;
   private offset = 0;
   public totalCount = 0;
   public isLoading = false;
   public hasMore = false; // Start false, pagination handles it
-  
+
   // Page tracking
   public currentPage = 1;
   public totalPages = 0;
@@ -71,7 +71,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     private productsService: ProductsService,
     private router: Router,
     private seoService: SeoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.setupDefaultSeo();
@@ -100,7 +100,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     //console.log(changes);
-    
+
     // Handle changes to inputs after initial load
     if (changes['category'] || changes['searchTerm'] || changes['brandId']) {
       if (!changes['initialLoad'] || !changes['initialLoad'].firstChange) {
@@ -111,7 +111,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
 
   private loadProductsBasedOnInputs(): void {
     //console.log(this._brandId, this._categoryId);
-    
+
     if (this._brandId && this._categoryId) {
       this.loadProductsByBrandAndCategory();
     } else if (this._brandId) {
@@ -134,7 +134,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    
+
     // First, get the total count
     this.productsService.getOnlineStoreProductsCount().subscribe({
       next: (count) => {
@@ -154,17 +154,17 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.productsService.getOnlineStoreProducts(this.pageSize, 0).subscribe({
       next: (products) => {
         //console.log(products);
-        
+
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
-        
+
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
-        
+
         // Add Product schema for rich snippets
         this.addProductSchema();
-        
+
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -184,7 +184,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
-    
+
     // First, get the total count for this category
     this.productsService.getOnlineStoreProductsByCategoryCount(categoryId).subscribe({
       next: (count) => {
@@ -206,13 +206,13 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
-        
+
         // Check if there are more products to load
         this.hasMore = this.offset < this.totalCount;
-        
+
         // Add Product schema for rich snippets
         this.addProductSchema();
-        
+
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -246,7 +246,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     // Load first batch of products for this search
     this.productsService.searchProducts(searchTerm, this.pageSize, 0).subscribe({
       next: (products) => {
-       // console.log(products)
+        // console.log(products)
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
@@ -273,7 +273,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     this.offset = 0;
     this.currentPage = 1;
     //console.log(brandName);
-    
+
 
     // First, get the total count for this brand
     this.productsService.getOnlineStoreProductsByBrandNameCount(brandName).subscribe({
@@ -291,12 +291,12 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     //console.log(brandName);
-    
+
     // Load first batch of products for this brand
     this.productsService.getOnlineStoreProductsByBrandName(brandName, this.pageSize, 0).subscribe({
       next: (products) => {
         //console.log(products);
-        
+
         this.products = products;
         this.offset = products.length;
         this.isLoading = false;
@@ -319,7 +319,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   private loadProductsByBrandAndCategory(): void {
     const brandName = this._brandId;
     const categoryId = this._categoryId;
-    
+
     this.isLoading = true;
     this.offset = 0;
     this.currentPage = 1;
@@ -332,7 +332,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
           this.isLoading = false;
           return;
         }
-      //console.log(categories)
+        //console.log(categories)
         const categoryDescription = category.categoryDesc;
 
         this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName, categoryDescription).subscribe({
@@ -380,20 +380,20 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
       description: `Compra productos ${brand} originales en Ecuador. Envíos rápidos a todo el país desde Gilú Shop.`,
       keywords: `${brand} Ecuador, comprar ${brand} Ecuador, ${brand} original Ecuador, maquillaje ${brand}`,
       image: 'https://gilu-shop.com/assets/image/gilu-update.png',
-      url: `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`,
+      url: `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g, '-')}`,
       type: 'website',
       siteName: 'Gilú Shop'
     });
 
     this.seoService.setCanonicalUrl(
-      `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`
+      `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g, '-')}`
     );
 
     this.seoService.setJsonLd({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": `${brand} Ecuador`,
-      "url": `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g,'-')}`,
+      "url": `https://gilu-shop.com/shop/collections/${brand.toLowerCase().replace(/\s+/g, '-')}`,
       "description": `Productos ${brand} originales en Ecuador`
     }, 'schema-brand');
   }
@@ -401,26 +401,26 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   private loadPageByBrandAndCategory(page: number, offset: number): void {
     const brandName = this._brandId;
     const categoryId = this._categoryId;
-    
+
     if (!brandName || !categoryId) return;
 
     this.productsService.getCategories().subscribe({
       next: (categories) => {
         const category = categories.find(c => c.id === categoryId);
         if (!category) return;
-        
+
         const categoryDescription = category.categoryDesc;
 
         this.productsService.getOnlineStoreProductsByBrandNameAndCategoryDescription(brandName, categoryDescription, this.pageSize, offset).subscribe({
           next: (products) => {
             this.products = products;
             this.isLoading = false;
-            
+
             const productsSection = document.getElementById('products-section');
             if (productsSection) {
               productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            
+
             this.cdr.detectChanges();
           },
           error: (err) => {
@@ -435,14 +435,14 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   // Go to specific page
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages || page === this.currentPage || this.isLoading) return;
-    
+
     this.isLoading = true;
     this.currentPage = page;
     this.updateVisiblePages();
-    
+
     // Calculate offset: page 1 = 0, page 2 = 16, page 3 = 32, etc.
     const offset = (page - 1) * this.pageSize;
-    
+
     if (this._brandId && this._categoryId) {
       this.loadPageByBrandAndCategory(page, offset);
     } else if (this._searchTerm) {
@@ -451,13 +451,13 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         next: (products) => {
           this.products = products;
           this.isLoading = false;
-          
+
           // Scroll to top of products section
           const productsSection = document.getElementById('products-section');
           if (productsSection) {
             productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          
+
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -485,7 +485,7 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
           this.isLoading = false;
         }
       });
-     } else if (this._brandId) {
+    } else if (this._brandId) {
       // Load by brand name
       this.productsService.getOnlineStoreProductsByBrandName(this._brandId, this.pageSize, offset).subscribe({
         next: (products) => {
@@ -511,13 +511,13 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         next: (products) => {
           this.products = products;
           this.isLoading = false;
-          
+
           // Scroll to top of products section
           const productsSection = document.getElementById('products-section');
           if (productsSection) {
             productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-          
+
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -543,19 +543,19 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   private updateVisiblePages(): void {
     const maxVisible = 5;
     const pages: number[] = [];
-    
+
     let start = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
     let end = Math.min(this.totalPages, start + maxVisible - 1);
-    
+
     // Adjust start if we're near the end
     if (end - start < maxVisible - 1) {
       start = Math.max(1, end - maxVisible + 1);
     }
-    
+
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-    
+
     this.visiblePages = pages;
   }
 
@@ -654,12 +654,12 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
         }))
       );
       this.seoService.setJsonLd(productListSchema, 'schema-product-list');
-      
+
       // Also add first product schema for rich snippets
       const firstProduct = this.products[0];
       // Only generate schema if we have valid data
       if (firstProduct.name && firstProduct.description &&
-          typeof firstProduct.price === 'number' && firstProduct.price >= 0) {
+        typeof firstProduct.price === 'number' && firstProduct.price >= 0) {
 
         // Ensure image is a valid URL
         let imageUrl = firstProduct.image;
@@ -684,6 +684,6 @@ export class ProductGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getImageUrl(path: string): string {
-  return `${environment.imageUrl}/${path}`;
-}
+    return `${environment.imageUrl}/${path}`;
+  }
 }

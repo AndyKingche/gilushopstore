@@ -6,6 +6,7 @@ import { CartService } from '../../../core/services/cart.service';
 import { CartItem } from '../../../core/models/cart-item.model';
 import { Observable } from 'rxjs';
 import { ModalService } from '../../../core/services/modal.service';
+import { environment } from 'src/environments/environment';
 declare const PPaymentButtonBox: any;
 
 @Component({
@@ -138,5 +139,9 @@ export class CartSidebarComponent implements OnInit, OnChanges {
     this.modalService.open();
 
     setTimeout(() => ppb.render('#pp-button'), 0);
+  }
+  
+    getImageUrl(path: string): string {
+    return `${environment.imageUrl}/${path}`;
   }
 }

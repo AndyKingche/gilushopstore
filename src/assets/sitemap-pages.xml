@@ -24,6 +24,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://gilu-shop.com/box-gilu</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
+      <image:title>Gilú Shop - Cajitas Gilú</image:title>
+      <image:caption>Descubre nuestras exclusivas cajitas de maquillaje internacional 100% original de marcas como: Maybelline, Elf, Loreal, Nyx, Got2b, Milani, Beauty Creations, Prosa, entre otras marcas, todo al por mayor</image:caption>
+    </image:image>
+  <url>
     <loc>https://gilu-shop.com/about</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -36,13 +46,13 @@
   </url>
   <url>
     <loc>https://gilu-shop.com/faq</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
      <image:image>
       <image:loc>https://gilu-shop.com/assets/image/gilu-update.png</image:loc>
       <image:title>Gilú Shop - Sobre Nosotros</image:title>
-      <image:caption>Conoce la historia de Gilú Shop</image:caption>
+      <image:caption>Planes acumulativos, métodos de pago y envíos a todo Ecuador</image:caption>
     </image:image>
   </url>
   <!-- <url>

@@ -14,6 +14,7 @@ export class ProductsService {
   private categoryApiUrl = environment.apiUrl+'api/v1/gessa/category';
   private productApiUrl = environment.apiUrl+'api/v1/gessa/product';
   private brandApiUrl = environment.apiUrl+'api/v1/gessa/catalog-brand';
+  private boxApiUrl = environment.apiUrl+'api/v1/gessa/stock';
   // Default outletId - in a real app this would come from configuration or user selection
   private outletId = 2;
 
@@ -170,8 +171,29 @@ export class ProductsService {
     return this.http.get<Product[]>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/categoryDescription/${categoryDescription}`, { params });
   }
 
-  getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName: string, categoryDescription: string): Observable<number> {
+getOnlineStoreProductsByBrandNameAndCategoryDescriptionCount(brandName: string, categoryDescription: string): Observable<number> {
     return this.http.get<number>(`${this.brandApiUrl}/online-store/${this.outletId}/brandName/${brandName}/categoryDescription/${categoryDescription}/count`);
   }
 
+  /**
+   * Get paginated products for online store box
+   * @param outletId ID of the outlet
+   * @param pageSize Number of products per page
+   * @param offset Offset for pagination
+   */
+  getOnlineStoreProductsBox(outletId: number, pageSize: number = 16, offset: number = 0): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('offset', offset.toString());
+
+    return this.http.get<Product[]>(`${this.boxApiUrl}/online-store-box/${outletId}`, { params });
+  }
+
+  /**
+   * Get total count of online store products for box
+   * @param outletId ID of the outlet
+   */
+  getOnlineStoreProductsCountBox(outletId: number): Observable<number> {
+    return this.http.get<number>(`${this.boxApiUrl}/online-store-box/${outletId}/count`);
+  }
 }

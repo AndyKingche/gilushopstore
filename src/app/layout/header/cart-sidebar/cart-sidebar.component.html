@@ -28,7 +28,7 @@
     <div class="cart-items" *ngIf="items.length > 0">
       <div class="cart-item" *ngFor="let item of items">
         <div class="item-image"
-          [style.background-image]="item.product.image ? 'url(' + item.product.image + ')' : null">
+          [style.background-image]="item.product.image ? 'url(' + getImageUrl(item.product.image) + ')' : null">
           <div class="placeholder-image" *ngIf="!item.product.image"></div>
         </div>
         <div class="item-details">
@@ -71,14 +71,14 @@
         Confirmar pedido por WhatsApp 💬
       </button>
       <button class="btn-clear" (click)="clearCart()">Vaciar carrito</button>
-      <button type="button" class="btn-payphone" (click)="ejecutarCajitaPagos()">
+      <!-- <button class="btn-checkout" (click)="ejecutarCajitaPagos()">
         Pagar con Payphone
-      </button>
+      </button> -->
     </div>
   </div>
 </aside>
 
-<app-modal>
+<!-- <app-modal>
   <h2>Pago con Payphone</h2>
   <div id="pp-button"></div>
-</app-modal>
+</app-modal> -->

@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopModule)
   },
   {
+    path: 'box-gilu',
+    loadChildren: () => import('./pages/box-gilu/box-gilu.module').then(m => m.BoxGiluModule)
+  },
+  {
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule)
   },
