@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { GoogleLoginButtonComponent } from './components/login/google-login-button/google-login-button.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    GoogleLoginButtonComponent
   ]
 })
 export class AuthModule { }

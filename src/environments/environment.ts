@@ -7,5 +7,6 @@ export const environment = {
     templateId: 'template_zvy8jbo',
     publicKey: 'vrRL8rEEhrrr4YQHM'
   },
-  imageUrl: "https://gilu-shop.com/uploads/"
+  imageUrl: "https://gilu-shop.com/uploads/",
+  googleClientId: '643856283544-iko8c2arp77d0hjnj7nj0mp4vd0b9bhk.apps.googleusercontent.com' 
 };
