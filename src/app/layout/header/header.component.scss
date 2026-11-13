@@ -241,11 +241,11 @@
   align-items: center;
   justify-content: center;
   transition: color 0.3s ease;
-  
+
   &:hover {
     color: $pink-primary;
   }
-  
+
   .cart-badge {
     position: absolute;
     top: 0;
@@ -261,6 +261,102 @@
     align-items: center;
     justify-content: center;
     padding: 0 5px;
+  }
+}
+
+// Auth Dropdown
+.auth-dropdown {
+  position: relative;
+
+  .auth-btn {
+    color: $dark;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    min-height: 40px;
+
+    &:hover {
+      color: $pink-primary;
+      background: rgba($pink-primary, 0.05);
+    }
+
+    .auth-user-name {
+      font-size: 13px;
+      font-weight: 600;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .auth-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: $white;
+    min-width: 200px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1001;
+    border: 1px solid rgba($gray-300, 0.5);
+    animation: fadeIn 0.2s ease;
+
+    .auth-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 16px;
+      color: $dark;
+      background: transparent;
+      border: 0;
+      text-decoration: none;
+      font-size: 14px;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 44px;
+
+      &:hover {
+        background: $gray-100;
+        color: $pink-primary;
+        transform: translateX(2px);
+      }
+
+      &:active {
+        background: rgba($pink-primary, 0.1);
+      }
+
+      svg {
+        flex-shrink: 0;
+        color: inherit;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

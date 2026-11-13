@@ -58,7 +58,7 @@ export class AuthService {
     this.write(this.NAME_KEY, null);
     this.token.set(null);
     this.userName.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   private saveSession(res: ShopLoginResponse) {

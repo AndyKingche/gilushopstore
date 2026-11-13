@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID, ElementRef, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -8,6 +8,7 @@ import { ProductsService } from '../../core/services/products.service';
 import { CatalogBrandDTO } from '../../core/models/brand.model';
 import { Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @ViewChild('dropdown') dropdownElement: ElementRef;
+  @ViewChild('dropdown') dropdownElement?: ElementRef<HTMLElement>;
+  @ViewChild('authDropdown') authDropdownElement?: ElementRef<HTMLElement>;
   private routerSubscription?: Subscription;
   cartItemCount$: Observable<number>;
   isMenuOpen = false;
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   brandSearchTerm = '';
   isBrandsDropdownOpen = false;
   isBrandsCollapsed = false; // Start collapsed
+  isAuthDropdownOpen = false;
   navLinks = [
     { path: '/', label: 'GILÚ' },
     { path: '/shop', label: 'COMPRAR' },
@@ -41,6 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private searchService: SearchService,
     private productsService: ProductsService,
+    public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cartItemCount$ = new Observable(subscriber => {
@@ -98,8 +102,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    if (this.dropdownElement && !this.dropdownElement.nativeElement.contains(event.target)) {
+    if (this.dropdownElement && !this.dropdownElement.nativeElement.contains(event.target as Node)) {
       this.isBrandsDropdownOpen = false;
+    }
+    if (this.authDropdownElement && !this.authDropdownElement.nativeElement.contains(event.target as Node)) {
+      this.isAuthDropdownOpen = false;
     }
   }
 
@@ -157,7 +164,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateToBrand(brand: CatalogBrandDTO): void {
     // Navigate to shop collections with brand id
     //console.log(brand.brandDescription);
-    
+
     this.router.navigate(['/shop', 'collections', brand.brandDescription]);
     this.closeBrandsDropdown();
     this.isBrandsCollapsed = false; // Close collapse after navigation
@@ -181,5 +188,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
         brand.brandName.toLowerCase().includes(searchTerm)
       );
     }
+  }
+
+  toggleAuthDropdown(): void {
+    this.isAuthDropdownOpen = !this.isAuthDropdownOpen;
+  }
+
+  closeAuthDropdown(): void {
+    this.isAuthDropdownOpen = false;
+  }
+
+  login(): void {
+    this.closeAuthDropdown();
+    this.router.navigate(['/auth/login']);
+  }
+
+  logout(): void {
+    this.closeAuthDropdown();
+    this.authService.logout();
+  }
+
+  viewOrders(): void {
+    this.closeAuthDropdown();
   }
 }
