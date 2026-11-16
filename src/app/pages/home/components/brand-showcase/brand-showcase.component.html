@@ -1,0 +1,20 @@
+<div class="brand-grid">
+  <a
+    class="brand-card"
+    *ngFor="let brand of brands"
+    [routerLink]="['/shop/collections', brand.slug]"
+    [attr.aria-label]="'Ver productos de ' + brand.name">
+    <span class="brand-card__image">
+      <img [src]="brand.image" [alt]="brand.alt" loading="lazy">
+    </span>
+    <span class="brand-card__details">
+      <span class="brand-card__name">{{ brand.name }}</span>
+      <span class="brand-card__action">
+        Ver productos
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5" />
+        </svg>
+      </span>
+    </span>
+  </a>
+</div>

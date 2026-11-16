@@ -1,55 +1,55 @@
 <section class="influencer-section">
   <div class="container">
-     <h2 class="section-title">Tus influencers favoritos los recomiendan</h2>
-     <p class="section-subtitle">Descubre los productos que están amando</p>
-    
+    <div class="influencer-heading">
+      <h2 class="influencer-heading__title">Videos de maquillaje</h2>
+      <p class="influencer-heading__lead">Recomendaciones de productos y marcas disponibles en Gilú Shop.</p>
+    </div>
+
     <div class="videos-grid">
-      <div class="video-card" *ngFor="let video of videos; let i = index">
-        <div class="video-wrapper" (click)="playVideo(i)">
-          <!-- Thumbnail State -->
-          <div class="thumbnail" *ngIf="playingVideo !== i">
-            <img [src]="video.thumbnailUrl" [alt]="video.title">
-            <button class="play-button">
+      <article class="video-card" *ngFor="let video of videos; let i = index">
+        <div class="video-wrapper">
+          <button
+            class="video-thumbnail"
+            *ngIf="playingVideo !== i"
+            type="button"
+            (click)="playVideo(i)"
+            [attr.aria-label]="'Reproducir video: ' + video.title">
+            <img [src]="video.thumbnailUrl" alt="" loading="lazy">
+            <span class="play-button" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
               </svg>
-            </button>
-          </div>
-          
-          <!-- Video Playing State -->
+            </span>
+          </button>
+
           <iframe *ngIf="playingVideo === i"
                   [src]="video.embedUrl"
-                  frameborder="0"
+                  [title]="video.title"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen>
           </iframe>
-          
-          <!-- Close Button -->
-          <button class="close-video" *ngIf="playingVideo === i" (click)="stopVideo(); $event.stopPropagation()">
+
+          <button
+            class="close-video"
+            *ngIf="playingVideo === i"
+            type="button"
+            [attr.aria-label]="'Cerrar video: ' + video.title"
+            (click)="stopVideo()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
-        
+
         <div class="video-info">
-          <button class="play-info" (click)="playingVideo === i ? stopVideo() : playVideo(i)">
-            <svg *ngIf="playingVideo !== i" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <svg *ngIf="playingVideo === i" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-          </button>
           <div class="info-text">
             <h4>{{ video.title }}</h4>
             <p class="influencer-name">{{ video.influencer }}</p>
             <span class="product-tag">{{ video.product }}</span>
           </div>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </section>

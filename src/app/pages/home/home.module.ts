@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 
 import { HomeComponent } from './home.component';
-import { HeroCarouselComponent } from './components/hero-carousel/hero-carousel.component';
-import { NewsCardsComponent } from './components/news-cards/news-cards.component';
+import { BrandShowcaseComponent } from './components/brand-showcase/brand-showcase.component';
 import { InfluencerVideosComponent } from './components/influencer-videos/influencer-videos.component';
 
 const routes: Routes = [
@@ -14,8 +13,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
-    HeroCarouselComponent,
-    NewsCardsComponent,
+    BrandShowcaseComponent,
     InfluencerVideosComponent
   ],
   imports: [

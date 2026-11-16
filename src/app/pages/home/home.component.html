@@ -1,15 +1,61 @@
 <div class="home-page">
-  <app-hero-carousel></app-hero-carousel>
+  <section class="home-hero">
+    <div class="container home-hero__inner">
+      <div class="home-hero__copy">
+        <p class="home-hero__eyebrow">Maquillaje y cuidado facial</p>
+        <h1>Maquillaje original en Ecuador</h1>
+        <p class="home-hero__lead">
+          Encuentra Maybelline, e.l.f., Rare Beauty y más marcas para tu rutina de maquillaje.
+        </p>
+        <div class="home-hero__actions">
+          <a class="btn-primary home-hero__button" routerLink="/shop">
+            Comprar maquillaje
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5" />
+            </svg>
+          </a>
+          <a class="home-hero__secondary" href="#brands">Ver marcas</a>
+        </div>
+      </div>
 
-  <section class="news-section" appScrollAnimation="fade-in">
-    <div class="container">
-      <h2 class="section-title">Novedades</h2>
-      <p class="section-subtitle">Descubre lo último en maquillaje</p>
+      <div class="home-hero__art" role="group" aria-label="Productos de Maybelline, e.l.f. y Rare Beauty">
+        <figure class="home-hero__product home-hero__product--main">
+          <img
+            src="assets/image/maybelline--1.webp"
+            alt="Base Super Stay Lumi Matte de Maybelline"
+            width="608"
+            height="894">
+        </figure>
+        <figure class="home-hero__product home-hero__product--lip">
+          <img
+            src="assets/image/elf--1.webp"
+            alt="Producto para labios de e.l.f."
+            width="300"
+            height="300">
+        </figure>
+        <figure class="home-hero__product home-hero__product--blush">
+          <img
+            src="assets/image/rare-beauty--1.webp"
+            alt="Rubor líquido de Rare Beauty"
+            width="700"
+            height="700">
+        </figure>
+      </div>
     </div>
-    <app-news-cards></app-news-cards>
   </section>
 
-  <app-influencer-videos appScrollAnimation="fade-in"></app-influencer-videos>
+  <section class="brands-section" id="brands">
+    <div class="container">
+      <div class="brands-section__heading">
+        <div>
+          <p class="brands-section__eyebrow">Marcas disponibles</p>
+          <h2>Maquillaje por marca</h2>
+        </div>
+        <p>Elige una marca para ver sus productos en Gilú Shop.</p>
+      </div>
+      <app-brand-showcase></app-brand-showcase>
+    </div>
+  </section>
 
-  <app-join-banner appScrollAnimation="fade-in"></app-join-banner>
+  <app-influencer-videos></app-influencer-videos>
 </div>
