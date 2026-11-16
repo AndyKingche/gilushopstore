@@ -1,0 +1,97 @@
+<section class="product-page" aria-label="Detalle del producto">
+  <div class="product-shell">
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <a routerLink="/shop">Tienda</a>
+      <span aria-hidden="true">/</span>
+      <span *ngIf="product" aria-current="page">{{ product.name }}</span>
+      <span *ngIf="!product" aria-current="page">Producto</span>
+    </nav>
+
+    <div class="loading-state" *ngIf="isLoading" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Cargando producto...</p>
+    </div>
+
+    <section class="message-state" *ngIf="!isLoading && !product" aria-live="polite">
+      <span class="message-icon" aria-hidden="true">♡</span>
+      <h1>{{ isNotFound ? 'Producto no disponible' : 'No se pudo cargar el producto' }}</h1>
+      <p>{{ errorMessage }}</p>
+      <button type="button" class="back-button" (click)="goBackToShop()">Volver a la tienda</button>
+    </section>
+
+    <article class="product-detail" *ngIf="!isLoading && product as item">
+      <div class="product-visual">
+        <div class="image-frame">
+          <img [src]="productImage" [alt]="item.name" fetchpriority="high">
+          <span class="new-badge" *ngIf="item.newProduct">Nuevo</span>
+        </div>
+        <div class="image-note">
+          <span class="note-mark" aria-hidden="true">✦</span>
+          <span>Disponible en Gilú Shop</span>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="product-meta">
+          <span class="brand-label">{{ item.brand }}</span>
+          <span class="meta-divider" aria-hidden="true"></span>
+          <span class="category-label">{{ item.category }}</span>
+        </div>
+
+        <h1 id="product-detail-heading">{{ item.name }}</h1>
+        <p class="product-description" *ngIf="item.description">{{ item.description }}</p>
+
+        <div class="price-row">
+          <span class="price">{{ item.price | currency:'USD':'symbol':'1.2-2' }}</span>
+          <span class="availability" [class.unavailable]="!item.inStock">
+            <span class="availability-dot" aria-hidden="true"></span>
+            {{ item.inStock ? 'Disponible' : 'Agotado' }}
+          </span>
+        </div>
+
+        <div class="product-divider"></div>
+
+        <div class="purchase-controls">
+          <div class="quantity-control">
+            <span class="control-label">Cantidad</span>
+            <div class="quantity-picker" aria-label="Cantidad de producto">
+              <button type="button" aria-label="Disminuir cantidad" (click)="decrementQuantity()" [disabled]="quantity <= 1">−</button>
+              <output aria-live="polite">{{ quantity }}</output>
+              <button type="button" aria-label="Aumentar cantidad" (click)="incrementQuantity()">+</button>
+            </div>
+          </div>
+
+          <button type="button" class="add-button" (click)="addToCart()" [disabled]="!item.inStock">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {{ item.inStock ? 'Agregar al carrito' : 'Producto agotado' }}
+          </button>
+        </div>
+
+        <p class="cart-feedback" *ngIf="addedToCart" role="status" aria-live="polite">
+          {{ quantity }} {{ quantity === 1 ? 'unidad agregada' : 'unidades agregadas' }} al carrito.
+        </p>
+
+        <div class="product-facts">
+          <div>
+            <span class="fact-icon" aria-hidden="true">01</span>
+            <span>Marca</span>
+            <strong>{{ item.brand }}</strong>
+          </div>
+          <div>
+            <span class="fact-icon" aria-hidden="true">02</span>
+            <span>Categoría</span>
+            <strong>{{ item.category }}</strong>
+          </div>
+        </div>
+
+        <a routerLink="/shop" class="continue-link">
+          <span aria-hidden="true">←</span> Seguir comprando
+        </a>
+      </div>
+    </article>
+  </div>
+</section>

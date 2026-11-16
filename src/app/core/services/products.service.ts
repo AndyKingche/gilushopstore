@@ -84,6 +84,14 @@ export class ProductsService {
     return this.http.get<Product[]>(`${this.productApiUrl}/online-store/${this.outletId}/search`, { params });
   }
 
+  getOnlineStoreProductByName(name: string): Observable<Product> {
+    const params = new HttpParams().set('name', name);
+    return this.http.get<Product>(
+      `${this.productApiUrl}/online-store/${this.outletId}/search/product`,
+      { params }
+    );
+  }
+
   /**
    * Get total count of search results
    * @param name Search term

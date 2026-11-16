@@ -52,8 +52,9 @@
     <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct"
       appScrollAnimation [style.animationDelay]="getAnimationDelay(i)" itemscope itemtype="https://schema.org/Product">
 
-      <!-- <a [routerLink]="['/product', product.id]" itemprop="url"> -->
-      <a>
+      <a [routerLink]="['/shop/product', product.name]"
+        [attr.aria-label]="'Ver ' + product.name"
+        itemprop="url">
 
         <meta itemprop="image" [attr.content]="product.image || 'https://gilu-shop.com/assets/image/gilu-update.png'">
 
@@ -81,7 +82,9 @@
         </p>
 
         <h3 class="card-name" itemprop="name">
-          {{ product.name }}
+          <a [routerLink]="['/shop/product', product.name]">
+            {{ product.name }}
+          </a>
         </h3>
 
         <p class="card-desc" itemprop="description">

@@ -9,8 +9,10 @@ import { CategoryFilterComponent } from './components/search-filter/components/c
 import { BadgeButtonsComponent } from './components/badge-buttons/badge-buttons.component';
 import { ProductGridComponent } from './components/product-grid/product-grid.component';
 import { BannerMarqueeComponent } from './components/banner-marquee/banner-marquee.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 const routes: Routes = [
+  { path: 'product/:name', component: ProductDetailComponent },
   { path: '', component: ShopComponent },
   { path: 'collections/:marca', component: ShopComponent },
   { path: 'collections/:marca/:category', component: ShopComponent },
@@ -25,7 +27,8 @@ const routes: Routes = [
     CategoryFilterComponent,
     BadgeButtonsComponent,
     ProductGridComponent,
-    BannerMarqueeComponent
+    BannerMarqueeComponent,
+    ProductDetailComponent
   ],
   imports: [
     SharedModule,
