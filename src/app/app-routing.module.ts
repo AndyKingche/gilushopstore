@@ -27,6 +27,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'order',
+    loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule)
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
   },

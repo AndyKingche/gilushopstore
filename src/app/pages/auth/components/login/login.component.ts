@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 interface LoginRequest {
   username: string;
   password: string;
-}
-
-interface LoginResponse {
-  jwttoken: string;
-  nombreCompleto: string;
 }
 
 @Component({
@@ -29,11 +23,8 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
 
-  // Use the correct backend port
-  private apiUrl = environment.apiUrl+'api';
-
   constructor(
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -43,9 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkAuth(): void {
-    const token = localStorage.getItem('authToken');
-    const name = localStorage.getItem('userName');
-    if (token && name) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
   }
@@ -60,25 +49,14 @@ export class LoginComponent implements OnInit {
 
     this.isLoading = true;
 
-    const loginData = {
-      username: this.credentials.username,
-      password: this.credentials.password
-    };
-
-    this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData).subscribe({
-      next: (response) => {
+    this.authService.login(this.credentials.username, this.credentials.password).subscribe({
+      next: () => {
         this.isLoading = false;
-        
-        // Store token and user name in localStorage
-        localStorage.setItem('authToken', response.jwttoken);
-        localStorage.setItem('userName', response.nombreCompleto);
-        
-        // Redirect to home after successful login
         this.router.navigate(['/']);
       },
       error: (error) => {
         this.isLoading = false;
-        
+
         if (error.status === 401) {
           this.errorMessage = 'Usuario o contraseña incorrectos';
         } else if (error.status === 0) {
@@ -86,7 +64,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.errorMessage = 'Error al iniciar sesión. Intente de nuevo.';
         }
-        
+
         console.error('Login error:', error);
       }
     });

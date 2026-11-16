@@ -210,5 +210,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   viewOrders(): void {
     this.closeAuthDropdown();
+    this.router.navigate(['/order']);
   }
 }

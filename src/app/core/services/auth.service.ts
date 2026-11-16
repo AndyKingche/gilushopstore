@@ -23,9 +23,15 @@ export class AuthService {
 
   private readonly TOKEN_KEY = 'shop_token';
   private readonly NAME_KEY = 'shop_name';
+  private readonly LEGACY_TOKEN_KEY = 'authToken';
+  private readonly LEGACY_NAME_KEY = 'userName';
 
-  readonly token = signal<string | null>(this.read(this.TOKEN_KEY));
-  readonly userName = signal<string | null>(this.read(this.NAME_KEY));
+  readonly token = signal<string | null>(
+    this.read(this.TOKEN_KEY) ?? this.read(this.LEGACY_TOKEN_KEY)
+  );
+  readonly userName = signal<string | null>(
+    this.read(this.NAME_KEY) ?? this.read(this.LEGACY_NAME_KEY)
+  );
   readonly isLoggedIn = computed(() => !!this.token());
 
   // Login normal de la tienda: el "username" del backend es el email
@@ -56,6 +62,8 @@ export class AuthService {
   clearSession() {
     this.write(this.TOKEN_KEY, null);
     this.write(this.NAME_KEY, null);
+    this.write(this.LEGACY_TOKEN_KEY, null);
+    this.write(this.LEGACY_NAME_KEY, null);
     this.token.set(null);
     this.userName.set(null);
     this.router.navigate(['/auth/login']);
@@ -64,6 +72,8 @@ export class AuthService {
   private saveSession(res: ShopLoginResponse) {
     this.write(this.TOKEN_KEY, res.jwttoken);
     this.write(this.NAME_KEY, res.nombreCompleto);
+    this.write(this.LEGACY_TOKEN_KEY, res.jwttoken);
+    this.write(this.LEGACY_NAME_KEY, res.nombreCompleto);
     this.token.set(res.jwttoken);
     this.userName.set(res.nombreCompleto);
   }

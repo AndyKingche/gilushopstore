@@ -150,6 +150,11 @@
   .designed-by {
     font-size: 12px;
     color: rgba($white, 0.5);
+
+    a {
+      color: $pink-primary;
+      text-decoration: underline;
+    }
   }
 }
 

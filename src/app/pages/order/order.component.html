@@ -1,0 +1,118 @@
+<section class="orders-page">
+  <div class="orders-shell">
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <a routerLink="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Mi perfil</span>
+    </nav>
+
+    <header class="profile-banner">
+      <div class="profile-copy">
+        <p class="eyebrow">TU ESPACIO GILÚ</p>
+        <h1>Un poquito de ti,<br><span>y tus pedidos.</span></h1>
+        <p class="banner-note">Todo lo que esperas, en un solo lugar.</p>
+      </div>
+      <div class="profile-card" *ngIf="authService.isLoggedIn(); else guestAvatar">
+        <div class="avatar">{{ initials }}</div>
+        <div class="profile-details">
+          <span class="profile-label">MI CUENTA</span>
+          <strong>{{ displayName }}</strong>
+        </div>
+        <span class="profile-sparkle" aria-hidden="true">✦</span>
+      </div>
+      <ng-template #guestAvatar>
+        <div class="profile-card">
+          <div class="avatar">G</div>
+          <div class="profile-details">
+            <span class="profile-label">BIENVENIDA</span>
+            <strong>Tu cuenta Gilú</strong>
+          </div>
+          <span class="profile-sparkle" aria-hidden="true">✦</span>
+        </div>
+      </ng-template>
+      <span class="banner-flower flower-one" aria-hidden="true">✿</span>
+      <span class="banner-flower flower-two" aria-hidden="true">✧</span>
+    </header>
+
+    <section class="orders-section" aria-labelledby="orders-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CON CARIÑO, PARA TI</p>
+          <h2 id="orders-title">Mis pedidos</h2>
+        </div>
+        <span class="order-count" *ngIf="authService.isLoggedIn() && !isLoading">
+          {{ orders.length }} {{ orders.length === 1 ? 'pedido' : 'pedidos' }}
+        </span>
+      </div>
+
+      <div class="state-card loading-card" *ngIf="isLoading" role="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Estamos preparando tu historial...</p>
+      </div>
+
+      <div class="state-card login-card" *ngIf="!isLoading && !authService.isLoggedIn()">
+        <div class="state-icon" aria-hidden="true">♡</div>
+        <h3>Tu próxima compra empieza aquí</h3>
+        <p>Inicia sesión para ver el estado y los detalles de tus pedidos.</p>
+        <button type="button" class="primary-button" (click)="openLogin()">Iniciar sesión</button>
+      </div>
+
+      <div class="state-card error-card" *ngIf="!isLoading && authService.isLoggedIn() && errorMessage" role="alert">
+        <div class="state-icon" aria-hidden="true">♡</div>
+        <h3>No pudimos mostrar tus pedidos</h3>
+        <p>{{ errorMessage }}</p>
+        <div class="state-actions">
+          <button type="button" class="primary-button" (click)="needsLogin ? openLogin() : loadOrders()">
+            {{ needsLogin ? 'Iniciar sesión' : 'Intentar de nuevo' }}
+          </button>
+          <button *ngIf="!needsLogin" type="button" class="text-button" (click)="openLogin()">Cambiar de cuenta</button>
+        </div>
+      </div>
+
+      <div class="state-card empty-card" *ngIf="!isLoading && authService.isLoggedIn() && !errorMessage && orders.length === 0">
+        <div class="state-icon" aria-hidden="true">✿</div>
+        <h3>Aún no hay pedidos por aquí</h3>
+        <p>Cuando hagas tu primera compra, podrás seguirla desde este espacio.</p>
+        <a routerLink="/shop" class="primary-button">Descubrir la tienda</a>
+      </div>
+
+      <div class="orders-card" *ngIf="!isLoading && authService.isLoggedIn() && !errorMessage && orders.length > 0">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Pedido</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Detalle</th>
+                <th scope="col">Total</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders; trackBy: trackByOrder">
+                <td data-label="Pedido">
+                  <span class="order-id">{{ orderNumber(order) }}</span>
+                </td>
+                <td data-label="Fecha">
+                  {{ (order.orderDate || order.dateCreated) ? ((order.orderDate || order.dateCreated) | date:'dd/MM/yyyy') : '—' }}
+                </td>
+                <td data-label="Detalle" class="detail-cell">{{ orderDescription(order) }}</td>
+                <td data-label="Total" class="total-cell">{{ order.orderTotal ?? 0 | currency:'USD':'symbol':'1.2-2' }}</td>
+                <td data-label="Estado">
+                  <span class="status-badge" [ngClass]="statusClass(order.orderStatus)">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    {{ statusLabel(order.orderStatus) }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="orders-footer">
+          <span>¿Buscas algo nuevo para tu rutina?</span>
+          <a routerLink="/shop">Visitar la tienda <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
