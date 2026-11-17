@@ -3,7 +3,10 @@
     <div class="container home-hero__inner">
       <div class="home-hero__copy">
         <p class="home-hero__eyebrow">Maquillaje y cuidado facial</p>
-        <h1>Maquillaje original en Ecuador</h1>
+        <h1>
+          Maquillaje original
+          <span class="home-hero__title-accent">en Ecuador</span>
+        </h1>
         <p class="home-hero__lead">
           Encuentra Maybelline, e.l.f., Rare Beauty y más marcas para tu rutina de maquillaje.
         </p>
@@ -18,28 +21,52 @@
         </div>
       </div>
 
-      <div class="home-hero__art" role="group" aria-label="Productos de Maybelline, e.l.f. y Rare Beauty">
-        <figure class="home-hero__product home-hero__product--main">
+      <div
+        class="home-hero__art"
+        role="region"
+        aria-roledescription="carrusel"
+        aria-label="Productos destacados"
+        [@.disabled]="prefersReducedMotion">
+        <div class="home-hero__carousel-stage">
           <img
-            src="assets/image/maybelline--1.webp"
-            alt="Base Super Stay Lumi Matte de Maybelline"
-            width="608"
-            height="894">
-        </figure>
-        <figure class="home-hero__product home-hero__product--lip">
-          <img
-            src="assets/image/elf--1.webp"
-            alt="Producto para labios de e.l.f."
-            width="300"
-            height="300">
-        </figure>
-        <figure class="home-hero__product home-hero__product--blush">
-          <img
-            src="assets/image/rare-beauty--1.webp"
-            alt="Rubor líquido de Rare Beauty"
-            width="700"
-            height="700">
-        </figure>
+            [@productDepth]="activeCarouselProduct.src"
+            [src]="activeCarouselProduct.src"
+            [alt]="activeCarouselProduct.alt"
+            decoding="async">
+        </div>
+
+        <div class="home-hero__carousel-controls">
+          <span class="home-hero__carousel-count" aria-hidden="true">
+            <strong>{{ currentSlideNumber }}</strong>
+            <span>/</span>
+            {{ totalSlideNumber }}
+          </span>
+
+          <div class="home-hero__carousel-buttons" role="group" aria-label="Controles del carrusel">
+            <button
+              class="home-hero__carousel-control"
+              type="button"
+              aria-label="Ver producto anterior"
+              (click)="showPreviousProduct()">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="M15 5 8 12l7 7" />
+              </svg>
+            </button>
+            <button
+              class="home-hero__carousel-control"
+              type="button"
+              aria-label="Ver siguiente producto"
+              (click)="showNextProduct()">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="m9 5 7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <span class="home-hero__visually-hidden" aria-live="polite" aria-atomic="true">
+          {{ activeCarouselProduct.alt }}, imagen {{ carouselIndex + 1 }} de {{ carouselProducts.length }}
+        </span>
       </div>
     </div>
   </section>
