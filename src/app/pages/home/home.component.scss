@@ -36,7 +36,7 @@
 
   .home-hero__title-accent {
     display: block;
-    color: darken($pink-primary, 15%);
+    color: darken($pink-medium, 15%);
   }
 }
 
@@ -80,7 +80,7 @@
   align-items: center;
   gap: 12px;
   padding: 0 26px;
-  background-color: darken($pink-primary, 15%);
+  background-color: darken($pink-medium, 15%);
   transition: background-color 160ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 
   &:hover {
