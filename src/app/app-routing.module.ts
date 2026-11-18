@@ -31,6 +31,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule)
   },
   {
+    path: 'payphone/respuesta',
+    loadChildren: () => import('./pages/payphone-response/payphone-response.module').then(m => m.PayphoneResponseModule)
+  },
+  {
     path: '404',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
   },

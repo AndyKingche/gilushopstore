@@ -1,0 +1,70 @@
+<div class="payment-result-page">
+  <section class="payment-result" aria-live="polite" [attr.aria-busy]="isVerifying">
+    <div class="payment-result__card">
+      <p class="payment-result__brand">Gilú Shop</p>
+
+      <div *ngIf="state === 'loading'" class="payment-result__state" role="status">
+        <span class="payment-result__spinner" aria-hidden="true"></span>
+        <h1>Verificando tu pago...</h1>
+        <p>Estamos consultando la confirmación de PayPhone.</p>
+      </div>
+
+      <div *ngIf="state === 'approved'" class="payment-result__state">
+        <span class="payment-result__indicator payment-result__indicator--success" aria-hidden="true"></span>
+        <h1>Pago aprobado</h1>
+        <p>PayPhone confirmó tu pago.</p>
+
+        <dl class="payment-result__details" *ngIf="response?.transactionId || response?.authorizationCode">
+          <div *ngIf="response?.transactionId">
+            <dt>Transacción</dt>
+            <dd>{{ response?.transactionId }}</dd>
+          </div>
+          <div *ngIf="response?.authorizationCode">
+            <dt>Autorización</dt>
+            <dd>{{ response?.authorizationCode }}</dd>
+          </div>
+          <div *ngIf="response?.amount">
+            <dt>Total</dt>
+            <dd>{{ response?.amount / 100 | currency:'USD' }}</dd>
+          </div>
+        </dl>
+
+        <button type="button" class="payment-result__button" (click)="returnToStore()">
+          Volver a la tienda
+        </button>
+      </div>
+
+      <div *ngIf="state === 'rejected'" class="payment-result__state">
+        <span class="payment-result__indicator payment-result__indicator--failure" aria-hidden="true"></span>
+        <h1>Pago no aprobado</h1>
+        <p>El pago fue cancelado o rechazado. Vuelve a la tienda para iniciar una nueva compra.</p>
+        <button type="button" class="payment-result__button" (click)="retryPurchase()">
+          Reintentar compra
+        </button>
+      </div>
+
+      <div *ngIf="state === 'error'" class="payment-result__state">
+        <span class="payment-result__indicator payment-result__indicator--failure" aria-hidden="true"></span>
+        <h1>No pudimos verificar el pago</h1>
+        <p>{{ errorMessage }}</p>
+        <button
+          *ngIf="canRetryVerification"
+          type="button"
+          class="payment-result__button"
+          [disabled]="isVerifying"
+          (click)="retryVerification()"
+        >
+          Reintentar verificación
+        </button>
+        <button
+          *ngIf="!canRetryVerification"
+          type="button"
+          class="payment-result__button"
+          (click)="returnToStore()"
+        >
+          Volver a la tienda
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

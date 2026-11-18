@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navLinks = [
     { path: '/', label: 'GILÚ' },
     { path: '/shop', label: 'COMPRAR' },
-    { path: '/box-gilu', label: 'CAJITAS GILÚ' },
+    { path: '/box-gilu', label: 'CAJITAS EMPRENDEDORAS' },
     { path: '/about', label: 'NOSOTROS' },
     { path: '/faq', label: 'FAQ' }
   ];

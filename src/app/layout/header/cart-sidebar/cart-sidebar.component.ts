@@ -110,6 +110,9 @@ export class CartSidebarComponent implements OnInit, OnChanges {
     console.log('Ejecutando cajita de pagos...');
     const clientTransactionID =
       'ID-' + Date.now();
+    const amount = Math.round(this.cartService.getTotal() * 100);
+    const amountWithTax = Math.round(amount / 1.15);
+    const tax = amount - amountWithTax;
 
     const ppb = new PPaymentButtonBox({
 
@@ -117,11 +120,11 @@ export class CartSidebarComponent implements OnInit, OnChanges {
       token: '3jtUVems9W2y8PEzJhvuHq-b5ekYYeweeB67Dk-WZ7endgaQCQs5OZuThvreYQ8Imkptelo810je_yY8BTxotniVsbbMIqFc6RJyl12yicj1ZOGpLGapnSvK6ApHwAxSkLr48fwOBCJRScvmdYpDsFqqb_mC3C9lqP4aZPczUybmS3lvmgKQxw-ajVrM7zhfM_-PgOouc2Kv6FW8kLRHmPdbgn4BK7uHbyXWmwStKdl6AkkgXrbwCWi4AWv1JG2iui2QhnI--kDWaKljLVjpQlJS9txKFO2ltOHkfgC8LT9rJkvxLw1ZLSyjT7-Y0GQFOdmWgA',
       storeId: 'ab1f3a83-071b-45c1-a8d2-1c79b05d0e5b',
 
-      // Valores en centavos
-      amount: 315,
-      amountWithoutTax: 200,
-      amountWithTax: 100,
-      tax: 15,
+      // Los precios del catálogo incluyen IVA del 15%; PayPhone recibe valores en centavos.
+      amount,
+      amountWithoutTax: 0,
+      amountWithTax,
+      tax,
 
       service: 0,
       tip: 0,
@@ -130,7 +133,7 @@ export class CartSidebarComponent implements OnInit, OnChanges {
 
       clientTransactionId: clientTransactionID,
 
-      reference: 'Pago de factura',
+      reference: 'Compra en GILÚ SHOP',
 
       backgroundColor: '#6610f2'
 
