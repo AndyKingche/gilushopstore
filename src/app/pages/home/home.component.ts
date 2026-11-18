@@ -27,10 +27,27 @@ interface CarouselProduct {
           style({ opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' })
         )
       ])
+    ]),
+    trigger('productShadow', [
+      transition('* => *', [
+        style({
+          opacity: 0.08,
+          transform: 'translate3d(-50%, 10px, -180px) scale(0.72)'
+        }),
+        animate(
+          '760ms cubic-bezier(0.16, 1, 0.3, 1)',
+          style({
+            opacity: 0.24,
+            transform: 'translate3d(-50%, 0, 0) scale(1)'
+          })
+        )
+      ])
     ])
   ]
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  private readonly carouselAutoplayIntervalMs = 6000;
+
   readonly carouselProducts: CarouselProduct[] = [
     {
       src: 'assets/carousel/maybelline.webp',
@@ -196,12 +213,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   carouselIndex = 0;
   prefersReducedMotion = false;
+  isCarouselPaused = false;
 
   private routerSubscription?: Subscription;
   private reducedMotionQuery?: MediaQueryList;
+  private carouselTimer?: number;
 
   private readonly onReducedMotionChange = (event: MediaQueryListEvent): void => {
     this.prefersReducedMotion = event.matches;
+    this.syncCarouselAutoplay();
   };
 
   constructor(
@@ -245,6 +265,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.routerSubscription?.unsubscribe();
     this.reducedMotionQuery?.removeEventListener('change', this.onReducedMotionChange);
+    this.stopCarouselAutoplay();
   }
 
   get activeCarouselProduct(): CarouselProduct {
@@ -263,20 +284,56 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.carouselIndex = (
       this.carouselIndex - 1 + this.carouselProducts.length
     ) % this.carouselProducts.length;
+    this.syncCarouselAutoplay();
   }
 
   showNextProduct(): void {
     this.carouselIndex = (this.carouselIndex + 1) % this.carouselProducts.length;
+    this.syncCarouselAutoplay();
+  }
+
+  toggleCarouselAutoplay(): void {
+    this.isCarouselPaused = !this.isCarouselPaused;
+    this.syncCarouselAutoplay();
   }
 
   private setupMotionPreference(): void {
-    if (!isPlatformBrowser(this.platformId) || typeof window.matchMedia !== 'function') {
+    if (!isPlatformBrowser(this.platformId)) {
       return;
     }
 
-    this.reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    this.prefersReducedMotion = this.reducedMotionQuery.matches;
-    this.reducedMotionQuery.addEventListener('change', this.onReducedMotionChange);
+    if (typeof window.matchMedia === 'function') {
+      this.reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.prefersReducedMotion = this.reducedMotionQuery.matches;
+      this.reducedMotionQuery.addEventListener('change', this.onReducedMotionChange);
+    }
+
+    this.syncCarouselAutoplay();
+  }
+
+  private syncCarouselAutoplay(): void {
+    this.stopCarouselAutoplay();
+
+    if (
+      !isPlatformBrowser(this.platformId) ||
+      this.prefersReducedMotion ||
+      this.isCarouselPaused
+    ) {
+      return;
+    }
+
+    this.carouselTimer = window.setInterval(() => {
+      this.carouselIndex = (this.carouselIndex + 1) % this.carouselProducts.length;
+    }, this.carouselAutoplayIntervalMs);
+  }
+
+  private stopCarouselAutoplay(): void {
+    if (this.carouselTimer === undefined) {
+      return;
+    }
+
+    window.clearInterval(this.carouselTimer);
+    this.carouselTimer = undefined;
   }
 
   private setupSeo(): void {
