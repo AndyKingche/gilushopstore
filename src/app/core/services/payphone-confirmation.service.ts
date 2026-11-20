@@ -13,6 +13,29 @@ export interface PayphoneConfirmationResponse {
   currency?: string | null;
 }
 
+export interface PayphoneOrderDetail {
+  quantity: number;
+  description: string;
+  totalValue: number;
+  totalValueWithoutTax: number;
+  productTax: number;
+}
+
+export interface PayphoneOrderRequest {
+  orderStatus: string;
+  orderKind: string;
+  orderTax: number;
+  orderDate: string;
+  orderTotal: number;
+  nameOrder: string;
+  identificationOrder: string;
+  cellphoneOrder: string;
+  cityOrder: string;
+  provinceOrder: string;
+  addressReference: string;
+  details: PayphoneOrderDetail[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +45,12 @@ export class PayphoneConfirmationService {
 
   constructor(private http: HttpClient) {}
 
-  confirm(id: number, clientTransactionId: string, retry = false): Observable<PayphoneConfirmationResponse> {
+  confirm(
+    id: number,
+    clientTransactionId: string,
+    order: PayphoneOrderRequest,
+    retry = false
+  ): Observable<PayphoneConfirmationResponse> {
     const key = JSON.stringify([id, clientTransactionId]);
     if (retry) {
       this.confirmations.delete(key);
@@ -34,7 +62,10 @@ export class PayphoneConfirmationService {
     }
 
     let request: Observable<PayphoneConfirmationResponse>;
-    request = this.http.post<PayphoneConfirmationResponse>(this.endpoint, { id, clientTransactionId }).pipe(
+    request = this.http.post<PayphoneConfirmationResponse>(
+      this.endpoint,
+      { id, clientTransactionId, order }
+    ).pipe(
       timeout(45_000),
       map(response => {
         if (

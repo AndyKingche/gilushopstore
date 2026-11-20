@@ -2,16 +2,20 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { CartService } from '../../core/services/cart.service';
 import {
+  PayphoneOrderRequest,
   PayphoneConfirmationResponse,
   PayphoneConfirmationService
 } from '../../core/services/payphone-confirmation.service';
+import { PendingPayphoneOrderService } from '../../core/services/pending-payphone-order.service';
 
 type PaymentState = 'loading' | 'approved' | 'rejected' | 'error';
 
 interface ConfirmationRequest {
   id: number;
   clientTransactionId: string;
+  order: PayphoneOrderRequest;
 }
 
 @Component({
@@ -35,6 +39,8 @@ export class PayphoneResponseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private confirmationService: PayphoneConfirmationService,
+    private pendingOrderService: PendingPayphoneOrderService,
+    private cartService: CartService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
@@ -53,7 +59,22 @@ export class PayphoneResponseComponent implements OnInit {
       return;
     }
 
-    this.confirmationRequest = { id, clientTransactionId };
+    let order: PayphoneOrderRequest | null;
+    try {
+      order = this.pendingOrderService.load(clientTransactionId);
+    } catch {
+      this.state = 'error';
+      this.errorMessage = 'No pudimos recuperar los datos de tu orden. Contacta a la tienda antes de volver a pagar.';
+      return;
+    }
+
+    if (!order) {
+      this.state = 'error';
+      this.errorMessage = 'No encontramos los datos de esta orden. Contacta a la tienda antes de volver a pagar.';
+      return;
+    }
+
+    this.confirmationRequest = { id, clientTransactionId, order };
     this.verifyPayment();
   }
 
@@ -72,7 +93,8 @@ export class PayphoneResponseComponent implements OnInit {
   }
 
   private verifyPayment(retry = false): void {
-    if (!this.confirmationRequest || this.isVerifying) {
+    const request = this.confirmationRequest;
+    if (!request || this.isVerifying) {
       return;
     }
 
@@ -80,18 +102,24 @@ export class PayphoneResponseComponent implements OnInit {
     this.response = null;
     this.isVerifying = true;
 
-    console.log('Verifying payment with request:', this.confirmationRequest, 'Retry:', retry);
     this.confirmationService.confirm(
-      this.confirmationRequest.id,
-      this.confirmationRequest.clientTransactionId,
+      request.id,
+      request.clientTransactionId,
+      request.order,
       retry
     ).pipe(
       finalize(() => this.isVerifying = false)
     ).subscribe({
       next: response => {
         this.response = response;
-        console.log('Received payment confirmation response:', response);
         this.state = this.getPaymentState(response);
+
+        if (this.state === 'approved') {
+          this.cartService.clearCart();
+          this.pendingOrderService.remove(request.clientTransactionId);
+        } else if (this.state === 'rejected') {
+          this.pendingOrderService.remove(request.clientTransactionId);
+        }
 
         if (this.state === 'error') {
           this.errorMessage = 'No se pudo interpretar la respuesta del pago. Intenta verificarlo de nuevo.';

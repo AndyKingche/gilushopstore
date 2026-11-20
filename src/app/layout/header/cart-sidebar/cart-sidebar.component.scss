@@ -26,6 +26,10 @@
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
 }
 
+.cart-sidebar--checkout {
+  width: 520px;
+}
+
 // User header when logged in
 .user-header {
   display: flex;
@@ -267,6 +271,187 @@
   flex-shrink: 0;
 }
 
+.checkout-view {
+  padding: 4px 8px 8px;
+}
+
+.checkout-back {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: lighten($dark, 28%);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 160ms ease;
+
+  span {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &:hover {
+    color: $pink-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $pink-primary;
+    outline-offset: 2px;
+  }
+}
+
+.checkout-intro {
+  margin-bottom: 18px;
+
+  h4 {
+    margin-bottom: 4px;
+    color: $dark;
+    font-family: $font-display;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  p {
+    color: lighten($dark, 32%);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.checkout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid $gray-300;
+  border-radius: 10px;
+  background: $white;
+
+  .item-image {
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    border-radius: 7px;
+    background-color: $gray-100;
+    background-position: center;
+    background-size: cover;
+
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 7px;
+      @include pink-gradient-placeholder;
+    }
+  }
+}
+
+.checkout-item__details {
+  min-width: 0;
+  flex: 1;
+
+  h5 {
+    overflow: hidden;
+    margin-bottom: 2px;
+    color: $dark;
+    font-size: 14px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .item-brand {
+    display: block;
+    margin-bottom: 5px;
+    color: lighten($dark, 40%);
+    font-size: 12px;
+  }
+}
+
+.checkout-item__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: lighten($dark, 30%);
+  font-size: 13px;
+
+  strong {
+    color: $dark;
+    font-size: 14px;
+  }
+}
+
+.checkout-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 12px;
+}
+
+.checkout-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &:last-child {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    color: $dark;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid $gray-300;
+    border-radius: 8px;
+    background: $white;
+    color: $dark;
+    font-size: 16px;
+    line-height: 1.4;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+
+    &:focus {
+      border-color: $pink-primary;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($pink-primary, 0.15);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: #b42318;
+    }
+  }
+
+  textarea {
+    min-height: 68px;
+    resize: vertical;
+  }
+}
+
+.field-error,
+.payment-error {
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.payment-error {
+  margin-top: 14px;
+}
+
 .cart-total {
   display: flex;
   align-items: center;
@@ -299,6 +484,12 @@
     gap: 8px;
     width: 100%;
     padding: 14px;
+
+    &:disabled {
+      background: lighten($pink-primary, 16%);
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
   }
   
   .btn-clear {
@@ -318,9 +509,20 @@
   }
 }
 
+.checkout-required-note {
+  color: lighten($dark, 34%);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
+
 // Responsive
 @include mobile {
   .cart-sidebar {
+    width: 100%;
+  }
+
+  .cart-sidebar--checkout {
     width: 100%;
   }
   
@@ -354,5 +556,17 @@
       padding: 10px 16px;
       font-size: 13px;
     }
+  }
+
+  .checkout-view {
+    padding: 0;
+  }
+
+  .checkout-form {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-field:last-child {
+    grid-column: auto;
   }
 }

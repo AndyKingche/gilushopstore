@@ -1,10 +1,10 @@
 <div class="cart-overlay" *ngIf="isOpen" (click)="onClose()"></div>
 
-<aside class="cart-sidebar" [@slideAnimation]="isOpen ? 'open' : 'closed'">
+<aside class="cart-sidebar" [class.cart-sidebar--checkout]="showCheckout" [@slideAnimation]="isOpen ? 'open' : 'closed'">
 
   <div class="cart-header">
-    <h3>Tu Carrito</h3>
-    <button class="close-btn" (click)="onClose()">
+    <h3>{{ showCheckout ? 'Completa tu compra' : 'Tu Carrito' }}</h3>
+    <button type="button" class="close-btn" aria-label="Cerrar carrito" (click)="onClose()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -25,7 +25,7 @@
       <span>¡Explora nuestros productos!</span>
     </div>
 
-    <div class="cart-items" *ngIf="items.length > 0">
+    <div class="cart-items" *ngIf="items.length > 0 && !showCheckout">
       <div class="cart-item" *ngFor="let item of items">
         <div class="item-image"
           [style.background-image]="item.product.image ? 'url(' + getImageUrl(item.product.image) + ')' : null">
@@ -52,6 +52,93 @@
         </button>
       </div>
     </div>
+
+    <section class="checkout-view" *ngIf="items.length > 0 && showCheckout" aria-labelledby="checkout-title">
+      <button type="button" class="checkout-back" (click)="volverAlCarrito()">
+        <span aria-hidden="true">←</span> Volver al carrito
+      </button>
+      <div class="checkout-intro">
+        <h4 id="checkout-title">Revisa tu compra</h4>
+        <p>Completa estos datos para registrar tu compra y finalizar la orden.</p>
+      </div>
+
+      <div class="checkout-items" aria-label="Productos de la orden">
+        <div class="checkout-item" *ngFor="let item of items">
+          <div class="item-image"
+            [style.background-image]="item.product.image ? 'url(' + getImageUrl(item.product.image) + ')' : null">
+            <div class="placeholder-image" *ngIf="!item.product.image"></div>
+          </div>
+          <div class="checkout-item__details">
+            <h5>{{ item.product.name }}</h5>
+            <span class="item-brand">{{ item.product.brand }}</span>
+            <div class="checkout-item__summary">
+              <span>{{ item.quantity }} × ${{ item.product.price.toFixed(2) }}</span>
+              <strong>${{ (item.product.price * item.quantity).toFixed(2) }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form id="checkout-form" class="checkout-form" [formGroup]="checkoutForm" (ngSubmit)="ejecutarCajitaPagos()">
+        <div class="checkout-field">
+          <label for="checkout-name">Nombre completo</label>
+          <input id="checkout-name" type="text" formControlName="nameOrder" autocomplete="name"
+            [attr.aria-invalid]="checkoutForm.controls.nameOrder.invalid && checkoutForm.controls.nameOrder.touched">
+          <span class="field-error" *ngIf="checkoutForm.controls.nameOrder.touched && checkoutForm.controls.nameOrder.invalid">
+            Ingresa tu nombre completo.
+          </span>
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkout-identification">Cédula o RUC</label>
+          <input id="checkout-identification" type="text" formControlName="identificationOrder"
+            inputmode="numeric" autocomplete="off" maxlength="13"
+            [attr.aria-invalid]="checkoutForm.controls.identificationOrder.invalid && checkoutForm.controls.identificationOrder.touched">
+          <span class="field-error" *ngIf="checkoutForm.controls.identificationOrder.touched && checkoutForm.controls.identificationOrder.invalid">
+            Escribe un número de 10 a 13 dígitos.
+          </span>
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkout-phone">Celular</label>
+          <input id="checkout-phone" type="tel" formControlName="cellphoneOrder" inputmode="tel"
+            autocomplete="tel" maxlength="13"
+            [attr.aria-invalid]="checkoutForm.controls.cellphoneOrder.invalid && checkoutForm.controls.cellphoneOrder.touched">
+          <span class="field-error" *ngIf="checkoutForm.controls.cellphoneOrder.touched && checkoutForm.controls.cellphoneOrder.invalid">
+            Escribe un celular de 10 a 13 dígitos, sin espacios.
+          </span>
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkout-province">Provincia</label>
+          <input id="checkout-province" type="text" formControlName="provinceOrder" autocomplete="address-level1"
+            [attr.aria-invalid]="checkoutForm.controls.provinceOrder.invalid && checkoutForm.controls.provinceOrder.touched">
+          <span class="field-error" *ngIf="checkoutForm.controls.provinceOrder.touched && checkoutForm.controls.provinceOrder.invalid">
+            Ingresa la provincia.
+          </span>
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkout-city">Ciudad</label>
+          <input id="checkout-city" type="text" formControlName="cityOrder" autocomplete="address-level2"
+            [attr.aria-invalid]="checkoutForm.controls.cityOrder.invalid && checkoutForm.controls.cityOrder.touched">
+          <span class="field-error" *ngIf="checkoutForm.controls.cityOrder.touched && checkoutForm.controls.cityOrder.invalid">
+            Ingresa la ciudad.
+          </span>
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkout-address">Dirección y referencia</label>
+          <textarea id="checkout-address" formControlName="addressReference" autocomplete="street-address" rows="2"
+            [attr.aria-invalid]="checkoutForm.controls.addressReference.invalid && checkoutForm.controls.addressReference.touched"></textarea>
+          <span class="field-error" *ngIf="checkoutForm.controls.addressReference.touched && checkoutForm.controls.addressReference.invalid">
+            Escribe una dirección y una referencia de entrega.
+          </span>
+        </div>
+      </form>
+
+      <p class="payment-error" *ngIf="paymentError" role="alert">{{ paymentError }}</p>
+    </section>
   </div>
 
   <div class="cart-footer" *ngIf="cartItems$ | async as items">
@@ -60,7 +147,7 @@
       <span class="total-amount">${{ total.toFixed(2) }}</span>
     </div>
 
-    <div class="cart-actions" *ngIf="items.length > 0">
+    <div class="cart-actions" *ngIf="items.length > 0 && !showCheckout">
       <button class="btn-checkout" (click)="checkout()">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -70,10 +157,22 @@
         </svg>
         Confirmar pedido por WhatsApp
       </button>
-      <button class="btn-clear" (click)="clearCart()">Vaciar carrito</button>
-      <button class="btn-checkout" (click)="ejecutarCajitaPagos()">
+      <button type="button" class="btn-clear" (click)="clearCart()">Vaciar carrito</button>
+      <button type="button" class="btn-checkout" (click)="vistaPago()">
         Pagar con Payphone
       </button>
+    </div>
+
+    <div class="cart-actions checkout-actions" *ngIf="items.length > 0 && showCheckout">
+      <button
+        type="submit"
+        class="btn-checkout"
+        form="checkout-form"
+        [disabled]="checkoutForm.invalid || isPreparingPayment"
+      >
+        {{ isPreparingPayment ? 'Preparando pago…' : 'Pagar con Payphone' }}
+      </button>
+      <p class="checkout-required-note">Necesitamos estos datos para completar tu orden.</p>
     </div>
   </div>
 </aside>
