@@ -35,7 +35,7 @@ export class InfluencerVideosComponent {
     },
     { 
       ytId: 'kYu1N_aQNH4', 
-      title: 'Jam Session', 
+      title: 'Money Mauve', 
       influencer: 'Ronnie Bears', 
       product: 'Lip Gloss',
       thumbnailUrl: 'https://i.ibb.co/tMDb8yL2/3.png',
