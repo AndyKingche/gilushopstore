@@ -52,13 +52,12 @@
     <div class="product-card" *ngFor="let product of products; let i = index; trackBy: trackByProduct"
       appScrollAnimation [style.animationDelay]="getAnimationDelay(i)" itemscope itemtype="https://schema.org/Product">
 
-      <a [routerLink]="['/shop/product', product.name]"
-        [attr.aria-label]="'Ver ' + product.name"
-        itemprop="url">
+      <a [routerLink]="['/shop/product', product.name]" [attr.aria-label]="'Ver ' + product.name" itemprop="url">
 
         <meta itemprop="image" [attr.content]="product.image || 'https://gilu-shop.com/assets/image/gilu-update.png'">
 
-        <div class="card-image" [style.background-image]="product.image ? 'url(' + getImageUrl(product.image) + ')' : null"
+        <div class="card-image"
+          [style.background-image]="product.image ? 'url(' + getImageUrl(product.image) + ')' : null"
           [attr.aria-label]="product.name">
           <span class="brand-badge" itemprop="brand">
             {{ product.brand }}
@@ -68,9 +67,9 @@
             Agotado
           </span>
 
-<span *ngIf="product.newProduct" class="new-badge" title="Nuevo">
-             <img src="assets/image/badge-new.png" alt="Nuevo" width="48" height="48">
-           </span>
+          <span *ngIf="product.newProduct" class="new-badge" title="Nuevo">
+            <img src="assets/image/badge-new.png" alt="Nuevo" width="48" height="48">
+          </span>
         </div>
 
       </a>

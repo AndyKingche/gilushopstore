@@ -136,7 +136,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    background: darken($pink-primary, 18%);
+    background: $pink-primary;
     color: $white;
     padding: 5px 9px;
     border-radius: 999px;
@@ -262,7 +262,7 @@
     gap: 6px;
     width: 100%;
     min-height: 42px;
-    background: darken($pink-primary, 18%);
+    background: $pink-primary;
     color: $white;
     border: none;
     padding: 9px 14px;
