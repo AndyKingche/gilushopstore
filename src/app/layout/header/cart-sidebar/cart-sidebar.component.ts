@@ -196,8 +196,8 @@ export class CartSidebarComponent implements OnInit, OnChanges {
       const ppb = new PPaymentButtonBox({
 
         // Credenciales Payphone
-        token: '3jtUVems9W2y8PEzJhvuHq-b5ekYYeweeB67Dk-WZ7endgaQCQs5OZuThvreYQ8Imkptelo810je_yY8BTxotniVsbbMIqFc6RJyl12yicj1ZOGpLGapnSvK6ApHwAxSkLr48fwOBCJRScvmdYpDsFqqb_mC3C9lqP4aZPczUybmS3lvmgKQxw-ajVrM7zhfM_-PgOouc2Kv6FW8kLRHmPdbgn4BK7uHbyXWmwStKdl6AkkgXrbwCWi4AWv1JG2iui2QhnI--kDWaKljLVjpQlJS9txKFO2ltOHkfgC8LT9rJkvxLw1ZLSyjT7-Y0GQFOdmWgA',
-        storeId: 'ab1f3a83-071b-45c1-a8d2-1c79b05d0e5b',
+        token: environment.payphone_token,
+        storeId: environment.payphone_storeId,
 
         // Los precios del catálogo incluyen IVA del 15%; PayPhone recibe valores en centavos.
         amount,
@@ -214,7 +214,9 @@ export class CartSidebarComponent implements OnInit, OnChanges {
 
         reference: 'Compra en GILÚ SHOP',
 
-        backgroundColor: '#D95F80'
+        backgroundColor: '#D95F80',
+        // Opciones de estilo
+        
 
       });
 
@@ -254,6 +256,10 @@ export class CartSidebarComponent implements OnInit, OnChanges {
       orderTax: taxCents / 100,
       orderDate,
       orderTotal: Math.round(this.cartService.getTotal() * 100) / 100,
+      userId: null,
+      clientId: null,
+      enterpriseId: null,
+      invoiceId: null,
       ...form,
       details
     };

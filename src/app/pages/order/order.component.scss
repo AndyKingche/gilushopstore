@@ -232,7 +232,10 @@ table {
     vertical-align: middle;
   }
 
-  tbody tr {
+}
+
+@media (hover: hover) and (pointer: fine) {
+  table tbody tr {
     transition: background-color 160ms ease;
 
     &:hover {
@@ -445,8 +448,90 @@ table {
     padding: 34px;
   }
 
+  .orders-card {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
   table {
-    min-width: 760px;
+    min-width: 0;
+  }
+
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  tbody {
+    display: grid;
+    gap: 10px;
+  }
+
+  table tbody tr {
+    padding: 3px 14px;
+    border: 1px solid #f3eaed;
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  table td {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 10px 0;
+    border-top: 1px solid #f5edef;
+    text-align: right;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &::before {
+      flex: 0 0 auto;
+      color: #a18d95;
+      content: attr(data-label);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  }
+
+  .order-id,
+  .detail-cell {
+    overflow-wrap: anywhere;
+    text-align: right;
+  }
+
+  .detail-cell {
+    max-width: none;
+  }
+
+  .orders-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 14px 4px 2px;
   }
 }
 
@@ -494,82 +579,6 @@ table {
   .order-count {
     padding: 6px 9px;
     font-size: 10px;
-  }
-
-  .orders-card {
-    padding: 10px;
-    border-radius: 18px;
-  }
-
-  .table-wrap {
-    overflow: visible;
-  }
-
-  table,
-  tbody,
-  tr,
-  td {
-    display: block;
-    width: 100%;
-  }
-
-  thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    clip-path: inset(50%);
-  }
-
-  tbody {
-    display: grid;
-    gap: 10px;
-  }
-
-  table tbody tr {
-    padding: 3px 14px;
-    border: 1px solid #f3eaed;
-    border-radius: 14px;
-    background: #fff;
-  }
-
-  table td {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    border-top: 1px solid #f5edef;
-    text-align: right;
-
-    &:first-child {
-      border-top: 0;
-    }
-
-    &::before {
-      flex: 0 0 auto;
-      color: #a18d95;
-      content: attr(data-label);
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-align: left;
-      text-transform: uppercase;
-    }
-  }
-
-  .detail-cell {
-    max-width: none;
-    text-align: right;
-  }
-
-  .orders-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: 10px;
-    padding: 14px 4px 2px;
   }
 
   .state-card {

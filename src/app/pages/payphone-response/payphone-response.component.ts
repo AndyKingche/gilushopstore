@@ -1,14 +1,17 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { Observable, finalize, map, switchMap, throwError } from 'rxjs';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
 import {
   PayphoneOrderRequest,
   PayphoneConfirmationResponse,
   PayphoneConfirmationService
 } from '../../core/services/payphone-confirmation.service';
 import { PendingPayphoneOrderService } from '../../core/services/pending-payphone-order.service';
+import { environment } from 'src/environments/environment';
 
 type PaymentState = 'loading' | 'approved' | 'rejected' | 'error';
 
@@ -16,6 +19,16 @@ interface ConfirmationRequest {
   id: number;
   clientTransactionId: string;
   order: PayphoneOrderRequest;
+}
+
+interface CurrentUser {
+  id: number;
+  userName: string;
+  enterpriseId: number | { id: number };
+}
+
+interface Client {
+  id: number;
 }
 
 @Component({
@@ -38,6 +51,8 @@ export class PayphoneResponseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private http: HttpClient,
+    private authService: AuthService,
     private confirmationService: PayphoneConfirmationService,
     private pendingOrderService: PendingPayphoneOrderService,
     private cartService: CartService,
@@ -74,8 +89,16 @@ export class PayphoneResponseComponent implements OnInit {
       return;
     }
 
-    this.confirmationRequest = { id, clientTransactionId, order };
-    this.verifyPayment();
+    this.loadOrderIdentity(order).subscribe({
+      next: completeOrder => {
+        this.confirmationRequest = { id, clientTransactionId, order: completeOrder };
+        this.verifyPayment();
+      },
+      error: () => {
+        this.state = 'error';
+        this.errorMessage = 'No pudimos obtener los datos de tu cuenta para registrar la orden. Inicia sesión nuevamente e inténtalo otra vez.';
+      }
+    });
   }
 
   retryVerification(): void {
@@ -146,5 +169,47 @@ export class PayphoneResponseComponent implements OnInit {
     }
 
     return 'error';
+  }
+
+  private loadOrderIdentity(order: PayphoneOrderRequest): Observable<PayphoneOrderRequest> {
+    const token = this.authService.token();
+    if (!token) {
+      return throwError(() => new Error('Se requiere una sesión para registrar la orden.'));
+    }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const storedUserName = localStorage.getItem('userName')?.trim();
+    const userUrl = `${environment.apiUrl}api/v1/gessa/user/me`;
+
+    return this.http.get<CurrentUser>(userUrl, { headers }).pipe(
+      switchMap(user => {
+        const userId = user.id;
+        console.log('Current user:', user);
+        const enterpriseId = typeof user.enterpriseId === 'number'
+          ? user.enterpriseId
+          : user.enterpriseId?.id;
+        const email = storedUserName?.includes('@') ? storedUserName : user.userName;
+        if (!Number.isSafeInteger(userId) || !Number.isSafeInteger(enterpriseId) || !email) {
+          return throwError(() => new Error('El perfil no contiene los datos necesarios para registrar la orden.'));
+        }
+
+        const clientUrl = `${environment.apiUrl}api/v1/gessa/client/find-email-client/${encodeURIComponent(email)}`;
+        return this.http.get<Client>(clientUrl, { headers }).pipe(
+          map(client => {
+            if (!Number.isSafeInteger(client.id)) {
+              throw new Error('No se encontró un cliente válido para esta cuenta.');
+            }
+
+            return {
+              ...order,
+              userId: user.id,
+              clientId: client.id,
+              enterpriseId,
+              invoiceId: null
+            };
+          })
+        );
+      })
+    );
   }
 }

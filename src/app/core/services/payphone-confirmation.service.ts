@@ -27,6 +27,10 @@ export interface PayphoneOrderRequest {
   orderTax: number;
   orderDate: string;
   orderTotal: number;
+  userId: number | null;
+  clientId: number | null;
+  enterpriseId: number | null;
+  invoiceId: number | null;
   nameOrder: string;
   identificationOrder: string;
   cellphoneOrder: string;
