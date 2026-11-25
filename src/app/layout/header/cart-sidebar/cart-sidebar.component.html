@@ -1,6 +1,14 @@
-<div class="cart-overlay" *ngIf="isOpen" (click)="onClose()"></div>
+<div class="cart-overlay" #cartOverlay *ngIf="isOpen" (click)="onClose()"></div>
 
-<aside class="cart-sidebar" [class.cart-sidebar--checkout]="showCheckout" [@slideAnimation]="isOpen ? 'open' : 'closed'">
+<aside
+  class="cart-sidebar"
+  #cartSidebar
+  [class.cart-sidebar--checkout]="showCheckout"
+  [@slideAnimation]="isOpen ? 'open' : 'closed'"
+  (pointerdown)="onDrawerPointerDown($event)"
+  (pointermove)="onDrawerPointerMove($event)"
+  (pointerup)="onDrawerPointerUp($event)"
+  (pointercancel)="onDrawerPointerCancel($event)">
 
   <div class="cart-header">
     <h3>{{ showCheckout ? 'Completa tu compra' : 'Tu Carrito' }}</h3>

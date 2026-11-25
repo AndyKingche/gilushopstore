@@ -419,6 +419,7 @@
   gap: 16px;
   transition: left 0.3s ease;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  touch-action: pan-y;
 
   &.open {
     left: 0;

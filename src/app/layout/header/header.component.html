@@ -123,10 +123,18 @@
   </div>
 
   <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" *ngIf="isMobile && isMenuOpen" (click)="closeMenu()"></div>
+  <div class="mobile-menu-overlay" #mobileMenuOverlay *ngIf="isMobile && isMenuOpen" (click)="closeMenu()"></div>
   
   <!-- Mobile Menu -->
-  <nav class="nav-mobile" *ngIf="isMobile" [class.open]="isMenuOpen">
+  <nav
+    class="nav-mobile"
+    #mobileNav
+    *ngIf="isMobile"
+    [class.open]="isMenuOpen"
+    (pointerdown)="onMenuPointerDown($event)"
+    (pointermove)="onMenuPointerMove($event)"
+    (pointerup)="onMenuPointerUp($event)"
+    (pointercancel)="onMenuPointerCancel($event)">
     <a *ngFor="let link of navLinks"
        [routerLink]="link.path"
        routerLinkActive="active"

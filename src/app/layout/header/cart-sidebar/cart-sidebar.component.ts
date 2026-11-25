@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef, Inject, PLATFORM_ID, ElementRef, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
@@ -60,6 +60,9 @@ declare const PPaymentButtonBox: new (options: PayphoneButtonOptions) => {
 })
 export class CartSidebarComponent implements OnInit, OnChanges {
   private _isOpen = false;
+  @ViewChild('cartSidebar') cartSidebar?: ElementRef<HTMLElement>;
+  @ViewChild('cartOverlay') cartOverlay?: ElementRef<HTMLElement>;
+  private drawerDrag: { pointerId: number; startX: number; startTime: number; deltaX: number; dragging: boolean } | null = null;
 
   @Input()
   get isOpen(): boolean { return this._isOpen; }
@@ -68,6 +71,17 @@ export class CartSidebarComponent implements OnInit, OnChanges {
     if (value) {
       this.checkAuth();
       this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.cartSidebar) {
+          const sidebar = this.cartSidebar.nativeElement;
+          sidebar.style.transition = '';
+          sidebar.style.transform = '';
+        }
+        if (this.cartOverlay) {
+          this.cartOverlay.nativeElement.style.transition = '';
+          this.cartOverlay.nativeElement.style.opacity = '';
+        }
+      }, 0);
     }
   }
 
@@ -228,6 +242,102 @@ export class CartSidebarComponent implements OnInit, OnChanges {
     } finally {
       this.isPreparingPayment = false;
     }
+  }
+
+  onDrawerPointerDown(event: PointerEvent): void {
+    if (!isPlatformBrowser(this.platformId) || event.pointerType === 'mouse' || !this.cartSidebar) {
+      return;
+    }
+
+    const target = event.target as HTMLElement;
+    if (target.closest('input, textarea, button, a, form')) {
+      return;
+    }
+
+    this.drawerDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startTime: performance.now(),
+      deltaX: 0,
+      dragging: false
+    };
+    this.cartSidebar.nativeElement.setPointerCapture(event.pointerId);
+  }
+
+  onDrawerPointerMove(event: PointerEvent): void {
+    if (!this.drawerDrag || this.drawerDrag.pointerId !== event.pointerId || !this.cartSidebar) {
+      return;
+    }
+
+    const deltaX = event.clientX - this.drawerDrag.startX;
+    if (!this.drawerDrag.dragging && deltaX > 8) {
+      this.drawerDrag.dragging = true;
+    }
+    if (!this.drawerDrag.dragging) {
+      return;
+    }
+
+    const resisted = Math.max(0, deltaX);
+    const width = this.cartSidebar.nativeElement.offsetWidth;
+    const rubberBand = resisted > width * 0.45
+      ? width * 0.45 + (resisted - width * 0.45) * 0.2
+      : resisted;
+    this.drawerDrag.deltaX = deltaX;
+    this.cartSidebar.nativeElement.style.transition = 'none';
+    this.cartSidebar.nativeElement.style.transform = `translateX(${rubberBand}px)`;
+
+    if (this.cartOverlay) {
+      const progress = Math.min(resisted / width, 1);
+      this.cartOverlay.nativeElement.style.opacity = String(1 - progress);
+    }
+  }
+
+  onDrawerPointerUp(event: PointerEvent): void {
+    if (!this.drawerDrag || this.drawerDrag.pointerId !== event.pointerId || !this.cartSidebar) {
+      return;
+    }
+
+    const elapsed = Math.max(performance.now() - this.drawerDrag.startTime, 1);
+    const velocity = this.drawerDrag.deltaX / elapsed * 1000;
+    const threshold = this.cartSidebar.nativeElement.offsetWidth * 0.35;
+    const shouldClose = this.drawerDrag.deltaX > threshold || (this.drawerDrag.deltaX > 24 && velocity > 700);
+    this.finishDrawerDrag(shouldClose);
+  }
+
+  onDrawerPointerCancel(event: PointerEvent): void {
+    if (this.drawerDrag?.pointerId === event.pointerId) {
+      this.finishDrawerDrag(false);
+    }
+  }
+
+  private finishDrawerDrag(shouldClose: boolean): void {
+    if (!this.cartSidebar) {
+      this.drawerDrag = null;
+      return;
+    }
+
+    const sidebar = this.cartSidebar.nativeElement;
+    sidebar.style.transition = 'transform 220ms cubic-bezier(0.32, 0.72, 0, 1)';
+    if (shouldClose) {
+      sidebar.style.transform = `translateX(${sidebar.offsetWidth}px)`;
+      if (this.cartOverlay) {
+        this.cartOverlay.nativeElement.style.transition = 'opacity 220ms ease';
+        this.cartOverlay.nativeElement.style.opacity = '0';
+      }
+      window.setTimeout(() => this.onClose(), this.prefersReducedMotion() ? 120 : 220);
+    } else {
+      sidebar.style.transform = 'translateX(0)';
+      if (this.cartOverlay) {
+        this.cartOverlay.nativeElement.style.transition = 'opacity 180ms ease';
+        this.cartOverlay.nativeElement.style.opacity = '1';
+      }
+    }
+    this.drawerDrag = null;
+  }
+
+  private prefersReducedMotion(): boolean {
+    return isPlatformBrowser(this.platformId) &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   }
 
   private buildOrderRequest(items: CartItem[], taxCents: number): PayphoneOrderRequest {

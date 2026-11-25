@@ -47,6 +47,7 @@ interface CarouselProduct {
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly carouselAutoplayIntervalMs = 6000;
+  private carouselDrag: { pointerId: number; startX: number; startY: number; startTime: number; deltaX: number; horizontal: boolean } | null = null;
 
   readonly carouselProducts: CarouselProduct[] = [
     {
@@ -278,6 +279,101 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get totalSlideNumber(): string {
     return String(this.carouselProducts.length).padStart(2, '0');
+  }
+
+  onCarouselPointerDown(event: PointerEvent): void {
+    if (!isPlatformBrowser(this.platformId) || event.pointerType === 'mouse') {
+      return;
+    }
+    this.carouselDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startTime: performance.now(),
+      deltaX: 0,
+      horizontal: false
+    };
+    (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+  }
+
+  onCarouselPointerMove(event: PointerEvent): void {
+    if (!this.carouselDrag || this.carouselDrag.pointerId !== event.pointerId) {
+      return;
+    }
+    const deltaX = event.clientX - this.carouselDrag.startX;
+    const deltaY = event.clientY - this.carouselDrag.startY;
+    if (!this.carouselDrag.horizontal) {
+      if (Math.abs(deltaX) < 8) {
+        return;
+      }
+      this.carouselDrag.horizontal = Math.abs(deltaX) > Math.abs(deltaY);
+      if (!this.carouselDrag.horizontal) {
+        return;
+      }
+    }
+
+    this.carouselDrag.deltaX = deltaX;
+    const stage = event.currentTarget as HTMLElement;
+    const image = stage.querySelector('img');
+    if (image) {
+      image.style.transition = 'none';
+      const width = stage.offsetWidth;
+      const resisted = Math.abs(deltaX) > width * 0.45
+        ? Math.sign(deltaX) * (width * 0.45 + (Math.abs(deltaX) - width * 0.45) * 0.2)
+        : deltaX;
+      image.style.transform = `translateX(${resisted * 0.55}px) scale(0.98)`;
+    }
+  }
+
+  onCarouselPointerUp(event: PointerEvent): void {
+    if (!this.carouselDrag || this.carouselDrag.pointerId !== event.pointerId) {
+      return;
+    }
+    const elapsed = Math.max(performance.now() - this.carouselDrag.startTime, 1);
+    const velocity = this.carouselDrag.deltaX / elapsed * 1000;
+    const threshold = 48;
+    if (this.carouselDrag.horizontal &&
+      (this.carouselDrag.deltaX < -threshold || (this.carouselDrag.deltaX < -24 && velocity < -700))) {
+      this.finishCarouselDrag(true, event.currentTarget as HTMLElement);
+    } else if (this.carouselDrag.horizontal &&
+      (this.carouselDrag.deltaX > threshold || (this.carouselDrag.deltaX > 24 && velocity > 700))) {
+      this.finishCarouselDrag(false, event.currentTarget as HTMLElement);
+    } else {
+      this.resetCarouselDrag(event.currentTarget as HTMLElement);
+    }
+  }
+
+  onCarouselPointerCancel(event: PointerEvent): void {
+    if (this.carouselDrag?.pointerId === event.pointerId) {
+      this.resetCarouselDrag(event.currentTarget as HTMLElement);
+    }
+  }
+
+  private finishCarouselDrag(next: boolean, stage: HTMLElement): void {
+    const image = stage.querySelector('img');
+    if (image) {
+      image.style.transition = this.prefersReducedMotion
+        ? 'transform 120ms ease-out'
+        : 'transform 220ms cubic-bezier(0.32, 0.72, 0, 1)';
+      image.style.transform = 'translateX(0) scale(1)';
+    }
+    this.carouselDrag = null;
+    if (next) {
+      this.showNextProduct();
+    } else {
+      this.showPreviousProduct();
+    }
+  }
+
+  private resetCarouselDrag(stage: HTMLElement): void {
+    const image = stage.querySelector('img');
+    if (image) {
+      image.style.transition = this.prefersReducedMotion
+        ? 'transform 120ms ease-out'
+        : 'transform 220ms cubic-bezier(0.32, 0.72, 0, 1)';
+      image.style.transform = 'translateX(0) scale(1)';
+    }
+    this.carouselDrag = null;
   }
 
   showPreviousProduct(): void {

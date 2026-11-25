@@ -28,7 +28,12 @@
         aria-roledescription="carrusel"
         aria-label="Productos destacados"
         [@.disabled]="prefersReducedMotion">
-        <div class="home-hero__carousel-stage">
+        <div
+          class="home-hero__carousel-stage"
+          (pointerdown)="onCarouselPointerDown($event)"
+          (pointermove)="onCarouselPointerMove($event)"
+          (pointerup)="onCarouselPointerUp($event)"
+          (pointercancel)="onCarouselPointerCancel($event)">
           <div
             class="home-hero__carousel-shadow"
             [@productShadow]="activeCarouselProduct.src"

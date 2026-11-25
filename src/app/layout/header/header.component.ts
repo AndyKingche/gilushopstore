@@ -18,6 +18,9 @@ import { AuthService } from '../../core/services/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('dropdown') dropdownElement?: ElementRef<HTMLElement>;
   @ViewChild('authDropdown') authDropdownElement?: ElementRef<HTMLElement>;
+  @ViewChild('mobileNav') mobileNavElement?: ElementRef<HTMLElement>;
+  @ViewChild('mobileMenuOverlay') mobileMenuOverlayElement?: ElementRef<HTMLElement>;
+  private menuDrag: { pointerId: number; startX: number; startTime: number; deltaX: number; dragging: boolean } | null = null;
   private routerSubscription?: Subscription;
   cartItemCount$: Observable<number>;
   isMenuOpen = false;
@@ -117,10 +120,109 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleMenu(): void { this.isMenuOpen = !this.isMenuOpen; }
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen && this.mobileNavElement) {
+      const nav = this.mobileNavElement.nativeElement;
+      nav.style.transition = 'none';
+      nav.style.transform = 'translateX(0)';
+    }
+  }
   closeMenu(): void { this.isMenuOpen = false; }
   toggleCart(): void { this.isCartOpen = !this.isCartOpen; }
   closeCart(): void { this.isCartOpen = false; }
+
+  onMenuPointerDown(event: PointerEvent): void {
+    if (!isPlatformBrowser(this.platformId) || event.pointerType === 'mouse' || !this.mobileNavElement || !this.isMenuOpen) {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (target.closest('input, textarea, button, a, form')) {
+      return;
+    }
+    this.menuDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startTime: performance.now(),
+      deltaX: 0,
+      dragging: false
+    };
+    this.mobileNavElement.nativeElement.setPointerCapture(event.pointerId);
+  }
+
+  onMenuPointerMove(event: PointerEvent): void {
+    if (!this.menuDrag || this.menuDrag.pointerId !== event.pointerId || !this.mobileNavElement) {
+      return;
+    }
+    const deltaX = event.clientX - this.menuDrag.startX;
+    if (!this.menuDrag.dragging && deltaX < -8) {
+      this.menuDrag.dragging = true;
+    }
+    if (!this.menuDrag.dragging) {
+      return;
+    }
+
+    const width = this.mobileNavElement.nativeElement.offsetWidth;
+    const resisted = Math.min(0, deltaX);
+    const rubberBand = resisted < -width * 0.45
+      ? -width * 0.45 + (resisted + width * 0.45) * 0.2
+      : resisted;
+    this.menuDrag.deltaX = deltaX;
+    const nav = this.mobileNavElement.nativeElement;
+    nav.style.transition = 'none';
+    nav.style.transform = `translateX(${rubberBand}px)`;
+
+    if (this.mobileMenuOverlayElement) {
+      const progress = Math.min(Math.abs(resisted) / width, 1);
+      this.mobileMenuOverlayElement.nativeElement.style.opacity = String(1 - progress);
+    }
+  }
+
+  onMenuPointerUp(event: PointerEvent): void {
+    if (!this.menuDrag || this.menuDrag.pointerId !== event.pointerId || !this.mobileNavElement) {
+      return;
+    }
+    const elapsed = Math.max(performance.now() - this.menuDrag.startTime, 1);
+    const velocity = this.menuDrag.deltaX / elapsed * 1000;
+    const threshold = this.mobileNavElement.nativeElement.offsetWidth * 0.35;
+    const shouldClose = this.menuDrag.deltaX < -threshold || (this.menuDrag.deltaX < -24 && velocity < -700);
+    this.finishMenuDrag(shouldClose);
+  }
+
+  onMenuPointerCancel(event: PointerEvent): void {
+    if (this.menuDrag?.pointerId === event.pointerId) {
+      this.finishMenuDrag(false);
+    }
+  }
+
+  private finishMenuDrag(shouldClose: boolean): void {
+    if (!this.mobileNavElement) {
+      this.menuDrag = null;
+      return;
+    }
+    const nav = this.mobileNavElement.nativeElement;
+    nav.style.transition = 'transform 220ms cubic-bezier(0.32, 0.72, 0, 1)';
+    if (shouldClose) {
+      nav.style.transform = `translateX(-${nav.offsetWidth}px)`;
+      if (this.mobileMenuOverlayElement) {
+        this.mobileMenuOverlayElement.nativeElement.style.transition = 'opacity 220ms ease';
+        this.mobileMenuOverlayElement.nativeElement.style.opacity = '0';
+      }
+      window.setTimeout(() => this.closeMenu(), this.prefersReducedMotion() ? 120 : 220);
+    } else {
+      nav.style.transform = 'translateX(0)';
+      if (this.mobileMenuOverlayElement) {
+        this.mobileMenuOverlayElement.nativeElement.style.transition = 'opacity 180ms ease';
+        this.mobileMenuOverlayElement.nativeElement.style.opacity = '1';
+      }
+    }
+    this.menuDrag = null;
+  }
+
+  private prefersReducedMotion(): boolean {
+    return isPlatformBrowser(this.platformId) &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  }
 
   search(): void {
     const query = this.searchControl.value?.trim() || '';
