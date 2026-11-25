@@ -161,7 +161,8 @@
     display: block;
     width: min(100%, 520px);
     height: 100%;
-    max-height: 500px;
+    min-height: 0;
+    max-height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 12px 14px rgba($dark, 0.08));
   }
@@ -312,7 +313,7 @@
 
 @media (max-width: 900px) {
   .home-hero {
-    min-height: auto;
+    min-height: calc(100svh - 96px);
   }
 
   .home-hero__inner {
@@ -325,47 +326,63 @@
   }
 
   .home-hero__art {
-    min-height: 430px;
+    min-height: 0;
+    grid-template-rows: minmax(320px, 42vw) auto;
   }
 
   .home-hero__carousel-stage {
-    height: 380px;
+    height: clamp(320px, 42vw, 380px);
   }
 }
 
 @media (max-width: 600px) {
   .home-hero {
-    padding: 40px 0 48px;
+    padding: 28px 0 32px;
   }
 
   .home-hero__inner {
-    gap: 26px;
-  }
-
-  .home-hero__copy h1 {
-    margin: 10px 0 14px;
-    font-size: clamp(40px, 11vw, 48px);
-  }
-
-  .home-hero__lead {
-    font-size: 17px;
-  }
-
-  .home-hero__actions {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
-    margin-top: 22px;
-  }
-
-  .home-hero__art {
-    min-height: clamp(390px, 108vw, 470px);
-    grid-template-rows: minmax(330px, 1fr) auto;
     gap: 8px;
   }
 
+  .home-hero__copy h1 {
+    margin: 6px 0 10px;
+    font-size: clamp(36px, 9.2vw, 42px);
+  }
+
+  .home-hero__lead {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .home-hero__actions {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    margin-top: 16px;
+  }
+
+  .home-hero__button {
+    min-height: 46px;
+    gap: 8px;
+    padding: 0 18px;
+    font-size: 16px;
+  }
+
+  .home-hero__art {
+    min-height: 0;
+    grid-template-rows: clamp(240px, 72vw, 280px) auto;
+    gap: 0;
+  }
+
   .home-hero__carousel-stage {
-    height: 330px;
+    height: clamp(240px, 72vw, 280px);
+  }
+
+  .home-hero__carousel-stage img {
+    width: min(100%, 280px);
+    min-width: 0;
+    min-height: 0;
+    max-height: 100%;
   }
 
   .brands-section {
