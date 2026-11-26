@@ -27,7 +27,7 @@ export class ProductShowcaseComponent {
                   name: 'Bases',
                   description: 'Cobertura perfecta para todo tipo de piel. Desde ligeras hasta alta cobertura.',
                   brands: ['Maybelline', 'e.l.f', 'NYX', 'Loreal', 'Milani'],
-                  imageUrl: 'https://images.pexels.com/photos/354962/pexels-photo-354962.jpeg',
+                  imageUrl: '/assets/showcase/bases-gilu.png',
                   iconSvg: `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Cuerpo del frasco -->
   <rect x="62" y="80" width="76" height="96" rx="12"
